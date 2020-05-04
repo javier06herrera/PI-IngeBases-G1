@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1062
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Propio", "Propio\Propio.csproj", "{2025BDD0-7255-4094-816E-906252D3A0E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Propio.Tests", "Propio.Tests\Propio.Tests.csproj", "{9226C7A0-523D-42B7-A907-BF039AE3738E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2025BDD0-7255-4094-816E-906252D3A0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2025BDD0-7255-4094-816E-906252D3A0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2025BDD0-7255-4094-816E-906252D3A0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2025BDD0-7255-4094-816E-906252D3A0E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9226C7A0-523D-42B7-A907-BF039AE3738E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9226C7A0-523D-42B7-A907-BF039AE3738E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9226C7A0-523D-42B7-A907-BF039AE3738E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9226C7A0-523D-42B7-A907-BF039AE3738E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F117F890-5472-4536-800A-A30DCC19E4A6}
+	EndGlobalSection
+EndGlobal
