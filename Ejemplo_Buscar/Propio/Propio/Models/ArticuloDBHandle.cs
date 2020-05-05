@@ -20,10 +20,10 @@ namespace Propio.Models
         public bool AddArticulo(ArticuloModel smodel)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("AddNewArticulo", con);
+            SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", smodel.Name);
+            cmd.Parameters.AddWithValue("@Name", smodel.Name); // 
             cmd.Parameters.AddWithValue("@Topic", smodel.Topic);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
             cmd.Parameters.AddWithValue("@PublishDate", smodel.PublishDate);
@@ -123,19 +123,19 @@ namespace Propio.Models
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
-                {
-                    while (reader.Read())
-                    { 
-                        list.Add(new SelectListItem { Text = reader["Topic"].ToString(), Value = reader["Topic"].ToString() }); // Pone todos los temas que
-                        // coincidan con la palabra en la lista
-                        // Recuerde que se usa la palabra topic tanto en text como en value por que la solicitud solo devuelve una columna
-                    }
+                //if (reader.Read()) //Revisar perdida de valor
+                //{
+                while (reader.Read())
+                { 
+                    list.Add(new SelectListItem { Text = reader["Topic"].ToString(), Value = reader["Topic"].ToString() }); // Pone todos los temas que
+                    // coincidan con la palabra en la lista
+                    // Recuerde que se usa la palabra topic tanto en text como en value por que la solicitud solo devuelve una columna
                 }
-                else
-                {
-                    list.Add(new SelectListItem { Text = "No records found", Value = "0" });
-                }
+                //}
+                //else
+                //{
+                //    list.Add(new SelectListItem { Text = "No records found", Value = "0" });
+                //}
 
                 con.Close();
             }

@@ -127,6 +127,8 @@ namespace Propio.Controllers
             ArticuloDBHandle dbHandle = new ArticuloDBHandle();
             string topic = Convert.ToString(TempData["Topic"]);
             return View(dbHandle.GetResultado(topic));
+            
+            
         }
     }
 }
