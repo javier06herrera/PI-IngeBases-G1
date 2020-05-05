@@ -4,14 +4,14 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>ArticuloModel</h4>
-    <hr />
-    <span>Country:</span> @Html.DropDownListFor(m => m.Topic, Model.TopicsList, "--Please select a country--", new { @class = "btn btn-default" })
-    <br />
-    <br />
-    <button class="btn btn-primary">Submit</button>
-</div>
+    <div class="form-horizontal">
+        <h4>ArticuloModel</h4>
+        <hr />
+        <span>Country:</span> @Html.DropDownListFor(m => m.Topic, Model.TopicsList, "--Please select a topic--", new { @class = "btn btn-default" })
+        <br />
+        <br />
+        <button class="btn btn-primary">Submit</button>
+    </div>
 }
 
 <div>
@@ -21,4 +21,3 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-

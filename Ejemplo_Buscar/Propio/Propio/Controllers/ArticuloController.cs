@@ -99,36 +99,60 @@ namespace Propio.Controllers
         }
 
         public static ArticuloModel cMain;
-        public ActionResult SearchTopic()
+        //public ActionResult SearchTopic()
+        //{
+        //    ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+        //    ArticuloModel c = new ArticuloModel();
+        //    cMain = new ArticuloModel();
+        //    c.TopicsList = cMain.TopicsList = dbHandle.PopulateArticles();
+        //    ViewBag.LblCountry = "";
+        //    return View(c);
+        //}
+
+        //[HttpPost]
+        //public ActionResult SearchTopic(ArticuloModel country)
+        //{
+        //    ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+        //    var g = cMain.TopicsList;
+        //    var selectedCountry = g.Find(p => p.Value == country.Topic.ToString()); // SelectListItem
+        //    //Arriba, tiene que escoger el .Topic para que la lista agarre los valores que le interesan
+        //    country.TopicsList = dbHandle.PopulateArticles();
+        //    return View(dbHandle.GetResultado(Convert.ToString(country.TopicsList)));
+        //    //ViewBag.LblCountry = "You selected " + selectedCountry.Text.ToString();
+        //    //TempData["Topic"] = selectedCountry.Text.ToString();
+        //    //return RedirectToAction("showResult");
+        //}
+
+        //public ActionResult ShowResult()
+        //{
+        //    ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+        //    string topic = Convert.ToString(TempData["Topic"]);
+        //    return View(dbHandle.GetResultado(topic));
+            
+            
+        //}
+
+        public ActionResult Topics()
         {
-            ArticuloDBHandle dbHandle = new ArticuloDBHandle();
-            ArticuloModel c = new ArticuloModel();
-            cMain = new ArticuloModel();
-            c.TopicsList = cMain.TopicsList = dbHandle.PopulateArticles();
-            ViewBag.LblCountry = "";
-            return View(c);
+            //ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+            //ArticuloModel c = new ArticuloModel();
+            //cMain = new ArticuloModel();
+            //c.TopicsList = cMain.TopicsList = dbHandle.PopulateArticles();
+            //ViewBag.LblCountry = "";
+            //return View(c);
+            return View();
+
         }
 
         [HttpPost]
-        public ActionResult SearchTopic(ArticuloModel country)
+        public ActionResult Topics(ArticuloModel country)
         {
             ArticuloDBHandle dbHandle = new ArticuloDBHandle();
-            var g = cMain.TopicsList;
-            var selectedCountry = g.Find(p => p.Value == country.Topic.ToString()); // SelectListItem
-            //Arriba, tiene que escoger el .Topic para que la lista agarre los valores que le interesan
-            country.TopicsList = dbHandle.PopulateArticles();
-            ViewBag.LblCountry = "You selected " + selectedCountry.Text.ToString();
-            TempData["Topic"] = selectedCountry.Text.ToString();
-            return RedirectToAction("showResult");
-        }
-
-        public ActionResult ShowResult()
-        {
-            ArticuloDBHandle dbHandle = new ArticuloDBHandle();
-            string topic = Convert.ToString(TempData["Topic"]);
-            return View(dbHandle.GetResultado(topic));
-            
-            
+            //var g = cMain.TopicsList;
+            //var selectedCountry = g.Find(p => p.Value == country.Topic.ToString()); // SelectListItem
+            //country.TopicsList = dbHandle.PopulateArticles();
+            //return View(dbHandle.GetResultado(Convert.ToString(country.TopicsList)));
+            return View(dbHandle.GetResultado(Convert.ToString(country.Topic)));
         }
     }
 }
