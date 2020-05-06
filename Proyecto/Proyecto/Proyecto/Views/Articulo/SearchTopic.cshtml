@@ -1,0 +1,18 @@
+﻿@model Proyecto.Models.ArticuloModel
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ArticuloModel</h4>
+        <hr />
+        <span>Country:</span> @Html.DropDownListFor(m => m.Topic, Model.TopicsList, "--Please select a topic--", new { @class = "btn btn-default" })
+        <br />
+        <br />
+        <button class="btn btn-primary">Submit</button>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
