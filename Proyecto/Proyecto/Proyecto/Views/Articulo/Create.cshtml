@@ -3,7 +3,6 @@
 
 <!DOCTYPE html>
 
-
 <meta name="viewport" content="width=device-width" />
 <title>TinyMCE Example</title>
 
@@ -12,6 +11,7 @@
 <script>
     tinymce.init({
         selector: '#Route',
+        //selector: '#textAreafor',
         images_upload_url: 'postAcceptor.php',
         automatic_uploads: false,
         height: 500,
@@ -69,7 +69,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Route, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Route, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.Route, new { htmlAttributes = new { @class = "form-control" } })*@ @*//Ojo con usar aqui TextAreaFor*@
+                @Html.TextAreaFor(model => model.Route, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Route, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -87,6 +88,6 @@
 </div>
 
 @*@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/scripts/tinymce/tinymce.min.js")
-}*@
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/scripts/tinymce/tinymce.min.js")
+    }*@

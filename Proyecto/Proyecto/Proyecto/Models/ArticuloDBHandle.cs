@@ -100,7 +100,7 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand("DeleteArticulo", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@StdId", id);
+            cmd.Parameters.AddWithValue("@ArtId", id);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();

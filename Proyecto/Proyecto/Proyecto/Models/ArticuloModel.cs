@@ -25,6 +25,7 @@ namespace Proyecto.Models
         public string PublishDate { get; set; }
 
         [Required(ErrorMessage = "Route is required.")]
+        [AllowHtml]
         public string Route { get; set; }
         public List<SelectListItem> TopicsList { get; set; }
     }

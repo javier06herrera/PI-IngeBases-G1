@@ -27,6 +27,7 @@ namespace Proyecto.Controllers
         // POST: Student/Create
         //Pasar datos (eso explica el post
         [HttpPost]
+     
         public ActionResult Create(ArticuloModel smodel)
         {
             try
@@ -63,6 +64,7 @@ namespace Proyecto.Controllers
 
         // POST: Articulo/Edit/5
         [HttpPost]
+        //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult Edit(int id, ArticuloModel smodel)
         {
             try
