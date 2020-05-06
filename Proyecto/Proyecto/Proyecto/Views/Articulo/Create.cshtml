@@ -1,10 +1,35 @@
 ﻿@model Proyecto.Models.ArticuloModel
 
 
-@using (Html.BeginForm()) 
+<!DOCTYPE html>
+
+
+<meta name="viewport" content="width=device-width" />
+<title>TinyMCE Example</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="~/scripts/tinymce/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#Route',
+        images_upload_url: 'postAcceptor.php',
+        automatic_uploads: false,
+        height: 500,
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table paste imagetools wordcount"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        content_css: '//www.tiny.cloud/css/codepen.min.css'
+
+    });
+</script>
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>ArticuloModel</h4>
         <hr />
@@ -61,6 +86,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    @Scripts.Render("~/scripts/tinymce/tinymce.min.js")
+}*@
