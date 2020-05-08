@@ -56,16 +56,16 @@ namespace Proyecto.Controllers
 
         // 3. ************* EDIT Articulo DETAILS ******************
         // GET: Articulo/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int articleId)
         {
             ArticuloDBHandle sdb = new ArticuloDBHandle();
-            return View(sdb.GetArticulo().Find(smodel => smodel.Id == id));
+            return View(sdb.GetArticulo().Find(smodel => smodel.articleId == articleId));
         }
 
         // POST: Articulo/Edit/5
         [HttpPost]
         //public ActionResult Edit(int id, ArticuloModel smodel)
-        public ActionResult Edit(int id, ArticuloModel smodel)
+        public ActionResult Edit(int articleId, ArticuloModel smodel)
         {
             try
             {
@@ -81,12 +81,12 @@ namespace Proyecto.Controllers
 
         // 4. ************* DELETE Articulo DETAILS ******************
         // GET: Articulo/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int articleId)
         {
             try
             {
                 ArticuloDBHandle sdb = new ArticuloDBHandle();
-                if (sdb.DeleteArticulo(id))
+                if (sdb.DeleteArticulo(articleId))
                 {
                     ViewBag.AlertMsg = "Article Deleted Successfully";
                 }
@@ -110,16 +110,16 @@ namespace Proyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchTopic(ArticuloModel country)
+        public ActionResult SearchTopic(ArticuloModel smodel)
         {
             ArticuloDBHandle dbHandle = new ArticuloDBHandle();
             var g = cMain.TopicsList;
-            var selectedCountry = g.Find(p => p.Value == country.Topic.ToString()); // SelectListItem
+            var selectedArticle = g.Find(p => p.Value == smodel.topic.ToString()); // SelectListItem
             //Arriba, tiene que escoger el .Topic para que la lista agarre los valores que le interesan
-            country.TopicsList = dbHandle.PopulateArticles();
+            smodel.TopicsList = dbHandle.PopulateArticles();
             //return View(dbHandle.GetResultado(Convert.ToString(country.TopicsList)));
-            ViewBag.LblCountry = "You selected " + selectedCountry.Text.ToString();
-            TempData["Topic"] = selectedCountry.Text.ToString();
+            ViewBag.LblCountry = "You selected " + selectedArticle.Text.ToString();
+            TempData["Topic"] = selectedArticle.Text.ToString();
             return RedirectToAction("showResult");
         }
 

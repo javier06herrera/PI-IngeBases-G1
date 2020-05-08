@@ -25,15 +25,29 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", smodel.Name); // 
-            cmd.Parameters.AddWithValue("@Topic", smodel.Topic);
+            cmd.Parameters.AddWithValue("@name", smodel.name); // 
+            cmd.Parameters.AddWithValue("@type", smodel.type);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
-            cmd.Parameters.AddWithValue("@PublishDate", smodel.PublishDate);
-            cmd.Parameters.AddWithValue("@Route", smodel.Route);
+            cmd.Parameters.AddWithValue("@publishDate", smodel.publishDate);
+            cmd.Parameters.AddWithValue("@content", smodel.content);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
+
+            connection();
+            SqlCommand cmd1 = new SqlCommand("AppendTopicToArticle", con); // Nombre procedimiento, 
+            cmd1.CommandType = CommandType.StoredProcedure;
+            String[] topics = smodel.topic.Split(',');
+            con.Open();
+            cmd1.Parameters.AddWithValue("@articleId", smodel.articleId);
+            foreach (String topic in topics)
+            {
+                cmd1.Parameters.AddWithValue("@topic", topic);
+                i = cmd1.ExecuteNonQuery();
+            }
+            con.Close();
+
 
             if (i >= 1)
                 return true;
@@ -61,12 +75,13 @@ namespace Proyecto.Models
                 articulolist.Add(
                     new ArticuloModel
                     {
-                        Id = Convert.ToInt32(dr["Id"]),
-                        Name = Convert.ToString(dr["Name"]),
-                        Topic = Convert.ToString(dr["Topic"]),
+                        articleId = Convert.ToInt32(dr["articleId"]),
+                        name = Convert.ToString(dr["name"]),
+                        topic = Convert.ToString(dr["topic"]),
                         Abstract = Convert.ToString(dr["Abstract"]),
-                        PublishDate = Convert.ToString(dr["PublishDate"]),
-                        Route = Convert.ToString(dr["Route"])
+                        publishDate = Convert.ToString(dr["publishDate"]),
+                        content = Convert.ToString(dr["content"]),
+                        type = Convert.ToBoolean(dr["type"])
                     });
             }
             return articulolist;
@@ -78,12 +93,12 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand("UpdateArticuloDetails", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Id", smodel.Id);
-            cmd.Parameters.AddWithValue("@Name", smodel.Name);
-            cmd.Parameters.AddWithValue("@Topic", smodel.Topic);
+            cmd.Parameters.AddWithValue("@Id", smodel.articleId);
+            cmd.Parameters.AddWithValue("@Name", smodel.name);
+            cmd.Parameters.AddWithValue("@Topic", smodel.topic);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
-            cmd.Parameters.AddWithValue("@PublishDate", Convert.ToDateTime(smodel.PublishDate));
-            cmd.Parameters.AddWithValue("@Route", smodel.Route);
+            cmd.Parameters.AddWithValue("@PublishDate", Convert.ToDateTime(smodel.publishDate));
+            cmd.Parameters.AddWithValue("@content", smodel.content);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -172,11 +187,13 @@ namespace Proyecto.Models
                 articulolist.Add(
                     new ArticuloModel
                     {
-                        Name = Convert.ToString(dr["Name"]),
-                        Topic = Convert.ToString(dr["Topic"]),
+                        articleId = Convert.ToInt32(dr["articleId"]),
+                        name = Convert.ToString(dr["name"]),
+                        topic = Convert.ToString(dr["topic"]),
                         Abstract = Convert.ToString(dr["Abstract"]),
-                        PublishDate = Convert.ToString(dr["PublishDate"]),
-                        Route = Convert.ToString(dr["Route"])
+                        publishDate = Convert.ToString(dr["publishDate"]),
+                        content = Convert.ToString(dr["content"]),
+                        type = Convert.ToBoolean(dr["type"])
                     });
             }
             return articulolist;
