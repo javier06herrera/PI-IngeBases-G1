@@ -54,20 +54,13 @@ namespace Proyecto.Models
             
             con.Close();
 
-
-            // Insertar tópico
             String[] topics = smodel.topic.Split(',');
-            String appendTopic = "INSERT INTO ArticleTopic VALUES(@articleId, @topic)";
-            SqlCommand cmd2 = new SqlCommand(appendTopic, con);
-            //adapter.SelectCommand = cmd2;
-            con.Open();
-            cmd2.Parameters.AddWithValue("@articleId", smodel.articleId);
-            foreach (String topic in topics)
+            String topic = "";
+            for (int m = 0; m < topics.Count(); m++)
             {
-                cmd2.Parameters.AddWithValue("@topic", topic);
-                i = cmd2.ExecuteNonQuery();
+                topic = topics[m];
+                InsertTopics(topic, smodel.articleId);
             }
-            con.Close();
 
 
             if (i >= 1)
@@ -76,7 +69,7 @@ namespace Proyecto.Models
                 return false;
         }
 
-        //Combines all the topics of a Article
+        //Combines all the topics of an Article
         public string topicMerge( int articleId, DataTable topicList)
         {
             string topicsLine = "";
@@ -144,13 +137,13 @@ namespace Proyecto.Models
                                    "type = @type, " +
                                    "abstract = @abstract, " +
                                    "publishDate = @publishDate," +
-                                   "content = @content" +
+                                   "content = @content " +
                                    "WHERE articleId = @articleId";
 
             SqlCommand cmd = new SqlCommand(updateArticle, con);
             cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
             cmd.Parameters.AddWithValue("@name", smodel.name);
-            cmd.Parameters.AddWithValue("@type", smodel.topic);
+            cmd.Parameters.AddWithValue("@type", smodel.type);
             cmd.Parameters.AddWithValue("@abstract", smodel.Abstract);
             cmd.Parameters.AddWithValue("@publishDate", Convert.ToDateTime(smodel.publishDate));
             cmd.Parameters.AddWithValue("@content", smodel.content);
@@ -163,35 +156,45 @@ namespace Proyecto.Models
 
             //Topics Elimination
             connection();
-            String getTopics = "DELETE FROM ArticleTopic" +
+            String getTopics = "DELETE FROM ArticleTopic " +
                                "WHERE articleId = @articleId";
-            cmd.CommandText = getTopics;
-            cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
+            SqlCommand cmd1 = new SqlCommand(getTopics, con);
+            cmd1.Parameters.AddWithValue("@articleId", smodel.articleId);
             con.Open();
-            i = cmd.ExecuteNonQuery();
+            i = cmd1.ExecuteNonQuery();
             con.Close();
 
-            if (i < 1)
-                return false;
+            //if (i < 1)
+            //    return false;
 
             //Topics Update
             String[] topics = smodel.topic.Split(',');
-            String appendTopic = "INSERT INTO ArticleTopic " +
-                                 "VALUES(@articleId, @topic)";
-            cmd.CommandText = appendTopic;
-            con.Open();
-            cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
-            foreach (String topic in topics)
+            String topic = "";
+            for (int m = 0; m < topics.Count(); m++)
             {
-                cmd.Parameters.AddWithValue("@topic", topic);
-                i = cmd.ExecuteNonQuery();
+                topic = topics[m];
+                InsertTopics(topic, smodel.articleId);
             }
-            con.Close();
 
             if (i >= 1)
                 return true;
             else
                 return false;
+        }
+
+        // Para agregar más de un dato
+        public void InsertTopics(String topic, int articleId)
+        {
+            connection();
+            String appendTopic = "INSERT INTO ArticleTopic " +
+                                "VALUES(@articleId, @topic)";
+            SqlCommand cmd2 = new SqlCommand(appendTopic, con);
+            cmd2.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            cmd2.Parameters.AddWithValue("@topic", topic);
+            int i = cmd2.ExecuteNonQuery();
+            con.Close();
+
         }
 
         public bool DeleteArticulo(int id)
