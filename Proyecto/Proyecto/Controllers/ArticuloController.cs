@@ -35,7 +35,7 @@ namespace Proyecto.Controllers
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticuloDBHandle sdb = new ArticuloDBHandle();
-                    if (sdb.AddArticulo(smodel))
+                    if (sdb.AddArticulo(smodel, false))
                     {
                         ViewBag.Message = "Student Details Added Successfully";
                         ModelState.Clear();
@@ -54,8 +54,40 @@ namespace Proyecto.Controllers
             }
         }
 
-        // 3. ************* EDIT Articulo DETAILS ******************
-        // GET: Articulo/Edit/5
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(ArticuloModel smodel)
+        {
+            try
+            {
+                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                {
+                    ArticuloDBHandle sdb = new ArticuloDBHandle();
+                    if (sdb.AddArticulo(smodel, true))
+                    {
+                        ViewBag.Message = "Student Details Added Successfully";
+                        ModelState.Clear();
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Falle por la fecha";
+                }
+                return View();
+            }
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View();
+            }
+        }
+
+            // 3. ************* EDIT Articulo DETAILS ******************
+            // GET: Articulo/Edit/5
         public ActionResult Edit(int articleId)
         {
             ArticuloDBHandle sdb = new ArticuloDBHandle();

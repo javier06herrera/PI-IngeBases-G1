@@ -19,14 +19,14 @@ namespace Proyecto.Models
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticulo(ArticuloModel smodel)
+        public bool AddArticulo(ArticuloModel smodel, bool type)
         {
             connection();
             SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@name", smodel.name); // 
-            cmd.Parameters.AddWithValue("@type", smodel.type);
+            cmd.Parameters.AddWithValue("@name", smodel.name); 
+            cmd.Parameters.AddWithValue("@type", type);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
             cmd.Parameters.AddWithValue("@publishDate", smodel.publishDate);
             cmd.Parameters.AddWithValue("@content", smodel.content);

@@ -21,12 +21,15 @@ namespace Proyecto.Models
         [Required(ErrorMessage = "Abstract is required.")]
         public string Abstract { get; set; }
 
+        [Display(Name = "Publish Date")]
         [Required(ErrorMessage = "PublishDate is required.")]
         public string publishDate { get; set; }
 
+        [Display(Name = "Topic")]
         [Required(ErrorMessage = "Topic is required.")]
         public string topic { get; set; }
 
+        [Display(Name = "Content")]
         [Required(ErrorMessage = "Content is required.")]
         [AllowHtml]
         public string content { get; set; }
