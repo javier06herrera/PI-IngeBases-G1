@@ -1,0 +1,2 @@
+C:\Users\Kevin\Documents\2020 I Semestre\PI_BDIS\Repo\PI-IngeBases-G1\Proyecto\Proyecto.Tests\obj\Debug\Proyecto.Tests.csprojAssemblyReference.cache
+C:\Users\Kevin\Documents\2020 I Semestre\PI_BDIS\Repo\PI-IngeBases-G1\Proyecto\Proyecto.Tests\obj\Debug\Proyecto.Tests.csproj.CoreCompileInputs.cache

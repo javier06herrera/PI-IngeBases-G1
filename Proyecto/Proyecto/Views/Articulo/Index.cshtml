@@ -6,15 +6,9 @@
 </p>
 <table class="table">
     <tr>
-<<<<<<< HEAD
         <th>
             @Html.DisplayNameFor(model => model.articleId)
         </th>
-=======
-        @*<th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>*@
->>>>>>> 03567dfc7e99001c8861b013072ffea7edddc8b0
         <th>
             @Html.DisplayNameFor(model => model.name)
         </th>
@@ -31,32 +25,21 @@
         <th>
             @Html.DisplayNameFor(model => model.publishDate)
         </th>
-<<<<<<< HEAD
         <th>
             @Html.DisplayNameFor(model => model.content)
         </th>
-=======
-        @*<th>
-            @Html.DisplayNameFor(model => model.Route)
-        </th>*@
->>>>>>> 03567dfc7e99001c8861b013072ffea7edddc8b0
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-<<<<<<< HEAD
         <td>
             @Html.DisplayFor(modelItem => item.articleId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.name)
         </td>
-=======
-    
-            @*@Html.HiddenFor(modelItem => item.Id)*@
-      
->>>>>>> 03567dfc7e99001c8861b013072ffea7edddc8b0
         <td>
             @Html.DisplayFor(modelItem => item.topic)
         </td>
@@ -69,23 +52,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.publishDate)
         </td>
-<<<<<<< HEAD
         <td>
             @Html.DisplayFor(modelItem => item.content)
         </td>
+
         <td>
-            @Html.ActionLink("Edit", "Edit", new { articleId = item.articleId }) |
-            @Html.ActionLink("Details", "Details", new { articleId = item.articleId }) |
-            @Html.ActionLink("Delete", "Delete", new { articleId = item.articleId })
-=======
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Route)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id })
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
->>>>>>> 03567dfc7e99001c8861b013072ffea7edddc8b0
+            @Html.ActionLink("Edit", "Edit", new { id=item.articleId })
         </td>
     </tr>
 }

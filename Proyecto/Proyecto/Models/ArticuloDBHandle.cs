@@ -35,16 +35,39 @@ namespace Proyecto.Models
             int i = cmd.ExecuteNonQuery();
             con.Close();
 
+
+
+            //Buscar ID
             connection();
-            SqlCommand cmd1 = new SqlCommand("AppendTopicToArticle", con); // Nombre procedimiento, 
-            cmd1.CommandType = CommandType.StoredProcedure;
-            String[] topics = smodel.topic.Split(',');
+            string findId = "select articleId from Article where name = @name";
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataSet ds = new DataSet();
             con.Open();
-            cmd1.Parameters.AddWithValue("@articleId", smodel.articleId);
+            SqlCommand cmd1 = new SqlCommand(findId, con); // Nombre procedimiento, 
+            cmd1.Parameters.AddWithValue("@name", smodel.name);
+            adapter.SelectCommand = cmd1;
+            adapter.Fill(ds);            
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                smodel.articleId = (Convert.ToInt32(dr["articleId"]));
+            }
+            
+            con.Close();
+
+
+
+
+            // Insertar tópico
+            String[] topics = smodel.topic.Split(',');
+            String appendTopic = "INSERT INTO ArticleTopic VALUES(@articleId, @topic)";
+            SqlCommand cmd2 = new SqlCommand(appendTopic, con);
+            //adapter.SelectCommand = cmd2;
+            con.Open();
+            cmd2.Parameters.AddWithValue("@articleId", smodel.articleId);
             foreach (String topic in topics)
             {
-                cmd1.Parameters.AddWithValue("@topic", topic);
-                i = cmd1.ExecuteNonQuery();
+                cmd2.Parameters.AddWithValue("@topic", topic);
+                i = cmd2.ExecuteNonQuery();
             }
             con.Close();
 
