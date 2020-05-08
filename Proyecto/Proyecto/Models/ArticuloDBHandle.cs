@@ -99,14 +99,17 @@ namespace Proyecto.Models
                     new ArticuloModel
                     {
                         articleId = Convert.ToInt32(dr["articleId"]),
-                        name = Convert.ToString(dr["name"]),
-                        topic = Convert.ToString(dr["topic"]),
+                        name = Convert.ToString(dr["name"]),                        
                         Abstract = Convert.ToString(dr["Abstract"]),
                         publishDate = Convert.ToString(dr["publishDate"]),
                         content = Convert.ToString(dr["content"]),
                         type = Convert.ToBoolean(dr["type"])
                     });
             }
+
+
+
+            SqlCommand cmd1 = new SqlCommand("GetArticulo", con);
             return articulolist;
         }
 
