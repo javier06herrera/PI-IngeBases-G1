@@ -25,7 +25,7 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@name", smodel.name); 
+            cmd.Parameters.AddWithValue("@name", smodel.name);
             cmd.Parameters.AddWithValue("@type", type);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
             cmd.Parameters.AddWithValue("@publishDate", smodel.publishDate);
@@ -46,12 +46,12 @@ namespace Proyecto.Models
             SqlCommand cmd1 = new SqlCommand(findId, con); // Nombre procedimiento, 
             cmd1.Parameters.AddWithValue("@name", smodel.name);
             adapter.SelectCommand = cmd1;
-            adapter.Fill(ds);            
+            adapter.Fill(ds);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 smodel.articleId = (Convert.ToInt32(dr["articleId"]));
             }
-            
+
             con.Close();
 
             String[] topics = smodel.topic.Split(',');
@@ -70,10 +70,10 @@ namespace Proyecto.Models
         }
 
         //Combines all the topics of an Article
-        public string topicMerge( int articleId, DataTable topicList)
+        public string topicMerge(int articleId, DataTable topicList)
         {
             string topicsLine = "";
-            foreach(DataRow topic in topicList.Rows)
+            foreach (DataRow topic in topicList.Rows)
             {
                 if (Convert.ToInt32(topic["articleId"]) == articleId)
                 {
@@ -92,7 +92,7 @@ namespace Proyecto.Models
             connection();
             string fetchArticles = "SELECT * " +
                                    "FROM Article";
-            SqlDataAdapter sd1 = new SqlDataAdapter(fetchArticles,con);
+            SqlDataAdapter sd1 = new SqlDataAdapter(fetchArticles, con);
             DataTable articleList = new DataTable();
             con.Open();
             sd1.Fill(articleList);
@@ -114,13 +114,13 @@ namespace Proyecto.Models
 
             //Fetch of the entire list of topics
             connection();
-            string fetchTopics =   "SELECT * " +
+            string fetchTopics = "SELECT * " +
                                    "FROM ArticleTopic";
             SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, con);
             DataTable topicList = new DataTable();
             con.Open();
             sd2.Fill(topicList);
-            foreach(ArticuloModel article in articulolist)
+            foreach (ArticuloModel article in articulolist)
             {
                 article.topic = topicMerge(article.articleId, topicList);
             }

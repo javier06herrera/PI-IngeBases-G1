@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,7 +28,7 @@ namespace Proyecto.Controllers
         // POST: Student/Create
         //Pasar datos (eso explica el post
         [HttpPost]
-     
+
         public ActionResult Create(ArticuloModel smodel)
         {
             try
@@ -58,12 +59,30 @@ namespace Proyecto.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult Upload(ArticuloModel smodel)
+        public ActionResult Upload(HttpPostedFileBase file, ArticuloModel smodel)
         {
             try
             {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        //string path = Path.Combine(Server.MapPath("/Files"), Path.GetFileName(file.FileName));
+                        smodel.content = Path.Combine(Server.MapPath("/Files"), Path.GetFileName(file.FileName));
+                        file.SaveAs(smodel.content);
+                        ViewBag.Message = "File uploaded successfully";
+                        //smodel.content = "Cualquier otra cochinada";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
+
+                ModelState.Remove("content");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticuloDBHandle sdb = new ArticuloDBHandle();
@@ -86,8 +105,8 @@ namespace Proyecto.Controllers
             }
         }
 
-            // 3. ************* EDIT Articulo DETAILS ******************
-            // GET: Articulo/Edit/5
+        // 3. ************* EDIT Articulo DETAILS ******************
+        // GET: Articulo/Edit/5
         public ActionResult Edit(int articleId)
         {
             ArticuloDBHandle sdb = new ArticuloDBHandle();
@@ -107,6 +126,64 @@ namespace Proyecto.Controllers
             }
             catch
             {
+                return View();
+            }
+        }
+
+        // Metodo para  editar articulos largos
+        public ActionResult EditLong(int articleId)
+        {
+            ArticuloDBHandle sdb = new ArticuloDBHandle();
+            return View(sdb.GetArticulo().Find(smodel => smodel.articleId == articleId));
+        }
+
+        // POST: Articulo/Edit/5
+        [HttpPost]
+        //public ActionResult Edit(int id, ArticuloModel smodel)
+        public ActionResult EditLong(int articleId, HttpPostedFileBase file, ArticuloModel smodel)
+        {
+            //try
+            //{
+            //    ArticuloDBHandle sdb = new ArticuloDBHandle();
+            //    sdb.UpdateDetails(smodel);
+            //    return RedirectToAction("Index");
+            //}
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        //string path = Path.Combine(Server.MapPath("/Files"), Path.GetFileName(file.FileName));
+                        smodel.content = Path.Combine(Server.MapPath("/Files"), Path.GetFileName(file.FileName));
+                        file.SaveAs(smodel.content);
+                        ViewBag.Message = "File uploaded successfully";
+                        //smodel.content = "Cualquier otra cochinada";
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                else
+                {
+                    ViewBag.Message = "You have not specified a file.";
+                }
+
+                ModelState.Remove("content");
+                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                {
+                    ArticuloDBHandle sdb = new ArticuloDBHandle();
+                    sdb.UpdateDetails(smodel);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "Falle por la fecha";
+                }
+                return View();
+            }
+            catch
+            {
+                ViewBag.Message = "Failed";
                 return View();
             }
         }
@@ -161,5 +238,9 @@ namespace Proyecto.Controllers
             string topic = Convert.ToString(TempData["Topic"]);
             return View(dbHandle.GetResultado(topic));
         }
+
+
+
+
     }
 }

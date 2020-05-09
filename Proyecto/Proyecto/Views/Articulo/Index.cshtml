@@ -24,25 +24,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.topic)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Abstract)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.publishDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { articleId=item.articleId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.topic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Abstract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publishDate)
+            </td>
+            @if (item.type == false)
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { articleId = item.articleId })
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Edit", "EditLong", new { articleId = item.articleId })
+                </td>
+            }
+
+
+        </tr>
+    }
 
 </table>
 <p> @Html.ActionLink("Buscar por topico", "SearchTopic") </p>
