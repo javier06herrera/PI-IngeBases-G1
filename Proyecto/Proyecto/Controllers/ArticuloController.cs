@@ -239,7 +239,73 @@ namespace Proyecto.Controllers
             return View(dbHandle.GetResultado(topic));
         }
 
+        public ActionResult ShowFAQ()
+        {
+            ArticuloDBHandle dbhandle = new ArticuloDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ModelState.Clear();
+            return View(dbhandle.GetQuestion(false));
+        }
 
+
+        public ActionResult SendFaq()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SendFaq(FaqModel smodel)
+        {
+            try
+            {
+                ModelState.Remove("answer");
+                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                {
+                    ArticuloDBHandle sdb = new ArticuloDBHandle();
+                    if (sdb.AddQuestion(smodel, false))
+                    {
+                        ViewBag.Message = "Student Details Added Successfully";
+                        ModelState.Clear();
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Falle por la fecha";
+                }
+                return View();
+            }
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View();
+            }
+        }
+        public ActionResult ModeratorFAQ()
+        {
+            ArticuloDBHandle dbhandle = new ArticuloDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ModelState.Clear();
+            return View(dbhandle.GetQuestion(true));
+        }
+
+        public ActionResult PublishFaq(int questionId)
+        {
+            ArticuloDBHandle sdb = new ArticuloDBHandle();
+            return View(sdb.GetQuestion(true).Find(smodel => smodel.questionId == questionId));
+        }
+
+        [HttpPost]
+        public ActionResult PublishFaq(int questionId, FaqModel smodel)
+        {
+            try
+            {
+                ArticuloDBHandle sdb = new ArticuloDBHandle();
+                sdb.UpdateQuestion(smodel);
+                return RedirectToAction("ModeratorFAQ");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
 
     }

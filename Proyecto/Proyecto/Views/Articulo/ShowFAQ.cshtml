@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Proyecto.Models.FaqModel>
+
+<p>
+    @Html.ActionLink("Post question", "SendFaq")
+</p>
+
+<p>
+    @Html.ActionLink("Choose questions", "ModeratorFAQ")
+</p>
+
+<table class="table">
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.question)
+        </th>
+    </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.answer)
+        </th>
+
+    </tr>*@
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <b>Pregunta: @Html.DisplayFor(modelItem => item.question)</b>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <b>Respuesta:</b> @Html.DisplayFor(modelItem => item.answer)
+            </td>
+        </tr>
+    }
+
+</table>
+<p> @Html.ActionLink("Buscar por topico", "SearchTopic") </p>

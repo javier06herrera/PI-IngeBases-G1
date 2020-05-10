@@ -285,5 +285,85 @@ namespace Proyecto.Models
             }
             return articulolist;
         }
+
+        public List<FaqModel> GetQuestion(bool moderator)
+        {
+            List<FaqModel> faqList = new List<FaqModel>();
+
+            //Fetch of the entire list of articles without topics
+            connection();
+            string questions = "";
+            if (!moderator)
+            {
+                questions = "SELECT * " +
+                                  "FROM Faq " +
+                                  "WHERE status = 'true'";
+            }
+            else
+            {
+                questions = "SELECT * " +
+                                  "FROM Faq";
+            }
+            SqlDataAdapter sd1 = new SqlDataAdapter(questions, con);
+            DataTable faqsList = new DataTable();
+            con.Open();
+            sd1.Fill(faqsList);
+            foreach (DataRow faq in faqsList.Rows)
+            {
+                faqList.Add(
+                    new FaqModel
+                    {
+                        questionId = Convert.ToInt32(faq["questionId"]),
+                        question = Convert.ToString(faq["question"]),
+                        answer = Convert.ToString(faq["answer"]),
+                        status = Convert.ToBoolean(faq["status"]),
+                    });
+            }
+            con.Close();
+
+            return faqList;
+        }
+
+        public bool AddQuestion(FaqModel smodel, bool type)
+        {
+            connection();
+            string sendQuestion = "INSERT INTO Faq VALUES (@question, @status, @answer)";
+            SqlCommand cmd = new SqlCommand(sendQuestion, con);
+            cmd.Parameters.AddWithValue("@question", smodel.question);
+            cmd.Parameters.AddWithValue("@status", type);
+            cmd.Parameters.AddWithValue("@answer", "");
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+        public bool UpdateQuestion(FaqModel smodel)
+        {
+            //Update of table articles
+            connection();
+            String updateQuestion = "UPDATE Faq " +
+                                   "SET question = @question, " +
+                                   "answer = @answer, " +
+                                   "status = @status " +
+                                   "WHERE questionId = @questionId";
+
+            SqlCommand cmd = new SqlCommand(updateQuestion, con);
+            cmd.Parameters.AddWithValue("@question", smodel.question);
+            cmd.Parameters.AddWithValue("@answer", smodel.answer);
+            cmd.Parameters.AddWithValue("@status", smodel.status);
+            cmd.Parameters.AddWithValue("@questionId", smodel.questionId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+
     }
 }
