@@ -4,23 +4,8 @@
     @Html.ActionLink("Post question", "SendFaq")
 </p>
 
-<p>
-    @Html.ActionLink("Choose questions", "ModeratorFAQ")
-</p>
-
 <table class="table">
-    @*<tr>
-        <th>
-            @Html.DisplayNameFor(model => model.question)
-        </th>
-    </tr>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.answer)
-        </th>
-
-    </tr>*@
-
+    <h4>FAQ</h4>
     @foreach (var item in Model)
     {
         <tr>
@@ -38,4 +23,3 @@
     }
 
 </table>
-<p> @Html.ActionLink("Buscar por topico", "SearchTopic") </p>

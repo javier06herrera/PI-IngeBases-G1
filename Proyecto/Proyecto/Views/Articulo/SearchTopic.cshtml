@@ -4,7 +4,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-            <h4>ArticuloModel</h4>
+            <h4>Search Topic</h4>
             <hr />
             <span>Country:</span> @Html.DropDownListFor(m => m.topic, Model.TopicsList, "--Please select a topic--", new { @class = "btn btn-default" })
             <br />
@@ -24,7 +24,3 @@
     </div>*@
 
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
