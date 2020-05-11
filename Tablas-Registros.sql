@@ -17,10 +17,10 @@ content		VARCHAR(MAX),
 
 
 insert into Article
-values ('Robinson Crusoe',1,'El tom hanks del siglo 17','12-02-1999','Ble ble ble');
+values ('Robinson Crusoe',1,'Naufragio de un inglés del siglo 17','12-02-1999','C://Daniel/Defoe');
 
 insert into Article
-values ('Yo Robot',1,'Todo lo que no es la pelicula','12-02-1999','Ble ble ble');
+values ('Yo Robot',1,'Problemáticas filosóficas en la aplicación de las leyes de la robótica','12-02-1999','C://Isaac/Asimov');
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE ArticleTopic
 (
@@ -64,10 +64,10 @@ CONSTRAINT FK_ForeignParticipant_Users FOREIGN KEY (userId) REFERENCES Community
 );
 
 insert into ForeignParticipant
-values (1, 'Futbolista');
+values (1, 'Datos_de_Participante');
 
 insert into ForeignParticipant
-values (2, 'Silenciosa');
+values (2, 'Datos_de_Participante');
 
 ----------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Member
@@ -79,10 +79,10 @@ CONSTRAINT FK_Member_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId)
 );
 
 insert into Member
-values (1, 1 , 'Pequeña');
+values (1, 1 , 'Datos_de_Participante');
 
 insert into Member
-values (2, 2, 'Gordo');
+values (2, 2, 'Datos_de_Participante');
 
 --------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Creates
@@ -98,3 +98,11 @@ insert into Creates
 values (1,1);
 insert into Creates
 values (2,2);
+---------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Faq (
+    questionId  INT           IDENTITY (1, 1) NOT NULL,
+    question    VARCHAR (MAX) NOT NULL,
+    status      BIT           NOT NULL,
+    answer      VARCHAR (MAX) NULL,
+    PRIMARY KEY CLUSTERED (questionId ASC)
+);
