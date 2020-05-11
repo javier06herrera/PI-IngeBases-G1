@@ -1,18 +1,20 @@
-DROP TABLE Creates;
-DROP TABLE Member;
-DROP TABLE ForeignParticipant;
-DROP TABLE CommunityUser;
+--DROP TABLE Creates;
+--DROP TABLE Member;
+--DROP TABLE ForeignParticipant;
+--DROP TABLE CommunityUser;
 DROP TABLE ArticleTopic;
 DROP TABLE Article;
+DROP TABLE Faq;
 
 CREATE TABLE Article
 ( 
 articleId   INT IDENTITY(1,1) PRIMARY KEY,
 name		VARCHAR(50) NOT NULL UNIQUE,
 type        BIT NOT NULL, --LONG(0) SHORT(1)
-abstract	VARCHAR(MAX),
-publishDate DATE,
-content		VARCHAR(MAX),
+abstract	VARCHAR(MAX) NOT NULL,
+publishDate DATE NOT NULL,
+content		VARCHAR(MAX) NOT NULL,
+
 );
 
 
@@ -42,62 +44,62 @@ values (2,'Filosofía')
 INSERT INTO ArticleTopic
 values (2,'Ciencia Ficción')
 -------------------------------------------------------------------------------------------------------------------
-CREATE TABLE CommunityUser
-(
-userId		INT  IDENTITY PRIMARY KEY,
-name		VARCHAR(50) NOT NULL,
-lastName	VARCHAR(100) NOT NULL,
-userState   INT NOT NULL DEFAULT(0)
-);
+--CREATE TABLE CommunityUser
+--(
+--userId		INT  IDENTITY PRIMARY KEY,
+--name		VARCHAR(50) NOT NULL,
+--lastName	VARCHAR(100) NOT NULL,
+--userState   INT NOT NULL DEFAULT(0)
+--);
 
-insert into CommunityUser
-values ('Daniel', 'Barrantes',1);
+--insert into CommunityUser
+--values ('Daniel', 'Barrantes',1);
 
-insert into CommunityUser
-values ('Antonio', 'Alvarez',1);
+--insert into CommunityUser
+--values ('Antonio', 'Alvarez',1);
 --------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE ForeignParticipant
-(
-userId int PRIMARY KEY,
-participantAttributes	VARCHAR(MAX) NOT NULL,
-CONSTRAINT FK_ForeignParticipant_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE 
-);
+--CREATE TABLE ForeignParticipant
+--(
+--userId int PRIMARY KEY,
+--participantAttributes	VARCHAR(MAX) NOT NULL,
+--CONSTRAINT FK_ForeignParticipant_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE 
+--);
 
-insert into ForeignParticipant
-values (1, 'Datos_de_Participante');
+--insert into ForeignParticipant
+--values (1, 'Datos_de_Participante');
 
-insert into ForeignParticipant
-values (2, 'Datos_de_Participante');
+--insert into ForeignParticipant
+--values (2, 'Datos_de_Participante');
 
 ----------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE Member
-(
-userId int PRIMARY KEY,
-memberRank				INT  NOT NULL, --1:Coordinador 2:Nucleo 3:Activo
-memberAttributes		VARCHAR(MAX) NOT NULL,
-CONSTRAINT FK_Member_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE
-);
+--CREATE TABLE Member
+--(
+--userId int PRIMARY KEY,
+--memberRank				INT  NOT NULL, --1:Coordinador 2:Nucleo 3:Activo
+--memberAttributes		VARCHAR(MAX) NOT NULL,
+--CONSTRAINT FK_Member_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE
+--);
 
-insert into Member
-values (1, 1 , 'Datos_de_Participante');
+--insert into Member
+--values (1, 1 , 'Datos_de_Participante');
 
-insert into Member
-values (2, 2, 'Datos_de_Participante');
+--insert into Member
+--values (2, 2, 'Datos_de_Participante');
 
 --------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE Creates
-(
-articleId int NOT NULL,
-userId int NOT NULL,
-PRIMARY KEY(articleId,userId),
-CONSTRAINT FK_Creates_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE,
-CONSTRAINT FK_Creates_Member FOREIGN KEY (userId) REFERENCES Member(userId) ON DELETE NO ACTION ON UPDATE CASCADE
-);
+--CREATE TABLE Creates
+--(
+--articleId int NOT NULL,
+--userId int NOT NULL,
+--PRIMARY KEY(articleId,userId),
+--CONSTRAINT FK_Creates_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE,
+--CONSTRAINT FK_Creates_Member FOREIGN KEY (userId) REFERENCES Member(userId) ON DELETE NO ACTION ON UPDATE CASCADE
+--);
 
-insert into Creates
-values (1,1);
-insert into Creates
-values (2,2);
+--insert into Creates
+--values (1,1);
+--insert into Creates
+--values (2,2);
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Faq (
     questionId  INT           IDENTITY (1, 1) NOT NULL,
