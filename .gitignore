@@ -1,4 +1,6 @@
 ﻿/PI_BasesInge_MVC_G1/.vs/PI_BasesInge_MVC_G1/v15/Server/sqlite3/db.lock
 Proyecto/.vs
-Proyecto/Proyecto/obj
-Proyecto/Proyecto/bin
+Proyecto/Proyecto/obj/*
+Proyecto/Proyecto/bin/*
+packages/*
+.vs/*

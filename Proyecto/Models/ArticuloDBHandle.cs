@@ -19,79 +19,182 @@ namespace Proyecto.Models
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticulo(ArticuloModel smodel)
+        public bool AddArticulo(ArticuloModel smodel, bool type)
         {
             connection();
             SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", smodel.Name); // 
-            cmd.Parameters.AddWithValue("@Topic", smodel.Topic);
+            cmd.Parameters.AddWithValue("@name", smodel.name);
+            cmd.Parameters.AddWithValue("@type", type);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
-            cmd.Parameters.AddWithValue("@PublishDate", smodel.PublishDate);
-            cmd.Parameters.AddWithValue("@Route", smodel.Route);
+            cmd.Parameters.AddWithValue("@publishDate", smodel.publishDate);
+            cmd.Parameters.AddWithValue("@content", smodel.content);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
 
+
+
+            //Buscar ID
+            connection();
+            string findId = "select articleId from Article where name = @name";
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            con.Open();
+            SqlCommand cmd1 = new SqlCommand(findId, con); // Nombre procedimiento, 
+            cmd1.Parameters.AddWithValue("@name", smodel.name);
+            adapter.SelectCommand = cmd1;
+            adapter.Fill(ds);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                smodel.articleId = (Convert.ToInt32(dr["articleId"]));
+            }
+
+            con.Close();
+
+            String[] topics = smodel.topic.Split(',');
+            String topic = "";
+            for (int m = 0; m < topics.Count(); m++)
+            {
+                topic = topics[m];
+                InsertTopics(topic, smodel.articleId);
+            }
+
+
             if (i >= 1)
                 return true;
             else
                 return false;
+        }
+
+        //Combines all the topics of an Article
+        public string topicMerge(int articleId, DataTable topicList)
+        {
+            string topicsLine = "";
+            foreach (DataRow topic in topicList.Rows)
+            {
+                if (Convert.ToInt32(topic["articleId"]) == articleId)
+                {
+                    topicsLine = topicsLine + topic["topic"] + ", ";
+                }
+            }
+            return topicsLine;
         }
 
         // Ver resultados de busqueda
         public List<ArticuloModel> GetArticulo()
         {
-            connection();
             List<ArticuloModel> articulolist = new List<ArticuloModel>();
 
-            SqlCommand cmd = new SqlCommand("GetArticulo", con);
-
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-
+            //Fetch of the entire list of articles without topics
+            connection();
+            string fetchArticles = "SELECT * " +
+                                   "FROM Article";
+            SqlDataAdapter sd1 = new SqlDataAdapter(fetchArticles, con);
+            DataTable articleList = new DataTable();
             con.Open();
-            sd.Fill(dt);
-            con.Close();
-
-            foreach (DataRow dr in dt.Rows)
+            sd1.Fill(articleList);
+            foreach (DataRow article in articleList.Rows)
             {
                 articulolist.Add(
                     new ArticuloModel
                     {
-                        Name = Convert.ToString(dr["Name"]),
-                        Topic = Convert.ToString(dr["Topic"]),
-                        Abstract = Convert.ToString(dr["Abstract"]),
-                        PublishDate = Convert.ToString(dr["PublishDate"]),
-                        Route = Convert.ToString(dr["Route"])
+                        articleId = Convert.ToInt32(article["articleId"]),
+                        name = Convert.ToString(article["name"]),
+                        topic = " ",
+                        Abstract = Convert.ToString(article["Abstract"]),
+                        publishDate = Convert.ToString(article["publishDate"]),
+                        content = Convert.ToString(article["content"]),
+                        type = Convert.ToBoolean(article["type"])
                     });
             }
+            con.Close();
+
+            //Fetch of the entire list of topics
+            connection();
+            string fetchTopics = "SELECT * " +
+                                   "FROM ArticleTopic";
+            SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, con);
+            DataTable topicList = new DataTable();
+            con.Open();
+            sd2.Fill(topicList);
+            foreach (ArticuloModel article in articulolist)
+            {
+                article.topic = topicMerge(article.articleId, topicList);
+            }
+            con.Close();
             return articulolist;
         }
 
         public bool UpdateDetails(ArticuloModel smodel)
         {
+            //Update of table articles
             connection();
-            SqlCommand cmd = new SqlCommand("UpdateArticuloDetails", con);
-            cmd.CommandType = CommandType.StoredProcedure;
+            String updateArticle = "UPDATE Article " +
+                                   "SET name = @name, " +
+                                   "type = @type, " +
+                                   "abstract = @abstract, " +
+                                   "publishDate = @publishDate," +
+                                   "content = @content " +
+                                   "WHERE articleId = @articleId";
 
-            cmd.Parameters.AddWithValue("@ArtId", smodel.Id);
-            cmd.Parameters.AddWithValue("@Name", smodel.Name);
-            cmd.Parameters.AddWithValue("@Topic", smodel.Topic);
-            cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
-            cmd.Parameters.AddWithValue("@PublishDate", smodel.PublishDate);
-            cmd.Parameters.AddWithValue("@Route", smodel.Route);
-
+            SqlCommand cmd = new SqlCommand(updateArticle, con);
+            cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
+            cmd.Parameters.AddWithValue("@name", smodel.name);
+            cmd.Parameters.AddWithValue("@type", smodel.type);
+            cmd.Parameters.AddWithValue("@abstract", smodel.Abstract);
+            cmd.Parameters.AddWithValue("@publishDate", Convert.ToDateTime(smodel.publishDate));
+            cmd.Parameters.AddWithValue("@content", smodel.content);
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
+
+            if (i < 1)
+                return false;
+
+            //Topics Elimination
+            connection();
+            String getTopics = "DELETE FROM ArticleTopic " +
+                               "WHERE articleId = @articleId";
+            SqlCommand cmd1 = new SqlCommand(getTopics, con);
+            cmd1.Parameters.AddWithValue("@articleId", smodel.articleId);
+            con.Open();
+            i = cmd1.ExecuteNonQuery();
+            con.Close();
+
+            //if (i < 1)
+            //    return false;
+
+            //Topics Update
+            String[] topics = smodel.topic.Split(',');
+            String topic = "";
+            for (int m = 0; m < topics.Count(); m++)
+            {
+                topic = topics[m];
+                InsertTopics(topic, smodel.articleId);
+            }
 
             if (i >= 1)
                 return true;
             else
                 return false;
+        }
+
+        // Para agregar más de un dato
+        public void InsertTopics(String topic, int articleId)
+        {
+            connection();
+            String appendTopic = "INSERT INTO ArticleTopic " +
+                                "VALUES(@articleId, @topic)";
+            SqlCommand cmd2 = new SqlCommand(appendTopic, con);
+            cmd2.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            cmd2.Parameters.AddWithValue("@topic", topic);
+            int i = cmd2.ExecuteNonQuery();
+            con.Close();
+
         }
 
         public bool DeleteArticulo(int id)
@@ -171,14 +274,96 @@ namespace Proyecto.Models
                 articulolist.Add(
                     new ArticuloModel
                     {
-                        Name = Convert.ToString(dr["Name"]),
-                        Topic = Convert.ToString(dr["Topic"]),
+                        articleId = Convert.ToInt32(dr["articleId"]),
+                        name = Convert.ToString(dr["name"]),
+                        topic = Convert.ToString(dr["topic"]),
                         Abstract = Convert.ToString(dr["Abstract"]),
-                        PublishDate = Convert.ToString(dr["PublishDate"]),
-                        Route = Convert.ToString(dr["Route"])
+                        publishDate = Convert.ToString(dr["publishDate"]),
+                        content = Convert.ToString(dr["content"]),
+                        type = Convert.ToBoolean(dr["type"])
                     });
             }
             return articulolist;
         }
+
+        public List<FaqModel> GetQuestion(bool moderator)
+        {
+            List<FaqModel> faqList = new List<FaqModel>();
+
+            //Fetch of the entire list of articles without topics
+            connection();
+            string questions = "";
+            if (!moderator)
+            {
+                questions = "SELECT * " +
+                                  "FROM Faq " +
+                                  "WHERE status = 'true'";
+            }
+            else
+            {
+                questions = "SELECT * " +
+                                  "FROM Faq";
+            }
+            SqlDataAdapter sd1 = new SqlDataAdapter(questions, con);
+            DataTable faqsList = new DataTable();
+            con.Open();
+            sd1.Fill(faqsList);
+            foreach (DataRow faq in faqsList.Rows)
+            {
+                faqList.Add(
+                    new FaqModel
+                    {
+                        questionId = Convert.ToInt32(faq["questionId"]),
+                        question = Convert.ToString(faq["question"]),
+                        answer = Convert.ToString(faq["answer"]),
+                        status = Convert.ToBoolean(faq["status"]),
+                    });
+            }
+            con.Close();
+
+            return faqList;
+        }
+
+        public bool AddQuestion(FaqModel smodel, bool type)
+        {
+            connection();
+            string sendQuestion = "INSERT INTO Faq VALUES (@question, @status, @answer)";
+            SqlCommand cmd = new SqlCommand(sendQuestion, con);
+            cmd.Parameters.AddWithValue("@question", smodel.question);
+            cmd.Parameters.AddWithValue("@status", type);
+            cmd.Parameters.AddWithValue("@answer", "");
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+        public bool UpdateQuestion(FaqModel smodel)
+        {
+            //Update of table articles
+            connection();
+            String updateQuestion = "UPDATE Faq " +
+                                   "SET question = @question, " +
+                                   "answer = @answer, " +
+                                   "status = @status " +
+                                   "WHERE questionId = @questionId";
+
+            SqlCommand cmd = new SqlCommand(updateQuestion, con);
+            cmd.Parameters.AddWithValue("@question", smodel.question);
+            cmd.Parameters.AddWithValue("@answer", smodel.answer);
+            cmd.Parameters.AddWithValue("@status", smodel.status);
+            cmd.Parameters.AddWithValue("@questionId", smodel.questionId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

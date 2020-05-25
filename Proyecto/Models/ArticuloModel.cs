@@ -8,25 +8,35 @@ namespace Proyecto.Models
 {
     public class ArticuloModel
     {
-        public int Id { get; set; }
+        public int articleId { get; set; }
 
         [Display(Name = "Articulo")]
 
         [Required(ErrorMessage = "Title is required.")]
-        public string Name { get; set; }
+        public string name { get; set; }
 
-        [Required(ErrorMessage = "Topic is required.")]
-        public string Topic { get; set; }
+        //[Required(ErrorMessage = "Topic is required.")]
+        //public string Topic { get; set; }
 
         [Required(ErrorMessage = "Abstract is required.")]
         public string Abstract { get; set; }
 
+        [Display(Name = "Publish Date")]
         [Required(ErrorMessage = "PublishDate is required.")]
-        public string PublishDate { get; set; }
+        public string publishDate { get; set; }
 
-        [Required(ErrorMessage = "Route is required.")]
+        [Display(Name = "Topic")]
+        [Required(ErrorMessage = "Topic is required.")]
+        public string topic { get; set; }
+
+        [Display(Name = "Content")]
+        [Required(ErrorMessage = "Content is required.")]
         [AllowHtml]
-        public string Route { get; set; }
+        public string content { get; set; }
         public List<SelectListItem> TopicsList { get; set; }
+        [Required(ErrorMessage = "Type is required.")]
+        public bool type { get; set;}
     }
+
+
 }
