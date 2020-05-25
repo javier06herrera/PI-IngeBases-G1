@@ -6,3 +6,5 @@ packages/*
 .vs/*
 */bin/*
 Proyecto/obj/*
+Proyecto.Tests/bin/*
+Proyecto.Tests/obj/*
