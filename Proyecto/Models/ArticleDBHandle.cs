@@ -9,17 +9,17 @@ using System.Data;
 
 namespace Proyecto.Models
 {
-    public class ArticuloDBHandle
+    public class ArticleDBHandle
     {
         private SqlConnection con;
         private void connection()
         {
-            string constring = ConfigurationManager.ConnectionStrings["articuloconn"].ToString();
+            string constring = ConfigurationManager.ConnectionStrings["ArticleConn"].ToString();
             con = new SqlConnection(constring);
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticulo(ArticuloModel smodel, bool type)
+        public bool AddArticle(ArticuloModel smodel, bool type)
         {
             connection();
             SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
@@ -84,21 +84,22 @@ namespace Proyecto.Models
         }
 
         // Ver resultados de busqueda
-        public List<ArticuloModel> GetArticulo()
+        public List<ArticuloModel> GetArticle()
         {
-            List<ArticuloModel> articulolist = new List<ArticuloModel>();
+            List<ArticuloModel> articleList = new List<ArticuloModel>();
 
             //Fetch of the entire list of articles without topics
             connection();
             string fetchArticles = "SELECT * " +
-                                   "FROM Article";
+                                   "FROM Article "+
+                                   "ORDER BY publishDate DESC";
             SqlDataAdapter sd1 = new SqlDataAdapter(fetchArticles, con);
-            DataTable articleList = new DataTable();
+            DataTable articleTable = new DataTable();
             con.Open();
-            sd1.Fill(articleList);
-            foreach (DataRow article in articleList.Rows)
+            sd1.Fill(articleTable);
+            foreach (DataRow article in articleTable.Rows)
             {
-                articulolist.Add(
+                articleList.Add(
                     new ArticuloModel
                     {
                         articleId = Convert.ToInt32(article["articleId"]),
@@ -120,12 +121,12 @@ namespace Proyecto.Models
             DataTable topicList = new DataTable();
             con.Open();
             sd2.Fill(topicList);
-            foreach (ArticuloModel article in articulolist)
+            foreach (ArticuloModel article in articleList)
             {
                 article.topic = topicMerge(article.articleId, topicList);
             }
             con.Close();
-            return articulolist;
+            return articleList;
         }
 
         public bool UpdateDetails(ArticuloModel smodel)
@@ -190,14 +191,14 @@ namespace Proyecto.Models
                                 "VALUES(@articleId, @topic)";
             SqlCommand cmd2 = new SqlCommand(appendTopic, con);
             cmd2.Parameters.AddWithValue("@articleId", articleId);
-            con.Open();
             cmd2.Parameters.AddWithValue("@topic", topic);
+            con.Open();
             int i = cmd2.ExecuteNonQuery();
             con.Close();
 
         }
 
-        public bool DeleteArticulo(int id)
+        public bool DeleteArticle(int id)
         {
             connection();
             SqlCommand cmd = new SqlCommand("DeleteArticulo", con);
@@ -253,14 +254,14 @@ namespace Proyecto.Models
         }
 
         //
-        public List<ArticuloModel> GetResultado(string topico)
+        public List<ArticuloModel> GetResults(string topic)
         {
             connection();
             List<ArticuloModel> articulolist = new List<ArticuloModel>();
 
             SqlCommand cmd = new SqlCommand("GetResultados", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Topic", topico);
+            cmd.Parameters.AddWithValue("@Topic", topic);
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -296,13 +297,13 @@ namespace Proyecto.Models
             if (!moderator)
             {
                 questions = "SELECT * " +
-                                  "FROM Faq " +
-                                  "WHERE status = 'true'";
+                            "FROM Faq " +
+                            "WHERE status = 'true'";
             }
             else
             {
                 questions = "SELECT * " +
-                                  "FROM Faq";
+                            "FROM Faq";
             }
             SqlDataAdapter sd1 = new SqlDataAdapter(questions, con);
             DataTable faqsList = new DataTable();

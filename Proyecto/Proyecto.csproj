@@ -124,7 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArticuloDBHandle.cs" />
+    <Compile Include="Models\ArticleDBHandle.cs" />
     <Compile Include="Models\ArticuloModel.cs" />
     <Compile Include="Models\FaqModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

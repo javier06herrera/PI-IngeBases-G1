@@ -4,3 +4,5 @@ Proyecto/Proyecto/obj/*
 Proyecto/Proyecto/bin/*
 packages/*
 .vs/*
+*/bin/*
+Proyecto/obj/*

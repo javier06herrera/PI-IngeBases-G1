@@ -12,9 +12,9 @@ namespace Proyecto.Controllers
     {
         public ActionResult Index()
         {
-            ArticuloDBHandle dbhandle = new ArticuloDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
             ModelState.Clear();
-            return View(dbhandle.GetArticulo());
+            return View(dbhandle.GetArticle());
         }
 
         // 2. *************ADD NEW Articulo ******************
@@ -35,8 +35,8 @@ namespace Proyecto.Controllers
             {
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
-                    ArticuloDBHandle sdb = new ArticuloDBHandle();
-                    if (sdb.AddArticulo(smodel, false))
+                    ArticleDBHandle sdb = new ArticleDBHandle();
+                    if (sdb.AddArticle(smodel, false))
                     {
                         ViewBag.Message = "Student Details Added Successfully";
                         ModelState.Clear();
@@ -85,8 +85,8 @@ namespace Proyecto.Controllers
                 ModelState.Remove("content");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
-                    ArticuloDBHandle sdb = new ArticuloDBHandle();
-                    if (sdb.AddArticulo(smodel, true))
+                    ArticleDBHandle sdb = new ArticleDBHandle();
+                    if (sdb.AddArticle(smodel, true))
                     {
                         ViewBag.Message = "Student Details Added Successfully";
                         ModelState.Clear();
@@ -109,8 +109,8 @@ namespace Proyecto.Controllers
         // GET: Articulo/Edit/5
         public ActionResult Edit(int articleId)
         {
-            ArticuloDBHandle sdb = new ArticuloDBHandle();
-            return View(sdb.GetArticulo().Find(smodel => smodel.articleId == articleId));
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
         // POST: Articulo/Edit/5
@@ -120,7 +120,7 @@ namespace Proyecto.Controllers
         {
             try
             {
-                ArticuloDBHandle sdb = new ArticuloDBHandle();
+                ArticleDBHandle sdb = new ArticleDBHandle();
                 sdb.UpdateDetails(smodel);
                 return RedirectToAction("Index");
             }
@@ -133,8 +133,8 @@ namespace Proyecto.Controllers
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
         {
-            ArticuloDBHandle sdb = new ArticuloDBHandle();
-            return View(sdb.GetArticulo().Find(smodel => smodel.articleId == articleId));
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
         // POST: Articulo/Edit/5
@@ -171,7 +171,7 @@ namespace Proyecto.Controllers
                 ModelState.Remove("content");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
-                    ArticuloDBHandle sdb = new ArticuloDBHandle();
+                    ArticleDBHandle sdb = new ArticleDBHandle();
                     sdb.UpdateDetails(smodel);
                     return RedirectToAction("Index");
                 }
@@ -194,8 +194,8 @@ namespace Proyecto.Controllers
         {
             try
             {
-                ArticuloDBHandle sdb = new ArticuloDBHandle();
-                if (sdb.DeleteArticulo(articleId))
+                ArticleDBHandle sdb = new ArticleDBHandle();
+                if (sdb.DeleteArticle(articleId))
                 {
                     ViewBag.AlertMsg = "Article Deleted Successfully";
                 }
@@ -210,7 +210,7 @@ namespace Proyecto.Controllers
         public static ArticuloModel cMain;
         public ActionResult SearchTopic()
         {
-            ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+            ArticleDBHandle dbHandle = new ArticleDBHandle();
             ArticuloModel c = new ArticuloModel();
             cMain = new ArticuloModel();
             c.TopicsList = cMain.TopicsList = dbHandle.PopulateArticles();
@@ -221,12 +221,12 @@ namespace Proyecto.Controllers
         [HttpPost]
         public ActionResult SearchTopic(ArticuloModel smodel)
         {
-            ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+            ArticleDBHandle dbHandle = new ArticleDBHandle();
             var g = cMain.TopicsList;
             var selectedArticle = g.Find(p => p.Value == smodel.topic.ToString()); // SelectListItem
             //Arriba, tiene que escoger el .Topic para que la lista agarre los valores que le interesan
             smodel.TopicsList = dbHandle.PopulateArticles();
-            //return View(dbHandle.GetResultado(Convert.ToString(country.TopicsList)));
+            //return View(dbHandle.GetResults(Convert.ToString(country.TopicsList)));
             ViewBag.LblCountry = "You selected " + selectedArticle.Text.ToString();
             TempData["Topic"] = selectedArticle.Text.ToString();
             return RedirectToAction("showResult");
@@ -234,14 +234,14 @@ namespace Proyecto.Controllers
 
         public ActionResult ShowResult()
         {
-            ArticuloDBHandle dbHandle = new ArticuloDBHandle();
+            ArticleDBHandle dbHandle = new ArticleDBHandle();
             string topic = Convert.ToString(TempData["Topic"]);
-            return View(dbHandle.GetResultado(topic));
+            return View(dbHandle.GetResults(topic));
         }
 
         public ActionResult ShowFAQ()
         {
-            ArticuloDBHandle dbhandle = new ArticuloDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
             ModelState.Clear();
             return View(dbhandle.GetQuestion(false));
         }
@@ -260,7 +260,7 @@ namespace Proyecto.Controllers
                 ModelState.Remove("answer");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
-                    ArticuloDBHandle sdb = new ArticuloDBHandle();
+                    ArticleDBHandle sdb = new ArticleDBHandle();
                     if (sdb.AddQuestion(smodel, false))
                     {
                         ViewBag.Message = "Student Details Added Successfully";
@@ -281,14 +281,14 @@ namespace Proyecto.Controllers
         }
         public ActionResult ModeratorFAQ()
         {
-            ArticuloDBHandle dbhandle = new ArticuloDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
             ModelState.Clear();
             return View(dbhandle.GetQuestion(true));
         }
 
         public ActionResult PublishFaq(int questionId)
         {
-            ArticuloDBHandle sdb = new ArticuloDBHandle();
+            ArticleDBHandle sdb = new ArticleDBHandle();
             return View(sdb.GetQuestion(true).Find(smodel => smodel.questionId == questionId));
         }
 
@@ -297,7 +297,7 @@ namespace Proyecto.Controllers
         {
             try
             {
-                ArticuloDBHandle sdb = new ArticuloDBHandle();
+                ArticleDBHandle sdb = new ArticleDBHandle();
                 sdb.UpdateQuestion(smodel);
                 return RedirectToAction("ModeratorFAQ");
             }
