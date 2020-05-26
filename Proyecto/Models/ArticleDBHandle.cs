@@ -22,13 +22,14 @@ namespace Proyecto.Models
         public bool AddArticle(ArticuloModel smodel, bool type)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("AddNewArticulo", con); // Nombre procedimiento, 
-            cmd.CommandType = CommandType.StoredProcedure;
+            string AddNewArticle = "INSERT INTO Article " +
+                                    "VALUES (@name, @type,@Abstract,@publishDate,@content)";
+            SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
             cmd.Parameters.AddWithValue("@type", type);
             cmd.Parameters.AddWithValue("@Abstract", smodel.Abstract);
-            cmd.Parameters.AddWithValue("@publishDate", smodel.publishDate);
+            cmd.Parameters.AddWithValue("@publishDate", Convert.ToDateTime(smodel.publishDate));
             cmd.Parameters.AddWithValue("@content", smodel.content);
 
             con.Open();
@@ -39,7 +40,9 @@ namespace Proyecto.Models
 
             //Buscar ID
             connection();
-            string findId = "select articleId from Article where name = @name";
+            string findId = "SELECT articleId " +
+                            "FROM Article " +
+                            "WHERE name = @name";
             SqlDataAdapter adapter = new SqlDataAdapter();
             DataSet ds = new DataSet();
             con.Open();
@@ -116,7 +119,7 @@ namespace Proyecto.Models
             //Fetch of the entire list of topics
             connection();
             string fetchTopics = "SELECT * " +
-                                   "FROM ArticleTopic";
+                                 "FROM ArticleTopic";
             SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, con);
             DataTable topicList = new DataTable();
             con.Open();
@@ -201,10 +204,10 @@ namespace Proyecto.Models
         public bool DeleteArticle(int id)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("DeleteArticulo", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@ArtId", id);
+            string deleteArticle = "DELETE FROM Article" +
+                                   "WHERE articleId = @aticleId";
+            SqlCommand cmd = new SqlCommand(deleteArticle, con);
+            cmd.Parameters.AddWithValue("@aticleId", id);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -224,8 +227,9 @@ namespace Proyecto.Models
             try
             {
                 connection();
-                SqlCommand cmd = new SqlCommand("ObtainTopics", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                string obtainTopics = "SELECT DISTINCT topic " +
+                                      "FROM ArticleTopic";
+                SqlCommand cmd = new SqlCommand(obtainTopics, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -258,10 +262,14 @@ namespace Proyecto.Models
         {
             connection();
             List<ArticuloModel> articulolist = new List<ArticuloModel>();
+            string getResults = "SELECT A.articleId, A.name, A.abstract, A.publishDate, ATo.topic, A.content, A.type " +
+                                "FROM Article A " +
+                                "JOIN ArticleTopic ATo ON A.articleId = ATo.articleId " +
+                                "WHERE ATo.topic = @topic";
+            SqlCommand cmd = new SqlCommand(getResults, con);
+            cmd.Parameters.AddWithValue("@topic", topic);
 
-            SqlCommand cmd = new SqlCommand("GetResultados", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Topic", topic);
+
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -328,7 +336,8 @@ namespace Proyecto.Models
         public bool AddQuestion(FaqModel smodel, bool type)
         {
             connection();
-            string sendQuestion = "INSERT INTO Faq VALUES (@question, @status, @answer)";
+            string sendQuestion = "INSERT INTO Faq " +
+                                  "VALUES (@question, @status, @answer)";
             SqlCommand cmd = new SqlCommand(sendQuestion, con);
             cmd.Parameters.AddWithValue("@question", smodel.question);
             cmd.Parameters.AddWithValue("@status", type);
