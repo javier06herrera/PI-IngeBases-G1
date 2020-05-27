@@ -21,6 +21,8 @@ namespace Proyecto.Models
         [Required(ErrorMessage = "Abstract is required.")]
         public string Abstract { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:mm dd yyyy}")]
         [Display(Name = "Publish Date")]
         [Required(ErrorMessage = "PublishDate is required.")]
         public string publishDate { get; set; }
