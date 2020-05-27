@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<Proyecto.Models.ArticuloModel>
+@Scripts.Render("~/Scripts/search")
 
-<table class="table">
+<input class="form-control mb-4" id="searchField" onkeyup="searchArticle()" type="text" placeholder="Search an article...">
+<table class="table" id="userArticles">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
@@ -44,9 +46,11 @@
                     @Html.ActionLink("Edit", "EditLong", new { articleId = item.articleId })
                 </td>
             }
-
-
         </tr>
     }
-
 </table>
+
+
+
+
+
