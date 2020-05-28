@@ -1,25 +1,31 @@
 ﻿@model IEnumerable<Proyecto.Models.FaqModel>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <p>
     @Html.ActionLink("Post question", "SendFaq")
 </p>
 
-<table class="table">
-    <h4>FAQ</h4>
+
+<h4>FAQ</h4>
+
+<div class="accordion" id="questionsAndAnswers">
+@{int index = 0;}
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <b>Pregunta: @Html.DisplayFor(modelItem => item.question)</b>
-            </td>
-
-        </tr>
-
-        <tr>
-            <td>
-                <b>Respuesta:</b> @Html.DisplayFor(modelItem => item.answer)
-            </td>
-        </tr>
+        <div class="card">
+            <div class="card-header" id="heading@(index)">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse@(index)"> @Html.DisplayFor(modelItem => item.question)</button>
+                </h2>
+            </div>
+            <div id="collapse@(index)" class="collapse" aria-labelledby="heading@(index)" data-parent="#questionsAndAnswers">
+                <div class="card-body">
+                    <p>@Html.DisplayFor(modelItem => item.answer)</p>
+                </div>
+            </div>
+        </div>
+        index++;
     }
-
-</table>
+</div>
