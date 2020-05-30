@@ -122,7 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
-	<Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -309,15 +309,14 @@
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
-    <Content Include="Views\Article\Delete.cshtml" />
     <Content Include="Views\Article\Upload.cshtml" />
     <Content Include="Views\Article\EditLong.cshtml" />
-    <Content Include="Views\Article\ShowFAQ.cshtml" />
-    <Content Include="Views\Article\SendFaq.cshtml" />
-    <Content Include="Views\Article\ModeratorFAQ.cshtml" />
-    <Content Include="Views\Article\PublishFaq.cshtml" />
+    <Content Include="Views\Article\ShowQuestion.cshtml" />
+    <Content Include="Views\Article\SendQuestion.cshtml" />
+    <Content Include="Views\Article\ModeratorQuestion.cshtml" />
+    <Content Include="Views\Article\PublishQuestion.cshtml" />
     <Content Include="Views\Email\SendMail.cshtml" />
-	<Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Profile\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

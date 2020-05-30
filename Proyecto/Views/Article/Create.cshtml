@@ -26,47 +26,47 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Create Article</h4>
-    <hr />
-    <div class="form-group">
-        <div class="col-md-10">
-            <label class="control-label col-md-2"></label> @ViewBag.Message
+    <div class="form-horizontal">
+        <h4>Create Article</h4>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="control-label col-md-2"></label> @ViewBag.Message
+            </div>
         </div>
-    </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.topic, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.topic, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.topic, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.topicName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.topicName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.topicName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Abstract, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Abstract, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Abstract, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Abstract, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.publishDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.publishDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.publishDate, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.publishDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.publishDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.publishDate, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.content, htmlAttributes: new { @class = "control-label col-md-2" })
