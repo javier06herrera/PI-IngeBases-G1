@@ -19,6 +19,7 @@ namespace Proyecto.Models
         //public string Topic { get; set; }
 
         [Required(ErrorMessage = "Abstract is required.")]
+        [DataType(DataType.MultilineText)]
         public string Abstract { get; set; }
 
         [DataType(DataType.Date)]
