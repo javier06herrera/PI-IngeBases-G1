@@ -7,6 +7,12 @@
 <div class="form-horizontal">
     <h4>Edit Article</h4>
     <hr />
+    <div class="form-group">
+        <div class="col-md-10">
+            <label class="control-label col-md-2"></label> @ViewBag.Message
+        </div>
+    </div>
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -47,8 +53,6 @@
                 <label for="file">Upload File:</label>
                 <input type="file" name="file" id="file" /><br><br>
                 <input type="submit" value="Upload File" />
-                <br><br>
-                @ViewBag.Message
             </div>
         </div>
     </div>

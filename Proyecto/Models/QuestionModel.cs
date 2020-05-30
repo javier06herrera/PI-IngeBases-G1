@@ -27,8 +27,8 @@ namespace Proyecto.Models
         [AllowHtml]
         public string answer { get; set; }
 
-        //[Required(ErrorMessage = "Status is required.")]
-        //public bool status { get; set; }
+        [Required(ErrorMessage = "Status is required.")]
+        public bool status { get; set; }
 
         public List<SelectListItem> TopicsList { get; set; }        
     }
