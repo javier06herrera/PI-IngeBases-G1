@@ -6,21 +6,9 @@
     <div class="form-horizontal">
             <h4>Search Topic</h4>
             <hr />
-            <span>Select an option</span> @Html.DropDownListFor(m => m.topic, Model.TopicsList, "--Please select a topic--", new { @class = "btn btn-default" })
+            <span>Select an option</span> @Html.DropDownListFor(m => m.topic, Model.TopicsList, "--Please select a topic--", new { @class = "form-control" })
             <br />
             <br />
             <button class="btn btn-primary">Submit</button>
-
     </div>
-    @*<div class="form-group">
-        <label for="exampleSelect1">Example select</label>
-
-        <select class="form-control" id="exampleSelect1">
-            @foreach (var item in Model)
-            {
-                <option>@item.Topic</option>
-            }
-        </select>
-    </div>*@
-
 }
