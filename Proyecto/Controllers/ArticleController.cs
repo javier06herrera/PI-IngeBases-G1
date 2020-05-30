@@ -34,13 +34,8 @@ namespace Proyecto.Controllers
             try
             {
 
-                ModelState.Remove("TopicsList");
-                ModelState.Remove("baseGrade");
-                ModelState.Remove("accessCount");
-                ModelState.Remove("likesCount");
-                ModelState.Remove("dislikesCount");
-                ModelState.Remove("likeBalance");
-                // (ModelState.IsValid) //Si los datos que me pasaron son validos
+                ModelState.Remove("type");
+                if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     if (sdb.AddArticle(smodel, "short"))
@@ -49,10 +44,10 @@ namespace Proyecto.Controllers
                         ModelState.Clear();
                     }
                 }
-                //else
-                //{
-                //    ViewBag.Message = "xyz";
-                //}
+                else
+                {
+                    ViewBag.Message = "xyz";
+                }
                 return View();
             }
             catch
@@ -125,13 +120,15 @@ namespace Proyecto.Controllers
         //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult Edit(int articleId, ArticleModel smodel)
         {
-            //try
+            try
             {
+            
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     
-                    if(sdb.UpdateDetails(smodel))
+                    if(sdb.UpdateDetails(smodel,"short"))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
@@ -143,11 +140,11 @@ namespace Proyecto.Controllers
                 }
                 return View();
             }
-            //catch
-            //{
-            //    ViewBag.Message = "Failed";
-            //    return View();
-            //}
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View();
+            }
         }
 
         // Metodo para  editar articulos largos
@@ -192,7 +189,7 @@ namespace Proyecto.Controllers
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    sdb.UpdateDetails(smodel);
+                    sdb.UpdateDetails(smodel,"long");
                     return RedirectToAction("Index");
                 }
                 else

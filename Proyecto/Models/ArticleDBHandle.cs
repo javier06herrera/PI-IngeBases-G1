@@ -81,10 +81,10 @@ namespace Proyecto.Models
             {
                 if (Convert.ToInt32(topic["articleId"]) == articleId)
                 {
-                    topicsLine = topicsLine + topic["topicName"] + ", ";
+                    topicsLine = topicsLine + topic["category"] + ":" + topic["topicName"] + ", ";
                 }
             }
-            topicsLine.Remove(topicsLine.Length - 1, 1);
+            topicsLine.Remove(topicsLine.Length - 2, 1);
             return topicsLine;
         }
 
@@ -134,7 +134,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
-        public bool UpdateDetails(ArticleModel smodel)
+        public bool UpdateDetails(ArticleModel smodel, string type)
         {
             //Update of table articles
             connection();
@@ -149,7 +149,7 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand(updateArticle, con);
             cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
             cmd.Parameters.AddWithValue("@name", smodel.name);
-            cmd.Parameters.AddWithValue("@type", smodel.type);
+            cmd.Parameters.AddWithValue("@type", type);
             cmd.Parameters.AddWithValue("@abstract", smodel.Abstract);
             cmd.Parameters.AddWithValue("@publishDate", Convert.ToDateTime(smodel.publishDate));
             cmd.Parameters.AddWithValue("@content", smodel.content);
