@@ -23,7 +23,7 @@ namespace Proyecto.Models
         {
             connection();
             string AddNewArticle = "INSERT INTO Article " +
-                                    "VALUES (@name, @type,@Abstract,@publishDate,@content)";
+                                   "VALUES (@name, @type,@Abstract,@publishDate,@content)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
