@@ -12,32 +12,32 @@ namespace Proyecto.Models
 
         [Display(Name = "Article")]
 
-        [Required(ErrorMessage = "Title is required.")]
+        [Required(ErrorMessage = "Please provide a name")]
         public string name { get; set; }
 
         //[Required(ErrorMessage = "Topic is required.")]
         //public string Topic { get; set; }
 
-        [Required(ErrorMessage = "Abstract is required.")]
+        [Required(ErrorMessage = "Please provide an abstract")]
         [DataType(DataType.MultilineText)]
         public string Abstract { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:mm dd yyyy}")]
         [Display(Name = "Publish Date")]
-        [Required(ErrorMessage = "PublishDate is required.")]
+        [Required(ErrorMessage = "Please provide a date")]
         public string publishDate { get; set; }
 
         [Display(Name = "Topic")]
-        [Required(ErrorMessage = "Topic is required.")]
+        [Required(ErrorMessage = "Please provide a topic")]
         public string topic { get; set; }
 
         [Display(Name = "Content")]
-        [Required(ErrorMessage = "Content is required.")]
+        [Required(ErrorMessage = "Please provide a content")]
         [AllowHtml]
         public string content { get; set; }
         public List<SelectListItem> TopicsList { get; set; }
-        [Required(ErrorMessage = "Type is required.")]
+        [Required(ErrorMessage = "Please provide a type")]
         public bool type { get; set;}
     }
 

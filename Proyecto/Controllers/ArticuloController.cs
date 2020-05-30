@@ -38,13 +38,13 @@ namespace Proyecto.Controllers
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     if (sdb.AddArticle(smodel, false))
                     {
-                        ViewBag.Message = "Student Details Added Successfully";
+                        ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "Falle por la fecha";
+                    ViewBag.Message = "Please complete the remaining fields";
                 }
                 return View();
             }
@@ -79,7 +79,7 @@ namespace Proyecto.Controllers
                     }
                 else
                 {
-                    ViewBag.Message = "You have not specified a file.";
+                    ViewBag.Message = "Please specify a file.";
                 }
 
                 ModelState.Remove("content");
@@ -88,13 +88,13 @@ namespace Proyecto.Controllers
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     if (sdb.AddArticle(smodel, true))
                     {
-                        ViewBag.Message = "Student Details Added Successfully";
+                        ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
                     }
                 }
                 else
                 {
-                    ViewBag.Message = "Falle por la fecha";
+                    ViewBag.Message = "Please complete the remaining fields";
                 }
                 return View();
             }
@@ -118,16 +118,29 @@ namespace Proyecto.Controllers
         //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult Edit(int articleId, ArticuloModel smodel)
         {
-            try
+            //try
             {
-                ArticleDBHandle sdb = new ArticleDBHandle();
-                sdb.UpdateDetails(smodel);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                {
+                    ArticleDBHandle sdb = new ArticleDBHandle();
+                    
+                    if(sdb.UpdateDetails(smodel))
+                    {
+                        ViewBag.Message = "Article Details Added Successfully";
+                        ModelState.Clear();
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Please complete the remaining fields";
+                }
                 return View();
             }
+            //catch
+            //{
+            //    ViewBag.Message = "Failed";
+            //    return View();
+            //}
         }
 
         // Metodo para  editar articulos largos
@@ -165,7 +178,7 @@ namespace Proyecto.Controllers
                     }
                 else
                 {
-                    ViewBag.Message = "You have not specified a file.";
+                    ViewBag.Message = "Please complete the remaining fields";
                 }
 
                 ModelState.Remove("content");
@@ -177,7 +190,7 @@ namespace Proyecto.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Falle por la fecha";
+                    ViewBag.Message = "Please complete the remaining fields";
                 }
                 return View();
             }
@@ -269,7 +282,7 @@ namespace Proyecto.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Falle por la fecha";
+                    ViewBag.Message = "Please complete the remaining fields";
                 }
                 return View();
             }
