@@ -16,7 +16,7 @@ namespace Proyecto.Tests.Controllers
         public void Index()
         {
             // Arrange
-            ArticuloController controller = new ArticuloController();
+            ArticleController controller = new ArticleController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
