@@ -125,8 +125,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ArticleDBHandle.cs" />
-    <Compile Include="Models\ArticuloModel.cs" />
-    <Compile Include="Models\FaqModel.cs" />
+    <Compile Include="Models\ArticleModel.cs" />
+    <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

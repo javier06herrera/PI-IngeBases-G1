@@ -29,7 +29,7 @@ namespace Proyecto.Controllers
         //Pasar datos (eso explica el post
         [HttpPost]
 
-        public ActionResult Create(ArticuloModel smodel)
+        public ActionResult Create(ArticleModel smodel)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Proyecto.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file, ArticuloModel smodel)
+        public ActionResult Upload(HttpPostedFileBase file, ArticleModel smodel)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace Proyecto.Controllers
         // POST: Articulo/Edit/5
         [HttpPost]
         //public ActionResult Edit(int id, ArticuloModel smodel)
-        public ActionResult Edit(int articleId, ArticuloModel smodel)
+        public ActionResult Edit(int articleId, ArticleModel smodel)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace Proyecto.Controllers
         // POST: Articulo/Edit/5
         [HttpPost]
         //public ActionResult Edit(int id, ArticuloModel smodel)
-        public ActionResult EditLong(int articleId, HttpPostedFileBase file, ArticuloModel smodel)
+        public ActionResult EditLong(int articleId, HttpPostedFileBase file, ArticleModel smodel)
         {
             //try
             //{
@@ -207,19 +207,19 @@ namespace Proyecto.Controllers
             }
         }
 
-        public static ArticuloModel cMain;
+        public static ArticleModel cMain;
         public ActionResult SearchTopic()
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();
-            ArticuloModel c = new ArticuloModel();
-            cMain = new ArticuloModel();
+            ArticleModel c = new ArticleModel();
+            cMain = new ArticleModel();
             c.TopicsList = cMain.TopicsList = dbHandle.PopulateArticles();
             ViewBag.LblCountry = "";
             return View(c);
         }
 
         [HttpPost]
-        public ActionResult SearchTopic(ArticuloModel smodel)
+        public ActionResult SearchTopic(ArticleModel smodel)
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();
             var g = cMain.TopicsList;
@@ -253,7 +253,7 @@ namespace Proyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendFaq(FaqModel smodel)
+        public ActionResult SendFaq(QuestionModel smodel)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace Proyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult PublishFaq(int questionId, FaqModel smodel)
+        public ActionResult PublishFaq(int questionId, QuestionModel smodel)
         {
             try
             {

@@ -6,7 +6,7 @@ using System.Web.Mvc; // Para usar SelectListItem
 
 namespace Proyecto.Models
 {
-    public class FaqModel
+    public class QuestionModel
     {
         public int questionId { get; set; }
 

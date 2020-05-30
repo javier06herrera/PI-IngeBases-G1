@@ -1,4 +1,4 @@
-﻿@model Proyecto.Models.ArticuloModel
+﻿@model Proyecto.Models.ArticleModel
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
 
-@using (Html.BeginForm("Upload", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Upload", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
