@@ -1,0 +1,81 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <body>
+
+        <div class="jumbotron" style="margin-top:30px">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2>About Me</h2>
+               
+                    <img src="~/assets/paris.jpg" class="rounded-circle" style="width:200px">
+                    @*<div class="fakeimg">Fake Image</div>*@
+                    <p>Esta es mi descripción aqui puedo poner todo lo que quiera sobre mi</p>
+                    <h4>Biographical information</h4>
+                    
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            Birthday: 30 september 1983 
+                        </li>
+                        <li class="nav-item">
+                            Address: San José, Costa Rica
+                        </li>
+                        
+                    </ul>
+
+                    <hr class="d-sm-none">
+                </div>
+                <div class="col-sm-8">
+                    <h2>My self</h2>
+                    <h6>Working Information</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Trabajé en lugar 1
+                            <span class="badge badge-primary badge-pill"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Trabajé en lugar 2
+                            <span class="badge badge-primary badge-pill"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Trabajé en lugar 3
+                            <span class="badge badge-primary badge-pill"></span>
+                        </li>
+                    </ul>
+
+                    <br />
+
+                    <p>Some text..</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                    <br>
+                    <h2>My articles</h2>
+                    <br />
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+                            <h4 class="card-title">Primary card title</h4>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <p>Some text..</p>
+                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron text-center" style="margin-bottom:0">
+            <p>Footer</p>
+        </div>
+
+    </body>
+
+
+
+
+}
