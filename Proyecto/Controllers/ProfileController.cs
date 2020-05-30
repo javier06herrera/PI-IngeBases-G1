@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Proyecto.Models;
 
 namespace Proyecto.Controllers
 {
@@ -14,10 +15,10 @@ namespace Proyecto.Controllers
             return View();
         }
 
-        public ActionResult Profile()
+        public ActionResult Profile(int memberId)
         {
-
-            return View();
+            ProfileDBHandle sdb = new ProfileDBHandle();
+            return View(sdb.getAttributes().Find(smodel => smodel.memberId == memberId));
         }
     }
 }

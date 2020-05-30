@@ -55,7 +55,7 @@ namespace Proyecto.Models
         public string typeOfMember { get; set; }
 
         [Display(Name = "Points")]
-        public string totalQualification { get; set; }
+        public int totalQualification { get; set; }
 
     }
 }
