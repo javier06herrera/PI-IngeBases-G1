@@ -11,7 +11,6 @@ namespace Proyecto.Models
         public int articleId { get; set; }
 
         [Display(Name = "Article")]
-
         [Required(ErrorMessage = "Title is required.")]
         public string name { get; set; }
 
