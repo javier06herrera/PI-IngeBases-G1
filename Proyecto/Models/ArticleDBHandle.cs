@@ -19,11 +19,11 @@ namespace Proyecto.Models
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticle(ArticleModel smodel, bool type)
+        public bool AddArticle(ArticleModel smodel, string type)
         {
             connection();
             string AddNewArticle = "INSERT INTO Article " +
-                                   "VALUES (@name, @type,@Abstract,@publishDate,@content)";
+                                   "VALUES (@name, @type,@Abstract,@publishDate,@content,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
@@ -57,12 +57,13 @@ namespace Proyecto.Models
 
             con.Close();
 
-            String[] topics = smodel.topic.Split(',');
-            String topic = "";
+            String[] topics = smodel.topicName.Split(',');
+            String[] subjects;
+  
             for (int m = 0; m < topics.Count(); m++)
             {
-                topic = topics[m];
-                InsertTopics(topic, smodel.articleId);
+                subjects = topics[m].Split(':');
+                InsertTopics(smodel.articleId, subjects[0],subjects[1]);
             }
 
 
@@ -80,9 +81,10 @@ namespace Proyecto.Models
             {
                 if (Convert.ToInt32(topic["articleId"]) == articleId)
                 {
-                    topicsLine = topicsLine + topic["topic"] + ", ";
+                    topicsLine = topicsLine + topic["topicName"] + ", ";
                 }
             }
+            topicsLine.Remove(topicsLine.Length - 1, 1);
             return topicsLine;
         }
 
@@ -107,11 +109,11 @@ namespace Proyecto.Models
                     {
                         articleId = Convert.ToInt32(article["articleId"]),
                         name = Convert.ToString(article["name"]),
-                        topic = " ",
+                        topicName = " ",
                         Abstract = Convert.ToString(article["Abstract"]),
                         publishDate = Convert.ToString(article["publishDate"]),
                         content = Convert.ToString(article["content"]),
-                        type = Convert.ToBoolean(article["type"])
+                        type = Convert.ToString(article["type"])
                     });
             }
             con.Close();
@@ -119,14 +121,14 @@ namespace Proyecto.Models
             //Fetch of the entire list of topics
             connection();
             string fetchTopics = "SELECT * " +
-                                 "FROM ArticleTopic";
+                                 "FROM INVOLVES";
             SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, con);
             DataTable topicList = new DataTable();
             con.Open();
             sd2.Fill(topicList);
             foreach (ArticleModel article in articleList)
             {
-                article.topic = topicMerge(article.articleId, topicList);
+                article.topicName = topicMerge(article.articleId, topicList);
             }
             con.Close();
             return articleList;
@@ -160,7 +162,7 @@ namespace Proyecto.Models
 
             //Topics Elimination
             connection();
-            String getTopics = "DELETE FROM ArticleTopic " +
+            String getTopics = "DELETE FROM INVOLVES " +
                                "WHERE articleId = @articleId";
             SqlCommand cmd1 = new SqlCommand(getTopics, con);
             cmd1.Parameters.AddWithValue("@articleId", smodel.articleId);
@@ -172,12 +174,13 @@ namespace Proyecto.Models
             //    return false;
 
             //Topics Update
-            String[] topics = smodel.topic.Split(',');
-            String topic = "";
+            String[] topics = smodel.topicName.Split(',');
+            String[] subjects;
+
             for (int m = 0; m < topics.Count(); m++)
             {
-                topic = topics[m];
-                InsertTopics(topic, smodel.articleId);
+                subjects = topics[m].Split(':');
+                InsertTopics(smodel.articleId, subjects[0], subjects[1]);
             }
 
             if (i >= 1)
@@ -187,14 +190,15 @@ namespace Proyecto.Models
         }
 
         // Para agregar más de un dato
-        public void InsertTopics(String topic, int articleId)
+        public void InsertTopics(int articleId, String category, String topicName)
         {
             connection();
-            String appendTopic = "INSERT INTO ArticleTopic " +
-                                "VALUES(@articleId, @topic)";
+            String appendTopic = "INSERT INTO INVOLVES " +
+                                "VALUES(@articleId, @category ,@topicName)";
             SqlCommand cmd2 = new SqlCommand(appendTopic, con);
             cmd2.Parameters.AddWithValue("@articleId", articleId);
-            cmd2.Parameters.AddWithValue("@topic", topic);
+            cmd2.Parameters.AddWithValue("@topicName", topicName);
+            cmd2.Parameters.AddWithValue("@category", category);
             con.Open();
             int i = cmd2.ExecuteNonQuery();
             con.Close();
@@ -227,8 +231,8 @@ namespace Proyecto.Models
             try
             {
                 connection();
-                string obtainTopics = "SELECT DISTINCT topic " +
-                                      "FROM ArticleTopic";
+                string obtainTopics = "SELECT DISTINCT topicName " +
+                                      "FROM INVOLVES";
                 SqlCommand cmd = new SqlCommand(obtainTopics, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -237,7 +241,7 @@ namespace Proyecto.Models
                 //{
                 while (reader.Read())
                 {
-                    list.Add(new SelectListItem { Text = reader["Topic"].ToString(), Value = reader["Topic"].ToString() }); // Pone todos los temas que
+                    list.Add(new SelectListItem { Text = reader["topicName"].ToString(), Value = reader["topicName"].ToString() }); // Pone todos los temas que
                     // coincidan con la palabra en la lista
                     // Recuerde que se usa la palabra topic tanto en text como en value por que la solicitud solo devuelve una columna
                 }
@@ -262,12 +266,12 @@ namespace Proyecto.Models
         {
             connection();
             List<ArticleModel> articulolist = new List<ArticleModel>();
-            string getResults = "SELECT A.articleId, A.name, A.abstract, A.publishDate, ATo.topic, A.content, A.type " +
+            string getResults = "SELECT A.*, I.topicName" +
                                 "FROM Article A " +
-                                "JOIN ArticleTopic ATo ON A.articleId = ATo.articleId " +
-                                "WHERE ATo.topic = @topic";
+                                "JOIN INVOLVES I ON A.articleId = I.articleId " +
+                                "WHERE I.topicName = @topicName";
             SqlCommand cmd = new SqlCommand(getResults, con);
-            cmd.Parameters.AddWithValue("@topic", topic);
+            cmd.Parameters.AddWithValue("@topicName", topic);
 
 
 
@@ -285,11 +289,16 @@ namespace Proyecto.Models
                     {
                         articleId = Convert.ToInt32(dr["articleId"]),
                         name = Convert.ToString(dr["name"]),
-                        topic = Convert.ToString(dr["topic"]),
+                        topicName = Convert.ToString(dr["topicName"]),
                         Abstract = Convert.ToString(dr["Abstract"]),
                         publishDate = Convert.ToString(dr["publishDate"]),
                         content = Convert.ToString(dr["content"]),
-                        type = Convert.ToBoolean(dr["type"])
+                        type = Convert.ToString(dr["type"]),
+                        baseGrade = Convert.ToInt32(dr["baseGrade"]),
+                        accessCount = Convert.ToInt32(dr["accessCount"]),
+                        likesCount = Convert.ToInt32(dr["likesCount"]),
+                        dislikesCount = Convert.ToInt32(dr["dislikesCount"]),
+                        likeBalance = Convert.ToInt32(dr["likeBalance"])
                     });
             }
             return articulolist;
@@ -305,13 +314,13 @@ namespace Proyecto.Models
             if (!moderator)
             {
                 questions = "SELECT * " +
-                            "FROM Faq " +
-                            "WHERE status = 'true'";
+                            "FROM Question " +
+                            "WHERE faq = 'posted' ";
             }
             else
             {
                 questions = "SELECT * " +
-                            "FROM Faq";
+                            "FROM Question";
             }
             SqlDataAdapter sd1 = new SqlDataAdapter(questions, con);
             DataTable faqsList = new DataTable();
@@ -325,7 +334,8 @@ namespace Proyecto.Models
                         questionId = Convert.ToInt32(faq["questionId"]),
                         question = Convert.ToString(faq["question"]),
                         answer = Convert.ToString(faq["answer"]),
-                        status = Convert.ToBoolean(faq["status"]),
+                        status = Convert.ToString(faq["status"]),
+                        faq = Convert.ToString(faq["faq"])
                     });
             }
             con.Close();
@@ -336,12 +346,13 @@ namespace Proyecto.Models
         public bool AddQuestion(QuestionModel smodel, bool type)
         {
             connection();
-            string sendQuestion = "INSERT INTO Faq " +
-                                  "VALUES (@question, @status, @answer)";
+            string sendQuestion = "INSERT INTO Question " +
+                                  "VALUES (@question, @faq, @answer, @status)";
             SqlCommand cmd = new SqlCommand(sendQuestion, con);
             cmd.Parameters.AddWithValue("@question", smodel.question);
-            cmd.Parameters.AddWithValue("@status", type);
-            cmd.Parameters.AddWithValue("@answer", "");
+            cmd.Parameters.AddWithValue("@faq", "not posted");
+            cmd.Parameters.AddWithValue("@answer", "no answer");
+            cmd.Parameters.AddWithValue("@status", "not checked");
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
@@ -354,15 +365,17 @@ namespace Proyecto.Models
         {
             //Update of table articles
             connection();
-            String updateQuestion = "UPDATE Faq " +
+            String updateQuestion = "UPDATE Question " +
                                    "SET question = @question, " +
-                                   "answer = @answer, " +
+                                   "faq = @faq, " +
+                                   "answer = @answer" +
                                    "status = @status " +
                                    "WHERE questionId = @questionId";
 
             SqlCommand cmd = new SqlCommand(updateQuestion, con);
             cmd.Parameters.AddWithValue("@question", smodel.question);
             cmd.Parameters.AddWithValue("@answer", smodel.answer);
+            cmd.Parameters.AddWithValue("@faq", smodel.faq);
             cmd.Parameters.AddWithValue("@status", smodel.status);
             cmd.Parameters.AddWithValue("@questionId", smodel.questionId);
             con.Open();
