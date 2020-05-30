@@ -8,7 +8,7 @@ using Proyecto.Models;
 
 namespace Proyecto.Controllers
 {
-    public class ArticuloController : Controller
+    public class ArticleController : Controller
     {
         public ActionResult Index()
         {

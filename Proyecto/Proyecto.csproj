@@ -120,7 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ArticuloController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -292,22 +292,22 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Articulo\Index.cshtml" />
-    <Content Include="Views\Articulo\Create.cshtml" />
-    <Content Include="Views\Articulo\Edit.cshtml" />
-    <Content Include="Views\Articulo\SearchTopic.cshtml" />
-    <Content Include="Views\Articulo\ShowResult.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
+    <Content Include="Views\Article\Edit.cshtml" />
+    <Content Include="Views\Article\SearchTopic.cshtml" />
+    <Content Include="Views\Article\ShowResult.cshtml" />
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
-    <Content Include="Views\Articulo\Delete.cshtml" />
-    <Content Include="Views\Articulo\Upload.cshtml" />
-    <Content Include="Views\Articulo\EditLong.cshtml" />
-    <Content Include="Views\Articulo\ShowFAQ.cshtml" />
-    <Content Include="Views\Articulo\SendFaq.cshtml" />
-    <Content Include="Views\Articulo\ModeratorFAQ.cshtml" />
-    <Content Include="Views\Articulo\PublishFaq.cshtml" />
+    <Content Include="Views\Article\Delete.cshtml" />
+    <Content Include="Views\Article\Upload.cshtml" />
+    <Content Include="Views\Article\EditLong.cshtml" />
+    <Content Include="Views\Article\ShowFAQ.cshtml" />
+    <Content Include="Views\Article\SendFaq.cshtml" />
+    <Content Include="Views\Article\ModeratorFAQ.cshtml" />
+    <Content Include="Views\Article\PublishFaq.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
