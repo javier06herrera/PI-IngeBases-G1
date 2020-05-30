@@ -6,18 +6,21 @@ using System.Web.Mvc; // Para usar SelectListItem
 
 namespace Proyecto.Models
 {
-    public class FaqModel
+    public class QuestionModel
     {
         public int questionId { get; set; }
 
         [Display(Name = "Question")]
-
         [Required(ErrorMessage = "Question is required.")]
         public string question { get; set; }
 
-        //[Display(Name = "Category")]
-        //[Required(ErrorMessage = "Category is required.")]
-        //public string category { get; set; }
+        [Display(Name = "Question")]
+        [Required(ErrorMessage = "Person who asks is required.")]
+        public int askedBy { get; set; }
+
+
+        [Display(Name = "FAQ")]
+        public string faq { get; set; } //posted -- not posted
 
         [Display(Name = "Answer")]
         [Required(ErrorMessage = "Answer is required.")]

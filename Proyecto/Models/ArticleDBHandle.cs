@@ -19,11 +19,11 @@ namespace Proyecto.Models
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticle(ArticuloModel smodel, bool type)
+        public bool AddArticle(ArticleModel smodel, bool type)
         {
             connection();
             string AddNewArticle = "INSERT INTO Article " +
-                                    "VALUES (@name, @type,@Abstract,@publishDate,@content)";
+                                   "VALUES (@name, @type,@Abstract,@publishDate,@content)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
@@ -87,9 +87,9 @@ namespace Proyecto.Models
         }
 
         // Ver resultados de busqueda
-        public List<ArticuloModel> GetArticle()
+        public List<ArticleModel> GetArticle()
         {
-            List<ArticuloModel> articleList = new List<ArticuloModel>();
+            List<ArticleModel> articleList = new List<ArticleModel>();
 
             //Fetch of the entire list of articles without topics
             connection();
@@ -103,7 +103,7 @@ namespace Proyecto.Models
             foreach (DataRow article in articleTable.Rows)
             {
                 articleList.Add(
-                    new ArticuloModel
+                    new ArticleModel
                     {
                         articleId = Convert.ToInt32(article["articleId"]),
                         name = Convert.ToString(article["name"]),
@@ -124,7 +124,7 @@ namespace Proyecto.Models
             DataTable topicList = new DataTable();
             con.Open();
             sd2.Fill(topicList);
-            foreach (ArticuloModel article in articleList)
+            foreach (ArticleModel article in articleList)
             {
                 article.topic = topicMerge(article.articleId, topicList);
             }
@@ -132,7 +132,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
-        public bool UpdateDetails(ArticuloModel smodel)
+        public bool UpdateDetails(ArticleModel smodel)
         {
             //Update of table articles
             connection();
@@ -258,10 +258,10 @@ namespace Proyecto.Models
         }
 
         //
-        public List<ArticuloModel> GetResults(string topic)
+        public List<ArticleModel> GetResults(string topic)
         {
             connection();
-            List<ArticuloModel> articulolist = new List<ArticuloModel>();
+            List<ArticleModel> articulolist = new List<ArticleModel>();
             string getResults = "SELECT A.articleId, A.name, A.abstract, A.publishDate, ATo.topic, A.content, A.type " +
                                 "FROM Article A " +
                                 "JOIN ArticleTopic ATo ON A.articleId = ATo.articleId " +
@@ -281,7 +281,7 @@ namespace Proyecto.Models
             foreach (DataRow dr in dt.Rows)
             {
                 articulolist.Add(
-                    new ArticuloModel
+                    new ArticleModel
                     {
                         articleId = Convert.ToInt32(dr["articleId"]),
                         name = Convert.ToString(dr["name"]),
@@ -295,9 +295,9 @@ namespace Proyecto.Models
             return articulolist;
         }
 
-        public List<FaqModel> GetQuestion(bool moderator)
+        public List<QuestionModel> GetQuestion(bool moderator)
         {
-            List<FaqModel> faqList = new List<FaqModel>();
+            List<QuestionModel> faqList = new List<QuestionModel>();
 
             //Fetch of the entire list of articles without topics
             connection();
@@ -320,7 +320,7 @@ namespace Proyecto.Models
             foreach (DataRow faq in faqsList.Rows)
             {
                 faqList.Add(
-                    new FaqModel
+                    new QuestionModel
                     {
                         questionId = Convert.ToInt32(faq["questionId"]),
                         question = Convert.ToString(faq["question"]),
@@ -333,7 +333,7 @@ namespace Proyecto.Models
             return faqList;
         }
 
-        public bool AddQuestion(FaqModel smodel, bool type)
+        public bool AddQuestion(QuestionModel smodel, bool type)
         {
             connection();
             string sendQuestion = "INSERT INTO Faq " +
@@ -350,7 +350,7 @@ namespace Proyecto.Models
             else
                 return false;
         }
-        public bool UpdateQuestion(FaqModel smodel)
+        public bool UpdateQuestion(QuestionModel smodel)
         {
             //Update of table articles
             connection();

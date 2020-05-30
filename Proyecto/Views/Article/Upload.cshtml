@@ -1,10 +1,10 @@
-﻿@model Proyecto.Models.ArticuloModel
+﻿@model Proyecto.Models.ArticleModel
 
 <meta name="viewport" content="width=device-width" />
 
 
 
-@using (Html.BeginForm("Upload", "Articulo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Upload", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
