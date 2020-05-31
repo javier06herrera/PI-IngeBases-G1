@@ -1,81 +1,164 @@
-﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <body>
-
-        <div class="jumbotron" style="margin-top:30px">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h2>About Me</h2>
-               
-                    <img src="~/assets/paris.jpg" class="rounded-circle" style="width:200px">
-                    @*<div class="fakeimg">Fake Image</div>*@
-                    <p>Esta es mi descripción aqui puedo poner todo lo que quiera sobre mi</p>
-                    <h4>Biographical information</h4>
-                    
-                    <ul class="nav nav-pills flex-column">
-                        <li class="nav-item">
-                            Birthday: 30 september 1983 
-                        </li>
-                        <li class="nav-item">
-                            Address: San José, Costa Rica
-                        </li>
-                        
-                    </ul>
-
-                    <hr class="d-sm-none">
-                </div>
-                <div class="col-sm-8">
-                    <h2>My self</h2>
-                    <h6>Working Information</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Trabajé en lugar 1
-                            <span class="badge badge-primary badge-pill"></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Trabajé en lugar 2
-                            <span class="badge badge-primary badge-pill"></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Trabajé en lugar 3
-                            <span class="badge badge-primary badge-pill"></span>
-                        </li>
-                    </ul>
-
-                    <br />
-
-                    <p>Some text..</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                    <br>
-                    <h2>My articles</h2>
-                    <br />
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">Header</div>
-                        <div class="card-body">
-                            <h4 class="card-title">Primary card title</h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+﻿<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- meta -->
+                <div class="card bg-light mb-3">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span class="float-left mr-3"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="thumb-lg rounded-circle"></span>
+                            <div>
+                                <h4 class="mt-1 mb-1 font-18">Michael A. Franklin</h4>
+                                <p>User Experience Specialist</p>
+                                <p>California, United States</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-right">
+                                <button type="button" class="btn btn-light waves-effect"><i class="mdi mdi-account-settings-variant mr-1"></i> Edit Profile</button>
+                            </div>
                         </div>
                     </div>
-                    <p>Some text..</p>
-                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
                 </div>
+                <!--/ meta -->
             </div>
         </div>
-
-        <div class="jumbotron text-center" style="margin-bottom:0">
-            <p>Footer</p>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Personal-Information -->
+                <div class="card-box">
+                    <h4 class="header-title mt-0">Personal Information</h4>
+                    <div class="panel-body">
+                        <p class="text-muted font-13">Hye, I’m Johnathan Doe residing in this beautiful world. I create websites and mobile apps with great UX and UI design. I have done work with big companies like Nokia, Google and Yahoo. Meet me or Contact me for any queries. One Extra line for filling space. Fill as many you want.</p>
+                        <hr>
+                        <div class="text-left">
+                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">Johnathan Deo</span></p>
+                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">(+12) 123 1234 567</span></p>
+                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">coderthemes@gmail.com</span></p>
+                            <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">USA</span></p>
+                            <p class="text-muted font-13">
+                                <strong>Languages :</strong> <span class="m-l-5"><span class="flag-icon flag-icon-us m-r-5 m-t-0" title="us"></span> <span>English</span> </span><span class="m-l-5"><span class="flag-icon flag-icon-de m-r-5" title="de"></span> <span>German</span> </span><span class="m-l-5"><span class="flag-icon flag-icon-es m-r-5" title="es"></span> <span>Spanish</span> </span><span class="m-l-5"><span class="flag-icon flag-icon-fr m-r-5" title="fr"></span> <span>French</span></span>
+                            </p>
+                        </div>
+                        <ul class="social-links list-inline mt-4 mb-0">
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Personal-Information -->
+            </div>
+            <div class="col-xl-8">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-dark mb-3">
+                            <i class="icon-layers float-right text-muted"></i>
+                            <h6 class="text-muted text-uppercase text-light mt-0">Member rank</h6>
+                            <h2 class="" data-plugin="counterup">1,587</h2><span class="badge badge-custom">+11% </span><span class="text-muted">From previous period</span>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-dark mb-3">
+                            <i class="icon-paypal float-right text-muted"></i>
+                            <h6 class="text-muted text-uppercase text-light mt-0">Number of articles</h6>
+                            <h2 class="">$<span data-plugin="counterup">46,782</span></h2><span class="badge badge-danger">-29% </span><span class="text-muted">From previous period</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card text-white bg-dark mb-3">
+                            <i class="icon-paypal float-right text-light text-muted"></i>
+                            <h6 class="text-muted text-uppercase mt-0">Points</h6>
+                            <h2 class="">$<span data-plugin="counterup">46,782</span></h2><span class="badge badge-danger">-29% </span><span class="text-muted">From previous period</span>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+                <div class="card mb-3">
+                    <h4 class="card-header">Experience</h4>
+                    <div class="">
+                        <div class="">
+                            <h5 class="card-title">Lead designer / Developer</h5>
+                            <p class="mb-0">websitename.com</p>
+                            <p><b>2010-2015</b></p>
+                            <p class="text-muted font-13 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        </div>
+                        <hr>
+                        <div class="">
+                            <h5 class="card-title">Senior Graphic Designer</h5>
+                            <p class="mb-0">coderthemes.com</p>
+                            <p><b>2007-2009</b></p>
+                            <p class="text-muted font-13 mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <h4 class="card-header">My Projects</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Project Name</th>
+                                    <th>Start Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Assign</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Adminox Admin</td>
+                                    <td>01/01/2015</td>
+                                    <td>07/05/2015</td>
+                                    <td><span class="label label-info">Work in Progress</span></td>
+                                    <td>Coderthemes</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Adminox Frontend</td>
+                                    <td>01/01/2015</td>
+                                    <td>07/05/2015</td>
+                                    <td><span class="label label-success">Pending</span></td>
+                                    <td>Coderthemes</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Adminox Admin</td>
+                                    <td>01/01/2015</td>
+                                    <td>07/05/2015</td>
+                                    <td><span class="label label-pink">Done</span></td>
+                                    <td>Coderthemes</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Adminox Frontend</td>
+                                    <td>01/01/2015</td>
+                                    <td>07/05/2015</td>
+                                    <td><span class="label label-purple">Work in Progress</span></td>
+                                    <td>Coderthemes</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Adminox Admin</td>
+                                    <td>01/01/2015</td>
+                                    <td>07/05/2015</td>
+                                    <td><span class="label label-warning">Coming soon</span></td>
+                                    <td>Coderthemes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
         </div>
-
-    </body>
-
-
-
-
-}
+        <!-- end row -->
+    </div>
+    <!-- container -->
+</div>
