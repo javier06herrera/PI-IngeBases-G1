@@ -147,6 +147,13 @@ namespace Proyecto.Controllers
             }
         }
 
+        public ActionResult PreviewArticle(int articleId) {
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+        }
+
+        
+
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
         {
@@ -225,6 +232,8 @@ namespace Proyecto.Controllers
         }
 
         public static ArticleModel cMain;
+        private object sdb;
+
         public ActionResult SearchTopic()
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();

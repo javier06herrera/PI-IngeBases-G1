@@ -1,0 +1,54 @@
+﻿@model Proyecto.Models.ArticleModel
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Preview Article</title>
+</head>
+<body>
+
+
+    <div>
+        <h3>Article Preview</h3>
+        <hr />
+
+        <div class="card border-primary mb-3">
+            <div class="card-header">@Html.DisplayNameFor(model => model.name) Name</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.name)</p>
+            </div>
+        </div>
+
+        <div class="card border-primary mb-3">
+            <div class="card-header">@Html.DisplayNameFor(model => model.topicName)</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.topicName)</p>
+            </div>
+        </div>
+
+        <div class="card border-primary mb-3">
+            <div class="card-header">@Html.DisplayNameFor(model => model.Abstract)</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.Abstract)</p>
+            </div>
+        </div>
+
+        <div class="card border-primary mb-3">
+            <div class="card-header">@Html.DisplayNameFor(model => model.publishDate)</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.publishDate)</p>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <h1 class="display-4">@Html.DisplayNameFor(model => model.content)</h1>
+            <p class="lead">@Html.DisplayFor(model => model.content)</p>
+            <hr class="my-4">
+        </div>
+
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

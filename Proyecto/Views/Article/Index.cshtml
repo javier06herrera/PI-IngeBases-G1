@@ -38,12 +38,14 @@
             {
         <td>
             @Html.ActionLink("Edit", "Edit", new { articleId = item.articleId })
+            @Html.ActionLink("Preview", "PreviewArticle", new { articleId = item.articleId })
         </td>
             }
             else
             {
         <td>
             @Html.ActionLink("Edit", "EditLong", new { articleId = item.articleId })
+            @Html.ActionLink("Preview", "PreviewArticle", new { articleId = item.articleId })
         </td>
             }
     </tr>

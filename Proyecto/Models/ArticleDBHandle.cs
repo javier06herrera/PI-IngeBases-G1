@@ -134,6 +134,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
+
         public bool UpdateDetails(ArticleModel smodel, string type)
         {
             //Update of table articles
@@ -267,9 +268,9 @@ namespace Proyecto.Models
             connection();
             List<ArticleModel> articulolist = new List<ArticleModel>();
             string getResults = "SELECT A.*, I.topicName" +
-                                "FROM Article A " +
-                                "JOIN INVOLVES I ON A.articleId = I.articleId " +
-                                "WHERE I.topicName = @topicName";
+                                " FROM Article A " +
+                                " JOIN INVOLVES I ON A.articleId = I.articleId " +
+                                " WHERE I.topicName = @topicName";
             SqlCommand cmd = new SqlCommand(getResults, con);
             cmd.Parameters.AddWithValue("@topicName", topic);
 

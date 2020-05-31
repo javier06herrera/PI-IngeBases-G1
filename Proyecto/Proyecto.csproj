@@ -317,6 +317,7 @@
     <Content Include="Views\Article\PublishQuestion.cshtml" />
     <Content Include="Views\Email\SendMail.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Article\PreviewArticle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
