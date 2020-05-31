@@ -33,10 +33,12 @@ namespace Proyecto.Controllers
         {
             try
             {
+
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    if (sdb.AddArticle(smodel, false))
+                    if (sdb.AddArticle(smodel, "short"))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
@@ -44,7 +46,7 @@ namespace Proyecto.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Please complete the remaining fields";
+                    ViewBag.Message = "xyz";
                 }
                 return View();
             }
@@ -83,10 +85,10 @@ namespace Proyecto.Controllers
                 }
 
                 ModelState.Remove("content");
-                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    if (sdb.AddArticle(smodel, true))
+                    if (sdb.AddArticle(smodel, "long"))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
@@ -118,13 +120,15 @@ namespace Proyecto.Controllers
         //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult Edit(int articleId, ArticleModel smodel)
         {
-            //try
+            try
             {
-                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+            
+                ModelState.Remove("type");
+                if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     
-                    if(sdb.UpdateDetails(smodel))
+                    if(sdb.UpdateDetails(smodel,"short"))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
@@ -136,11 +140,11 @@ namespace Proyecto.Controllers
                 }
                 return View();
             }
-            //catch
-            //{
-            //    ViewBag.Message = "Failed";
-            //    return View();
-            //}
+            catch
+            {
+                ViewBag.Message = "Failed";
+                return View();
+            }
         }
 
         // Metodo para  editar articulos largos
@@ -185,7 +189,7 @@ namespace Proyecto.Controllers
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    sdb.UpdateDetails(smodel);
+                    sdb.UpdateDetails(smodel,"long");
                     return RedirectToAction("Index");
                 }
                 else
@@ -236,23 +240,23 @@ namespace Proyecto.Controllers
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();
             var g = cMain.TopicsList;
-            var selectedArticle = g.Find(p => p.Value == smodel.topic.ToString()); // SelectListItem
+            var selectedArticle = g.Find(p => p.Value == smodel.topicName.ToString()); // SelectListItem
             //Arriba, tiene que escoger el .Topic para que la lista agarre los valores que le interesan
             smodel.TopicsList = dbHandle.PopulateArticles();
             //return View(dbHandle.GetResults(Convert.ToString(country.TopicsList)));
             ViewBag.LblCountry = "You selected " + selectedArticle.Text.ToString();
-            TempData["Topic"] = selectedArticle.Text.ToString();
+            TempData["topicName"] = selectedArticle.Text.ToString();
             return RedirectToAction("showResult");
         }
 
         public ActionResult ShowResult()
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();
-            string topic = Convert.ToString(TempData["Topic"]);
+            string topic = Convert.ToString(TempData["topicName"]);
             return View(dbHandle.GetResults(topic));
         }
 
-        public ActionResult ShowFAQ()
+        public ActionResult ShowQuestion()
         {
             ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
             ModelState.Clear();
@@ -260,23 +264,23 @@ namespace Proyecto.Controllers
         }
 
 
-        public ActionResult SendFaq()
+        public ActionResult SendQuestion()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult SendFaq(QuestionModel smodel)
+        public ActionResult SendQuestion(QuestionModel smodel)
         {
             try
             {
-                ModelState.Remove("answer");
-                if (ModelState.IsValid) //Si los datos que me pasaron son validos
+                ModelState.Remove("answer");//To avoid the answer check. It cant be null but in this case it is
+                if (ModelState.IsValid) //If the data is valid
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     if (sdb.AddQuestion(smodel, false))
                     {
-                        ViewBag.Message = "Student Details Added Successfully";
+                        ViewBag.Message = "Question Added Successfully";
                         ModelState.Clear();
                     }
                 }
@@ -292,27 +296,27 @@ namespace Proyecto.Controllers
                 return View();
             }
         }
-        public ActionResult ModeratorFAQ()
+        public ActionResult ModeratorQuestion()
         {
             ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
             ModelState.Clear();
             return View(dbhandle.GetQuestion(true));
         }
 
-        public ActionResult PublishFaq(int questionId)
+        public ActionResult PublishQuestion(int questionId)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
             return View(sdb.GetQuestion(true).Find(smodel => smodel.questionId == questionId));
         }
 
         [HttpPost]
-        public ActionResult PublishFaq(int questionId, QuestionModel smodel)
+        public ActionResult PublishQuestion(int questionId, QuestionModel smodel)
         {
             try
             {
                 ArticleDBHandle sdb = new ArticleDBHandle();
                 sdb.UpdateQuestion(smodel);
-                return RedirectToAction("ModeratorFAQ");
+                return RedirectToAction("ModeratorQuestion");
             }
             catch
             {

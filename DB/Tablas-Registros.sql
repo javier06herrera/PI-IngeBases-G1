@@ -1,3 +1,5 @@
+DROP TABLE HAS_SKILL;
+DROP TABLE Skill;
 DROP TABLE WRITES;
 DROP TABLE REVIEWS;
 DROP TABLE Question;
@@ -13,12 +15,13 @@ type			VARCHAR(5) NOT NULL, --long, short
 abstract		VARCHAR(MAX) NOT NULL,
 publishDate		DATE NOT NULL,
 content			VARCHAR(MAX) NOT NULL,
-baseGrade		FLOAT NOT NULL DEFAULT 0.0,
+baseGrade		INT NOT NULL DEFAULT 0,
 accessCount		INT NOT NULL DEFAULT 0,
 likesCount		INT NOT NULL DEFAULT 0, 
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
 );
+
 
 
 insert into Article
@@ -77,48 +80,86 @@ CREATE TABLE CommunityMember(
 memberId			INT IDENTITY(1,1) PRIMARY KEY,
 name				VARCHAR(75) NOT NULL,
 lastName			VARCHAR(75) NOT NULL,
+birthDate			DATE	NOT NULL,
+age					INT		NOT NULL,	
 address_city		VARCHAR(150) NOT NULL,
 address_country		VARCHAR(150) NOT NULL,
 hobbies				VARCHAR(300) NOT NULL,
 languages			VARCHAR(300) NOT NULL,
 email				VARCHAR(100) NOT NULL,
+phoneNumber			VARCHAR(15) NOT NULL UNIQUE,
+workInformation		VARCHAR(MAX) NOT NULL,
 typeOfMember		VARCHAR(100) NOT NULL,
 totalQualification	INT	NOT NULL DEFAULT 0,
 )
 
 INSERT INTO CommunityMember
-VALUES ( 'Kevin', 'Barrantes', 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','Generic',DEFAULT)
+VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','Generic',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Gloriana', 'Mora', 'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','Generic', DEFAULT)
+VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','Generic', DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Antonio', 'Álvares', 'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','Generic',DEFAULT)
+VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','Generic',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Daniel', 'Barrante', 'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','Generic',DEFAULT)
+VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','Generic',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Javier', 'Herrera', 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','Generic',DEFAULT)
+VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','Generic',DEFAULT)
+
+---------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Skill(
+subject_category  VARCHAR(100),
+subject_skillName VARCHAR(100),
+PRIMARY KEY(subject_category, subject_skillName)
+)
+
+INSERT INTO Skill
+VALUES ('Musica', 'Tocar piano')
+
+INSERT INTO Skill
+VALUES ('Diseño', 'Adobe')
+
+---------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE HAS_SKILL(
+memberId INT,
+category  VARCHAR(100),
+skillName VARCHAR(100),
+PRIMARY KEY(memberId, category, skillName),
+CONSTRAINT FK_Article_HAS_SKILL FOREIGN KEY (memberId) REFERENCES CommunityMember(memberId),
+CONSTRAINT FK_SkillCat_HAS_SKILL FOREIGN KEY (category, skillName) REFERENCES Skill(subject_category, subject_skillName)
+)
+
+INSERT INTO HAS_SKILL
+VALUES (1, 'Musica', 'Tocar piano')
+
+INSERT INTO HAS_SKILL
+VALUES (2, 'Diseño', 'Adobe')
+
+INSERT INTO HAS_SKILL
+VALUES (3, 'Musica', 'Tocar piano')
+
+INSERT INTO HAS_SKILL
+VALUES (4, 'Diseño', 'Adobe')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Question (
 questionId  INT           IDENTITY (1, 1) PRIMARY KEY,
-askedBy		INT NOT NULL, 
 question    VARCHAR (MAX) NOT NULL,
 faq		    VARCHAR(10)   NOT NULL DEFAULT 'not posted', -- posted, not posted
-answer      VARCHAR (MAX) DEFAULT 'NO ANSWER',
-CONSTRAINT FK_CommunityMember_Question FOREIGN KEY (askedBy) REFERENCES CommunityMember(memberId)
+answer      VARCHAR (MAX) DEFAULT 'no answer',
+status		VARCHAR (15)  NOT NULL DEFAULT 'not checked', --checked, not checked
 );
 
 INSERT INTO	Question
-VALUES (5, 'Why are we here?','posted', DEFAULT)
+VALUES ( 'Why are we here?','posted', DEFAULT, DEFAULT)
 
 INSERT INTO	Question
-VALUES (5, 'What happened to Jimmy Hoffa?',DEFAULT, DEFAULT)
+VALUES ( 'What happened to Jimmy Hoffa?',DEFAULT, DEFAULT, DEFAULT)
 
 INSERT INTO	Question
-VALUES (5, 'Will vaccinations make me autistic?', DEFAULT , 'No')
+VALUES ( 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE WRITES(
 memberId	INT,
@@ -289,3 +330,5 @@ INSERT INTO REVIEWS
 --    PRIMARY KEY CLUSTERED (questionId ASC)
 --);
 
+select *
+from Article

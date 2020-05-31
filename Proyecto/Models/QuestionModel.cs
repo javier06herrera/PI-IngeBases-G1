@@ -14,10 +14,9 @@ namespace Proyecto.Models
         [Required(ErrorMessage = "Question is required.")]
         public string question { get; set; }
 
-        [Display(Name = "Question")]
-        [Required(ErrorMessage = "Person who asks is required.")]
-        public int askedBy { get; set; }
-
+        //[Display(Name = "Question")]
+        //[Required(ErrorMessage = "Person who asks is required.")]
+        //public int askedBy { get; set; }
 
         [Display(Name = "FAQ")]
         public string faq { get; set; } //posted -- not posted
@@ -27,8 +26,9 @@ namespace Proyecto.Models
         [AllowHtml]
         public string answer { get; set; }
 
+        [Display(Name = "Status")]
         [Required(ErrorMessage = "Status is required.")]
-        public bool status { get; set; }
+        public string status { get; set; }
 
         public List<SelectListItem> TopicsList { get; set; }        
     }
