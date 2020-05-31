@@ -36,6 +36,16 @@ namespace Proyecto.Controllers
             string receiverMail = emodel.mail;        
             string messageContent = emodel.message;
 
+            if (subject == "" || receiverMail == "" || messageContent == "")
+            {
+                ViewBag.Message = "Cannot send mail, missing fields. Please fill required fields";
+                return RedirectToAction("SendMail");
+            }
+
+            string identifierMessage = "<p>This mail was sent using <strong>KnowItAll, Group 1 project platform</strong>.</p>";
+
+            messageContent += identifierMessage;
+
             MailMessage mail = new MailMessage(senderMail, receiverMail, subject, messageContent);
 
             mail.IsBodyHtml = true;
@@ -50,6 +60,8 @@ namespace Proyecto.Controllers
 
             client.Send(mail);
             client.Dispose();
+
+            ViewBag.Message = "Email sent succesfully!";
 
             return RedirectToAction("SendMail");
         }
