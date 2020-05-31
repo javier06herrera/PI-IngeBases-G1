@@ -16,7 +16,7 @@ namespace Proyecto.Models
 
         [Display(Name = "Type")]
         [Required(ErrorMessage = "Please provide a type")]
-        public bool type { get; set; }
+        public string type { get; set; }
         //[Required(ErrorMessage = "Topic is required.")]
         //public string Topic { get; set; }
 
@@ -32,9 +32,9 @@ namespace Proyecto.Models
         public string publishDate { get; set; }
 
         //Should be comented///////////////////////////////////////////////////////////////
-        [Display(Name = "Topic")]
-        [Required(ErrorMessage = "Please provide a topic")]
-        public string topic { get; set; }
+        //[Display(Name = "Topic")]
+        //[Required(ErrorMessage = "Please provide a topic")]
+        public string topicName { get; set; }
         //Should be comented///////////////////////////////////////////////////////////////
 
         [Display(Name = "Content")]
