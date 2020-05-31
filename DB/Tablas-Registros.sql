@@ -15,12 +15,13 @@ type			VARCHAR(5) NOT NULL, --long, short
 abstract		VARCHAR(MAX) NOT NULL,
 publishDate		DATE NOT NULL,
 content			VARCHAR(MAX) NOT NULL,
-baseGrade		FLOAT NOT NULL DEFAULT 0.0,
+baseGrade		INT NOT NULL DEFAULT 0,
 accessCount		INT NOT NULL DEFAULT 0,
 likesCount		INT NOT NULL DEFAULT 0, 
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
 );
+
 
 
 insert into Article
@@ -145,21 +146,20 @@ VALUES (4, 'Diseño', 'Adobe')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Question (
 questionId  INT           IDENTITY (1, 1) PRIMARY KEY,
-askedBy		INT NOT NULL, 
 question    VARCHAR (MAX) NOT NULL,
 faq		    VARCHAR(10)   NOT NULL DEFAULT 'not posted', -- posted, not posted
-answer      VARCHAR (MAX) DEFAULT 'NO ANSWER',
-CONSTRAINT FK_CommunityMember_Question FOREIGN KEY (askedBy) REFERENCES CommunityMember(memberId)
+answer      VARCHAR (MAX) DEFAULT 'no answer',
+status		VARCHAR (15)  NOT NULL DEFAULT 'not checked', --checked, not checked
 );
 
 INSERT INTO	Question
-VALUES (5, 'Why are we here?','posted', DEFAULT)
+VALUES ( 'Why are we here?','posted', DEFAULT, DEFAULT)
 
 INSERT INTO	Question
-VALUES (5, 'What happened to Jimmy Hoffa?',DEFAULT, DEFAULT)
+VALUES ( 'What happened to Jimmy Hoffa?',DEFAULT, DEFAULT, DEFAULT)
 
 INSERT INTO	Question
-VALUES (5, 'Will vaccinations make me autistic?', DEFAULT , 'No')
+VALUES ( 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE WRITES(
 memberId	INT,
@@ -330,3 +330,5 @@ INSERT INTO REVIEWS
 --    PRIMARY KEY CLUSTERED (questionId ASC)
 --);
 
+select *
+from Article
