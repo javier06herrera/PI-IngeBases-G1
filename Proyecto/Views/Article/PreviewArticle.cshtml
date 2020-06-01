@@ -42,7 +42,7 @@
 
         <div class="jumbotron">
             <h1 class="display-4">@Html.DisplayNameFor(model => model.content)</h1>
-            <p class="lead">@Html.DisplayFor(model => model.content)</p>
+            <p class="lead">@Html.Raw(HttpUtility.HtmlDecode(Model.content))</p>
             <hr class="my-4">
         </div>
 

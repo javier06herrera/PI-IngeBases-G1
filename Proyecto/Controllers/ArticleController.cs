@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
 
+
 namespace Proyecto.Controllers
 {
     public class ArticleController : Controller
@@ -152,7 +153,11 @@ namespace Proyecto.Controllers
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
-        
+        //public ActionResult HtmlRaw(ArticleModel smodel)
+        //{
+        //    ViewBag.message = smodel.content; 
+        //    return View();
+        //}
 
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
