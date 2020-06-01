@@ -3,15 +3,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<p>
-    @Html.ActionLink("Post question", "SendFaq")
-</p>
-
-
-<h4>FAQ</h4>
+<wbr>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i></a></li>
+    <li class="breadcrumb-item active">Frequently Asked Questions</li>
+</ol>
+<hr class="style-three">
 
 <div class="accordion" id="questionsAndAnswers">
-@{int index = 0;}
+    @{int index = 0;}
     @foreach (var item in Model)
     {
         <div class="card">
@@ -29,3 +29,8 @@
         index++;
     }
 </div>
+
+@Html.ActionLink("Send your question!", "SendQuestion")
+
+
+

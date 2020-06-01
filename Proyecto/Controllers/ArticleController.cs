@@ -10,25 +10,24 @@ namespace Proyecto.Controllers
 {
     public class ArticleController : Controller
     {
-        public ActionResult Index()
+        public ActionResult HomePage()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            return View();
+        }
+
+        public ActionResult CommunityArticles()
+        {
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
             ModelState.Clear();
             return View(dbhandle.GetArticle());
         }
 
-        // 2. *************ADD NEW Articulo ******************
-        // GET: Articulo/Create
-        //Obtener datos
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Student/Create
-        //Pasar datos (eso explica el post
         [HttpPost]
-
         public ActionResult Create(ArticleModel smodel)
         {
             try
@@ -298,7 +297,7 @@ namespace Proyecto.Controllers
         }
         public ActionResult ModeratorQuestion()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
             ModelState.Clear();
             return View(dbhandle.GetQuestion(true));
         }
