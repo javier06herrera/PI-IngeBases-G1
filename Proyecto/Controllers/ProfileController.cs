@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
 
+
+
+
 namespace Proyecto.Controllers
 {
     public class ProfileController : Controller
@@ -18,8 +21,12 @@ namespace Proyecto.Controllers
         public ActionResult Profile()
         {
             ProfileDBHandle sdb = new ProfileDBHandle();
-            ProfileModel memberProfile = sdb.getMemberProfile(1);
-            return View(memberProfile);
+            ArticleDBHandle sdb1 = new ArticleDBHandle();
+
+            ViewData["Articles"] = sdb1.GetArticle();
+            ViewData["Profile"] = sdb.getMemberProfile(1);
+
+            return View();
         }
     }
 }
