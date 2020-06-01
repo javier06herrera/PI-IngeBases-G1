@@ -15,10 +15,11 @@ namespace Proyecto.Controllers
             return View();
         }
 
-        public ActionResult Profile(int memberId)
+        public ActionResult Profile()
         {
             ProfileDBHandle sdb = new ProfileDBHandle();
-            return View(sdb.getAttributes().Find(smodel => smodel.memberId == memberId));
+            ProfileModel memberProfile = sdb.getMemberProfile(1);
+            return View(memberProfile);
         }
     }
 }

@@ -12,52 +12,52 @@ namespace Proyecto.Models
 {
     public class ProfileDBHandle
     {
-        private SqlConnection con;
-        private void Conection()
+        private SqlConnection connection;
+        private SqlCommand command;
+        private SqlDataReader reader;
+
+        public ProfileDBHandle()
         {
-            string constring = ConfigurationManager.ConnectionStrings["ArticleConn"].ToString();
-            con = new SqlConnection(constring);
+            connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
         }
 
-        public List<ProfileModel> getAttributes()
+        public ProfileModel getMemberProfile(int memberId)
         {
-
-            List<ProfileModel> memberList = new List<ProfileModel>();
-
-            Conection();
-            string memberData = "SELECT * " +
-                                "FROM CommunityMember ";
-
-            SqlDataAdapter sd1 = new SqlDataAdapter(memberData, con);
-            DataTable memberTable = new DataTable();
-            con.Open();
-            sd1.Fill(memberTable);
-            foreach (DataRow member in memberTable.Rows)
+            ProfileModel memberProfile = new ProfileModel();
+            string query = "SELECT * " +
+                            "FROM CommunityMember CM " +
+                            "WHERE CM.memberId = @memberId"; 
+                            
+            using (connection)
             {
-                memberList.Add(
-                    new ProfileModel
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("memberId", memberId);
+                connection.Open();
+                reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
                     {
-                        memberId = Convert.ToInt32(member["memberId"]),
-                        name = Convert.ToString(member["name"]),
-                        lastName = Convert.ToString(member["lastName"]),
-                        birthDate = Convert.ToString(member["birthDate"]),
-                        age = Convert.ToInt32(member["age"]),
-                        addressCity = Convert.ToString(member["addressCity"]),
-                        addressCountry = Convert.ToString(member["addressCountry"]),
-                        hobbies = Convert.ToString(member["hobbies"]),
-                        languages = Convert.ToString(member["languages"]),
-                        email = Convert.ToString(member["email"]),
-                        mobile = Convert.ToString(member["mobile"]),
-                        job = Convert.ToString(member["job"]),
-                        typeOfMember = Convert.ToString(member["typeOfMember"]),
-                        totalQualification = Convert.ToInt32(member["totalQualification"])
-
-                    });
+                        memberProfile.memberId = Convert.ToInt32(reader["memberId"]);
+                        memberProfile.name = Convert.ToString(reader["name"]);
+                        memberProfile.lastName = Convert.ToString(reader["lastName"]);
+                        memberProfile.birthDate = Convert.ToString(reader["birthDate"]);
+                        memberProfile.age = Convert.ToInt32(reader["age"]);
+                        memberProfile.addressCity = Convert.ToString(reader["address_city"]);
+                        memberProfile.addressCountry = Convert.ToString(reader["address_country"]);
+                        memberProfile.hobbies = Convert.ToString(reader["hobbies"]);
+                        memberProfile.languages = Convert.ToString(reader["languages"]);
+                        memberProfile.email = Convert.ToString(reader["email"]);
+                        memberProfile.mobile = Convert.ToString(reader["phoneNumber"]);
+                        memberProfile.job = Convert.ToString(reader["workInformation"]);
+                        memberProfile.typeOfMember = Convert.ToString(reader["typeOfMember"]);
+                        memberProfile.totalQualification = Convert.ToInt32(reader["totalQualification"]);
+                    }
+                }
+                
+                reader.Close();
+                return memberProfile;
             }
-            con.Close();
-
-            return memberList;
         }
-
     }
 }
