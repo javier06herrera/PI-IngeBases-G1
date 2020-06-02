@@ -8,6 +8,8 @@ namespace Proyecto.Models
 {
     public class ArticleModel
     {
+
+        [Display(Name = "Article ID")]
         public int articleId { get; set; }
 
         [Display(Name = "Article")]
@@ -32,7 +34,7 @@ namespace Proyecto.Models
         public string publishDate { get; set; }
 
         //Should be comented///////////////////////////////////////////////////////////////
-        //[Display(Name = "Topic")]
+        [Display(Name = "Topic")]
         //[Required(ErrorMessage = "Please provide a topic")]
         public string topicName { get; set; }
         //Should be comented///////////////////////////////////////////////////////////////
