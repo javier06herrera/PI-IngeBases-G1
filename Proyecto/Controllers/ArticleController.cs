@@ -107,6 +107,7 @@ namespace Proyecto.Controllers
                 }
 
                 ModelState.Remove("content");
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
@@ -194,8 +195,17 @@ namespace Proyecto.Controllers
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
         {
+            lMain = new ArticleModel();
             ArticleDBHandle sdb = new ArticleDBHandle();
-            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+            ArticleModel model = sdb.GetArticle().Find(smodel => smodel.articleId == articleId);
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            model.TopicsList = list;
+            ViewBag.LblCountry = "";
+            return View(model);
         }
 
         // POST: Articulo/Edit/5
@@ -203,12 +213,7 @@ namespace Proyecto.Controllers
         //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult EditLong(int articleId, HttpPostedFileBase file, ArticleModel smodel)
         {
-            //try
-            //{
-            //    ArticuloDBHandle sdb = new ArticuloDBHandle();
-            //    sdb.UpdateDetails(smodel);
-            //    return RedirectToAction("Index");
-            //}
+
             try
             {
                 if (file != null && file.ContentLength > 0)
@@ -230,6 +235,7 @@ namespace Proyecto.Controllers
                 }
 
                 ModelState.Remove("content");
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
