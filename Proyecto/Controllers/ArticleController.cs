@@ -6,21 +6,27 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
 
+
 namespace Proyecto.Controllers
 {
     public class ArticleController : Controller
     {
-        public ActionResult Index()
+        public ActionResult HomePage()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            return View();
+        }
+
+        public ActionResult CommunityArticles()
+        {
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
             ModelState.Clear();
             return View(dbhandle.GetArticle());
         }
-
         // 2. *************ADD NEW Articulo ******************
         // GET: Articulo/Create
         //Obtener datos
         public static ArticleModel mMain;
+
         public ActionResult Create()
         {
             mMain = new ArticleModel();
@@ -35,10 +41,7 @@ namespace Proyecto.Controllers
             return View(c);
         }
 
-        // POST: Student/Create
-        //Pasar datos (eso explica el post
         [HttpPost]
-
         public ActionResult Create(ArticleModel smodel)
         {
             try
@@ -58,7 +61,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "xyz";
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -117,7 +120,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "Please complete the remaining fields";
                 }
-                return View();
+                 return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -142,16 +145,6 @@ namespace Proyecto.Controllers
             model.TopicsList =  list;
             ViewBag.LblCountry = "";
             return View(model);
-            //mMain = new ArticleModel();
-            //ArticleModel c = new ArticleModel();
-            //var list = new List<SelectListItem>();
-            //list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
-            //list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
-            //list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
-            //list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
-            //c.TopicsList = mMain.TopicsList = list;
-            //ViewBag.LblCountry = "";
-            //return View(c);
         }
 
         // POST: Articulo/Edit/5
@@ -177,7 +170,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "Please complete the remaining fields";
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -185,6 +178,18 @@ namespace Proyecto.Controllers
                 return View();
             }
         }
+
+        public ActionResult PreviewArticle(int articleId)
+        {
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+        }
+
+        //public ActionResult HtmlRaw(ArticleModel smodel)
+        //{
+        //    ViewBag.message = smodel.content; 
+        //    return View();
+        //}
 
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
@@ -264,6 +269,8 @@ namespace Proyecto.Controllers
         }
 
         public static ArticleModel cMain;
+        private object sdb;
+
         public ActionResult SearchTopic()
         {
             ArticleDBHandle dbHandle = new ArticleDBHandle();
@@ -337,7 +344,7 @@ namespace Proyecto.Controllers
         }
         public ActionResult ModeratorQuestion()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); //Estos llamados son innecesarios, ya que los metodos de Handle podrian estar aqui
+            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
             ModelState.Clear();
             return View(dbhandle.GetQuestion(true));
         }

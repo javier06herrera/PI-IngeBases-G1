@@ -19,7 +19,7 @@ namespace Proyecto.Tests.Controllers
             ArticleController controller = new ArticleController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.CommunityArticles() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

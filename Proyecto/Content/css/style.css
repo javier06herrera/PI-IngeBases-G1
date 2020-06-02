@@ -124,6 +124,7 @@ ul.topnav li.icon {display: none;}
 
 .card-default{
 	margin-bottom: 10px;
+    width: 100%;
 }
 .flex {
 	display: flex;

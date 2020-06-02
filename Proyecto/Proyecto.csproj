@@ -148,33 +148,28 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\page-headers\6.jpg" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\droid-serif\Apache License.txt" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\droid-serif\Apache License.txt" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="fonts\droid-serif\DroidSerif-Bold.ttf" />
-    <Content Include="fonts\droid-serif\DroidSerif-BoldItalic.ttf" />
-    <Content Include="fonts\droid-serif\DroidSerif-Italic.ttf" />
-    <Content Include="fonts\droid-serif\DroidSerif-Regular.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\ufonts.com_copperplate-gothic-regular.ttf" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\fonts\droid-serif\DroidSerif-Bold.ttf" />
+    <Content Include="Content\fonts\droid-serif\DroidSerif-BoldItalic.ttf" />
+    <Content Include="Content\fonts\droid-serif\DroidSerif-Italic.ttf" />
+    <Content Include="Content\fonts\droid-serif\DroidSerif-Regular.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\ufonts.com_copperplate-gothic-regular.ttf" />
+    <Content Include="Scripts\js\bootstrap.js" />
+    <Content Include="Scripts\js\bootstrap.min.js" />
+    <Content Include="Scripts\js\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\js\main.js" />
+    <Content Include="Scripts\js\npm.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\search.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
@@ -315,7 +310,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Article\Index.cshtml" />
+    <Content Include="Views\Article\CommunityArticles.cshtml" />
     <Content Include="Views\Article\Create.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\SearchTopic.cshtml" />
@@ -332,6 +327,7 @@
     <Content Include="Views\Article\PublishQuestion.cshtml" />
     <Content Include="Views\Email\SendMail.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Article\PreviewArticle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -340,8 +336,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Views\Article\HomePage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
