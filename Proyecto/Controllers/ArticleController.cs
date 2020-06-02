@@ -147,7 +147,8 @@ namespace Proyecto.Controllers
             }
         }
 
-        public ActionResult PreviewArticle(int articleId) {
+        public ActionResult PreviewArticle(int articleId)
+        {
             ArticleDBHandle sdb = new ArticleDBHandle();
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }

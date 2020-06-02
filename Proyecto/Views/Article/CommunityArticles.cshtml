@@ -22,12 +22,12 @@
 
                         <div class="article-content">
                             <p class="block-with-text">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet finibus dui. Fusce ac nulla nec ex ornare vehicula non nec mi. Cras eget nisi sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra faucibus magna sed interdum. Phasellus ultrices sagittis molestie. Sed sit amet nisl id risus egestas semper. In porta, arcu eu dignissim vestibulum, sapien justo imperdiet enim, sed facilisis quam justo in neque. Aliquam fermentum arcu eget hendrerit efficitur.
+                                @Html.DisplayFor(modelItem => item.Abstract)
                             </p>
                         </div>
 
                         <div class="article-read-more">
-                            <a href="single-article.html" class="btn btn-outline-dark btn-sm btn-wide">Read more...</a>
+                            @Html.ActionLink("Read more...", "PreviewArticle", "Article", new { articleId = item.articleId }, null)
                         </div>
                     </div>
                 }
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
 
 

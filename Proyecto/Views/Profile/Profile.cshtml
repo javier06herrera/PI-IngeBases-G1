@@ -1,17 +1,16 @@
-﻿
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 @{
     IEnumerable<Proyecto.Models.ArticleModel> articles = ViewData["Articles"] as IEnumerable<Proyecto.Models.ArticleModel>;
     Proyecto.Models.ProfileModel profile = ViewData["Profile"] as Proyecto.Models.ProfileModel;
 }
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <wbr>
 <div class="content">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <!-- meta -->
                 <div class="card bg-light mb-3">
                     <div class="row">
                         <div class="col-sm-6">
@@ -69,29 +68,47 @@
                         </div>
                     </div>
 
+                    <div class="fb-heading">
+                        Articles
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            New Article
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://localhost:54007/Article/Create">Create</a></li>
+                            <li><a href="http://localhost:54007/Article/Upload">Upload</a></li>
+                        </ul>
+                    </div>
+                    <div class="article-content">
+                        @foreach (Proyecto.Models.ArticleModel item in articles)
+                        {
+                            <div class="card card-default">
+                                <div class="article-heading-abb">
+                                    <a href="single-article.html"><i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name)</a>
+                                </div>
+                                <div class="article-info">
+                                    <div class="art-date"><a href="#"><i class="fa fa-calendar-o"></i></a>@Html.DisplayFor(modelItem => item.publishDate)</div>
+                                    <div class="art-category"><a href="#"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</a></div>
+                                    <div class="art-comments"><a href="#"><i class="fas fa-thumbs-up"></i>@Html.DisplayFor(modelItem => item.likeBalance)</a></div>
+                                </div>
+
+                                <div class="article-content">
+                                    <p class="block-with-text">
+                                        @Html.DisplayFor(modelItem => item.Abstract)
+                                    </p>
+                                </div>
+
+                                <div class="article-read-more">
+                                    @Html.ActionLink("Read more...", "PreviewArticle", "Article", new { articleId = item.articleId }, null)
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
 
             </div>
-
         </div>
-
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Abstrac</th>
-                <th>Publish Date</th>
-
-            </tr>
-            @foreach (Proyecto.Models.ArticleModel article in articles)
-            {
-                <tr>
-                    <td>@article.name</td>
-                    <td>@article.Abstract</td>
-                    <td>@article.publishDate</td>
-          
-                </tr>
-            }
-        </table>
-
-
     </div>
+</div>
