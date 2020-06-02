@@ -29,8 +29,8 @@
                     <hr class="style-three">
                     <div class="article-feedback">
                         <h2><small>Was This Article Helpful?</small></h2>
-                        <button type="button" class="btn btn-success btn-o btn-wide"><i class="fa fa-thumbs-o-up"></i> Yes</button>
-                        <button type="button" class="btn btn-danger btn-o btn-wide">No <i class="fa fa-thumbs-o-down"></i></button>
+                        <a href="http://localhost:54007/Article/isALike?articleId=@(Model.articleId)" class="btn btn-success btn-o btn-wide"><i class="fa fa-thumbs-o-up"></i>Like</a>
+                        <a href="http://localhost:54007/Article/isADislike?articleId=@(Model.articleId)" class="btn btn-danger btn-o btn-wide"><i class="fa fa-thumbs-o-down"></i>Dislike</a>
                     </div>
                 </div>
             </div>

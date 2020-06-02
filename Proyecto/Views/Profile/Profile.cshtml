@@ -84,40 +84,38 @@
                     <div class="article-content">
                         @foreach (Proyecto.Models.ArticleModel item in articles)
                         {
-                            <div class="card card-default">
+                        <div class="card card-default">
 
 
-                                @if (item.type == "short")
-                                {
-                                    <div class="article-heading-abb">
-                                        <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
-                                    </div>
-                                }
-
-                                else
-                                {
-                                    <div class="article-heading-abb">
-                                        <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
-                                    </div>
-                                }
-
-                                <div class="article-info">
-                                    <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
-                                    <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
-                                    <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(modelItem => item.likesCount)</div>
-                                    <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(modelItem => item.dislikesCount)</div>
+                            @if (item.type == "short")
+                            {
+                                <div class="article-heading-abb">
+                                    <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
                                 </div>
+                            }
 
-                                <div class="article-content">
-                                    <p class="block-with-text">
-                                        @Html.DisplayFor(modelItem => item.Abstract)
-                                    </p>
+                            else
+                            {
+                                <div class="article-heading-abb">
+                                    <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
                                 </div>
+                            }
 
-                                <div class="article-read-more">
-                                    @Html.ActionLink("Read more...", "PreviewArticle", "Article", new { articleId = item.articleId }, null)
-                                </div>
+                            <div class="article-info">
+                                <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
+                                <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
+                                <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(modelItem => item.likesCount)</div>
+                                <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(modelItem => item.dislikesCount)</div>
                             </div>
+
+                            <div class="article-content">
+                                <p class="block-with-text">
+                                    @Html.DisplayFor(modelItem => item.Abstract)
+                                </p>
+                            </div>
+
+                            @Html.ActionLink("Read more", "PreviewArticle", "Article", new { articleId = item.articleId }, new { @class = "btn btn-outline-dark btn-sm" })
+                        </div>
                         }
                     </div>
                 </div>

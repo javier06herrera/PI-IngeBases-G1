@@ -16,7 +16,7 @@
                 {
                     <div class="card card-default">
                         <div class="article-heading-abb">
-                            <a href="single-article.html"><i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name)</a>
+                            <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name)
                         </div>
                         <div class="article-info">
                             <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
@@ -31,9 +31,7 @@
                             </p>
                         </div>
 
-                        <div class="article-read-more">
-                            @Html.ActionLink("Read more...", "PreviewArticle", "Article", new { articleId = item.articleId }, null)
-                        </div>
+                        @Html.ActionLink("Read more", "PreviewArticle", "Article", new { articleId = item.articleId }, new { @class = "btn btn-outline-dark btn-sm" })
                     </div>
                 }
 
