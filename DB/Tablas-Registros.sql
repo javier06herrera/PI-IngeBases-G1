@@ -336,3 +336,14 @@ INSERT INTO REVIEWS
 select *
 from Article
 
+update Article
+set likesCount = likesCount + 2
+where articleId = 1
+
+update Article
+set dislikesCount = dislikesCount + 1
+where articleId = 1
+
+update Article
+set likeBalance = likesCount - dislikesCount
+where articleId = 1
