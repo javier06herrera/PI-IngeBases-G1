@@ -16,18 +16,31 @@ a:hover {
 	/*text-decoration: none;*/
 }
 
+.BotonGris{
+    position:relative;
+    left: 30px;
+}
+
+.BotonGris1{
+    position: relative;
+    left: 12px;
+}
+
+
 .SearchTopic {
-    background-color: #f44336;
+    background-color: #007bff;
     color: white;
-    padding: 14px 25px;
+    padding: 7px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    position: relative;
+    right: -30px;
 }
 
-.SearchTopic:hover, .SearchTopic:active {
-    background-color: red;
-}
+    .SearchTopic:hover, .SearchTopic:active {
+        background-color: #17a2b8;
+    }
 /* Header */
 .header {
 	-webkit-align-items: center;

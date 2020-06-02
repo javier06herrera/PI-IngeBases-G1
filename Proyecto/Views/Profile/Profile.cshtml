@@ -68,11 +68,11 @@
                         </div>
                     </div>
 
-                    <div class="fb-heading">
+                    <div class="fb-heading BotonGris1">
                         Articles
                     </div>
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <button class="btn btn-default dropdown-toggle BotonGris" type="button" data-toggle="dropdown">
                             New Article
                             <span class="caret"></span>
                         </button>
@@ -85,13 +85,27 @@
                         @foreach (Proyecto.Models.ArticleModel item in articles)
                         {
                             <div class="card card-default">
-                                <div class="article-heading-abb">
-                                    <a href="single-article.html"><i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name)</a>
-                                </div>
+
+
+                                @if (item.type == "short")
+                                {
+                                    <div class="article-heading-abb">
+                                        <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="article-heading-abb">
+                                        <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
+                                    </div>
+                                }
+
                                 <div class="article-info">
-                                    <div class="art-date"><a href="#"><i class="fa fa-calendar-o"></i></a>@Html.DisplayFor(modelItem => item.publishDate)</div>
-                                    <div class="art-category"><a href="#"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</a></div>
-                                    <div class="art-comments"><a href="#"><i class="fas fa-thumbs-up"></i>@Html.DisplayFor(modelItem => item.likeBalance)</a></div>
+                                    <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
+                                    <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
+                                    <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(modelItem => item.likesCount)</div>
+                                    <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(modelItem => item.dislikesCount)</div>
                                 </div>
 
                                 <div class="article-content">
