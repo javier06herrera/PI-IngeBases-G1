@@ -20,6 +20,7 @@ accessCount		INT NOT NULL DEFAULT 0,
 likesCount		INT NOT NULL DEFAULT 0, 
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
+
 );
 
 
@@ -89,8 +90,8 @@ languages			VARCHAR(300) NOT NULL,
 email				VARCHAR(100) NOT NULL,
 mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
-typeOfMember		VARCHAR(100) NOT NULL,
-totalQualification	INT	NOT NULL DEFAULT 0,
+memberRank			VARCHAR(100) NOT NULL,
+points				INT	NOT NULL DEFAULT 0,
 )
 
 INSERT INTO CommunityMember
@@ -334,3 +335,4 @@ INSERT INTO REVIEWS
 
 select *
 from Article
+

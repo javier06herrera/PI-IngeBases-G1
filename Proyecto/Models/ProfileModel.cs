@@ -52,10 +52,10 @@ namespace Proyecto.Models
         public string job { get; set; }
 
         [Display(Name = "Member rank")]
-        public string typeOfMember { get; set; }
+        public string memberRank { get; set; }
 
         [Display(Name = "Points")]
-        public int totalQualification { get; set; }
+        public int points { get; set; }
 
     }
 }
