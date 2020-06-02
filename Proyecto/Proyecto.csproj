@@ -339,6 +339,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Article\HomePage.cshtml" />
+    <Content Include="Views\Profile\Registration.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
