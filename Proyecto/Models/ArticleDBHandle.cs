@@ -88,10 +88,32 @@ namespace Proyecto.Models
             return topicsLine;
         }
 
+
+        internal void UpdateAccess(ArticleModel smodel)
+        {
+            connection();
+            String updateCounts = "UPDATE Article " +
+                                  "SET accessCount = accessCount+1 " +
+                                  "WHERE articleId = @articleId";
+
+            SqlCommand cmd = new SqlCommand(updateCounts, con);
+            cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
+            cmd.Parameters.AddWithValue("@accessCount", smodel.accessCount);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+
+        }
+
+
+
         // Ver resultados de busqueda
         public List<ArticleModel> GetArticle()
         {
             List<ArticleModel> articleList = new List<ArticleModel>();
+       
 
             //Fetch of the entire list of articles without topics
             connection();
@@ -113,7 +135,8 @@ namespace Proyecto.Models
                         Abstract = Convert.ToString(article["Abstract"]),
                         publishDate = Convert.ToString(article["publishDate"]),
                         content = Convert.ToString(article["content"]),
-                        type = Convert.ToString(article["type"])
+                        type = Convert.ToString(article["type"]),
+                        accessCount = Convert.ToInt32(article["accessCount"])
                     });
             }
             con.Close();
@@ -133,7 +156,6 @@ namespace Proyecto.Models
             con.Close();
             return articleList;
         }
-
 
         public bool UpdateDetails(ArticleModel smodel, string type)
         {

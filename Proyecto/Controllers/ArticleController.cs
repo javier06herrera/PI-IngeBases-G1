@@ -84,6 +84,7 @@ namespace Proyecto.Controllers
                     ViewBag.Message = "Please specify a file.";
                 }
 
+                ModelState.Remove("type");
                 ModelState.Remove("content");
                 if (ModelState.IsValid) //Tell if the data is valid 
                 {
@@ -147,9 +148,23 @@ namespace Proyecto.Controllers
             }
         }
 
-        public ActionResult PreviewArticle(int articleId)
+        //[HttpPost]
+        //public ActionResult PreviewArticle(int articleId, ArticleModel smodel)
+        //{
+
+        //    ArticleDBHandle sdb = new ArticleDBHandle();
+
+        //    sdb.UpdateAccess(smodel);
+
+        //    return View();
+        //}
+
+        public ActionResult PreviewArticle(int articleId, ArticleModel artModel)
         {
+        
             ArticleDBHandle sdb = new ArticleDBHandle();
+            sdb.UpdateAccess(artModel);
+
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
