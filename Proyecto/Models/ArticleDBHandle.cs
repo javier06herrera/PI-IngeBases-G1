@@ -389,5 +389,26 @@ namespace Proyecto.Models
                 return false;
         }
 
+
+        public bool updateLikes(int articleId, bool likeFlag)
+        {
+            if (likeFlag)
+            {
+                connection();
+                String updateBalance = "UPDATE Article " +
+                                       "SET likeBalance = likeBalance + 1 " +
+                                       "WHERE articleId = @articleId";
+                SqlCommand cmd = new SqlCommand(updateBalance, con);
+                cmd.Parameters.AddWithValue("@articleId", articleId);
+            }
+            else
+            {
+
+            }
+
+            return true;
+
+        }
+
     }
 }

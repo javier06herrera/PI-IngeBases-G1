@@ -43,15 +43,15 @@ namespace Proyecto.Models
                         memberProfile.lastName = Convert.ToString(reader["lastName"]);
                         memberProfile.birthDate = Convert.ToString(reader["birthDate"]);
                         memberProfile.age = Convert.ToInt32(reader["age"]);
-                        memberProfile.addressCity = Convert.ToString(reader["address_city"]);
-                        memberProfile.addressCountry = Convert.ToString(reader["address_country"]);
+                        memberProfile.addressCity = Convert.ToString(reader["addressCity"]);
+                        memberProfile.addressCountry = Convert.ToString(reader["addressCountry"]);
                         memberProfile.hobbies = Convert.ToString(reader["hobbies"]);
                         memberProfile.languages = Convert.ToString(reader["languages"]);
                         memberProfile.email = Convert.ToString(reader["email"]);
-                        memberProfile.mobile = Convert.ToString(reader["phoneNumber"]);
-                        memberProfile.job = Convert.ToString(reader["workInformation"]);
-                        memberProfile.typeOfMember = Convert.ToString(reader["typeOfMember"]);
-                        memberProfile.totalQualification = Convert.ToInt32(reader["totalQualification"]);
+                        memberProfile.mobile = Convert.ToString(reader["mobile"]);
+                        memberProfile.job = Convert.ToString(reader["job"]);
+                        memberProfile.memberRank = Convert.ToString(reader["memberRank"]);
+                        memberProfile.points = Convert.ToInt32(reader["points"]);
                     }
                 }
                 

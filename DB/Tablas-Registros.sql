@@ -90,8 +90,8 @@ languages			VARCHAR(300) NOT NULL,
 email				VARCHAR(100) NOT NULL,
 mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
-typeOfMember		VARCHAR(100) NOT NULL,
-totalQualification	INT	NOT NULL DEFAULT 0,
+memberRank			VARCHAR(100) NOT NULL,
+points				INT	NOT NULL DEFAULT 0,
 )
 
 INSERT INTO CommunityMember
@@ -336,5 +336,3 @@ INSERT INTO REVIEWS
 select *
 from Article
 
-update Article
-set baseGrade = Add(
