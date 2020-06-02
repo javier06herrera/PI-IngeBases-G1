@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Proyecto.Models;
 
 namespace Proyecto.Controllers
 {
@@ -16,8 +17,9 @@ namespace Proyecto.Controllers
 
         public ActionResult Profile()
         {
-
-            return View();
+            ProfileDBHandle sdb = new ProfileDBHandle();
+            ProfileModel memberProfile = sdb.getMemberProfile(1);
+            return View(memberProfile);
         }
     }
 }
