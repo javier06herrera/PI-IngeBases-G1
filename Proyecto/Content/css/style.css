@@ -10,11 +10,37 @@
 	src: url("../fonts/ufonts.com_copperplate-gothic-regular.ttf") format("truetype");
 }
 a {
-	text-decoration: none;
+    /*text-decoration: none;*/
 }
 a:hover {
-	text-decoration: none;
+	/*text-decoration: none;*/
 }
+
+.BotonGris{
+    position:relative;
+    left: 30px;
+}
+
+.BotonGris1{
+    position: relative;
+    left: 12px;
+}
+
+
+.SearchTopic {
+    background-color: #007bff;
+    color: white;
+    padding: 7px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    right: -30px;
+}
+
+    .SearchTopic:hover, .SearchTopic:active {
+        background-color: #17a2b8;
+    }
 /* Header */
 .header {
 	-webkit-align-items: center;

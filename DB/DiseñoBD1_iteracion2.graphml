@@ -727,7 +727,7 @@
 			<data key="d3">
 				<x:List>
 					<y:Label LayoutParameter="{y:GraphMLReference 3}">
-						<y:Label.Text>typeOfMember</y:Label.Text>
+						<y:Label.Text>memberRank</y:Label.Text>
 						<y:Label.Style>
 							<yjs:DefaultLabelStyle verticalTextAlignment="BOTTOM" horizontalTextAlignment="CENTER" textFill="BLACK" textSize="16">
 								<yjs:DefaultLabelStyle.font>
@@ -1088,7 +1088,7 @@
 			<data key="d3">
 				<x:List>
 					<y:Label LayoutParameter="{y:GraphMLReference 8}">
-						<y:Label.Text>totalQualifications</y:Label.Text>
+						<y:Label.Text>points</y:Label.Text>
 						<y:Label.Style>
 							<yjs:DefaultLabelStyle verticalTextAlignment="BOTTOM" horizontalTextAlignment="CENTER" textFill="BLACK" textSize="16">
 								<yjs:DefaultLabelStyle.font>
@@ -1339,7 +1339,7 @@
 			<data key="d3">
 				<x:List>
 					<y:Label LayoutParameter="{y:GraphMLReference 3}">
-						<y:Label.Text>workInformation</y:Label.Text>
+						<y:Label.Text>job</y:Label.Text>
 						<y:Label.Style>
 							<yjs:DefaultLabelStyle verticalTextAlignment="BOTTOM" horizontalTextAlignment="CENTER" textFill="BLACK" textSize="16">
 								<yjs:DefaultLabelStyle.font>
@@ -1393,7 +1393,7 @@
 			<data key="d3">
 				<x:List>
 					<y:Label LayoutParameter="{y:GraphMLReference 3}">
-						<y:Label.Text>phoneNumber</y:Label.Text>
+						<y:Label.Text>mobile</y:Label.Text>
 						<y:Label.Style>
 							<yjs:DefaultLabelStyle verticalTextAlignment="BOTTOM" horizontalTextAlignment="CENTER" textFill="BLACK" textSize="16">
 								<yjs:DefaultLabelStyle.font>

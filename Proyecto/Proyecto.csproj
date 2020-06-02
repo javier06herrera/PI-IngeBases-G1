@@ -130,11 +130,13 @@
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommunityMemberModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
     <Compile Include="Models\ProfileDBHandle.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\ReviewsModel.cs" />
+    <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\TopicModel.cs" />
     <Compile Include="Models\WritesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -337,6 +339,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Article\HomePage.cshtml" />
+    <Content Include="Views\Profile\Registration.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

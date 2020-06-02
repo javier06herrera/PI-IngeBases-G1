@@ -50,7 +50,7 @@
                         <div class="card text-white bg-dark mb-3">
                             <i class="icon-layers float-right text-muted"></i>
                             <h6 class="text-muted text-uppercase text-light mt-0">Member rank</h6>
-                            <h2 class="" data-plugin="counterup">@profile.typeOfMember</h2>
+                            <h2 class="" data-plugin="counterup">@profile.memberRank</h2>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -64,15 +64,15 @@
                         <div class="card text-white bg-dark mb-3">
                             <i class="icon-paypal float-right text-light text-muted"></i>
                             <h6 class="text-muted text-uppercase mt-0">Points</h6>
-                            <h2 class=""><span data-plugin="counterup">@profile.totalQualification</span>
+                            <h2 class=""><span data-plugin="counterup">@profile.points</span>
                         </div>
                     </div>
 
-                    <div class="fb-heading">
+                    <div class="fb-heading BotonGris1">
                         Articles
                     </div>
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <button class="btn btn-default dropdown-toggle BotonGris" type="button" data-toggle="dropdown">
                             New Article
                             <span class="caret"></span>
                         </button>
@@ -84,26 +84,39 @@
                     <div class="article-content">
                         @foreach (Proyecto.Models.ArticleModel item in articles)
                         {
-                            <div class="card card-default">
+                        <div class="card card-default">
+
+
+                            @if (item.type == "short")
+                            {
                                 <div class="article-heading-abb">
-                                    <a href="single-article.html"><i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name)</a>
+                                    <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
                                 </div>
-                                <div class="article-info">
-                                    <div class="art-date"><a href="#"><i class="fa fa-calendar-o"></i></a>@Html.DisplayFor(modelItem => item.publishDate)</div>
-                                    <div class="art-category"><a href="#"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</a></div>
-                                    <div class="art-comments"><a href="#"><i class="fas fa-thumbs-up"></i>@Html.DisplayFor(modelItem => item.likeBalance)</a></div>
-                                </div>
+                            }
 
-                                <div class="article-content">
-                                    <p class="block-with-text">
-                                        @Html.DisplayFor(modelItem => item.Abstract)
-                                    </p>
+                            else
+                            {
+                                <div class="article-heading-abb">
+                                    <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
                                 </div>
+                            }
 
-                                <div class="article-read-more">
-                                    @Html.ActionLink("Read more...", "PreviewArticle", "Article", new { articleId = item.articleId }, null)
-                                </div>
+                            <div class="article-info">
+                                <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
+                                <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
+                                <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(modelItem => item.likesCount)</div>
+                                <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(modelItem => item.dislikesCount)</div>
+                                <div class="art-comments">Viewed @Html.DisplayFor(modelItem => item.accessCount) times</div>
                             </div>
+
+                            <div class="article-content">
+                                <p class="block-with-text">
+                                    @Html.DisplayFor(modelItem => item.Abstract)
+                                </p>
+                            </div>
+
+                            @Html.ActionLink("Read more", "PreviewArticle", "Article", new { articleId = item.articleId }, new { @class = "btn btn-outline-dark btn-sm" })
+                        </div>
                         }
                     </div>
                 </div>

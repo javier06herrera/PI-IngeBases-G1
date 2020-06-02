@@ -22,10 +22,23 @@ namespace Proyecto.Controllers
             ModelState.Clear();
             return View(dbhandle.GetArticle());
         }
+        // 2. *************ADD NEW Articulo ******************
+        // GET: Articulo/Create
+        //Obtener datos
+        public static ArticleModel mMain;
 
         public ActionResult Create()
         {
-            return View();
+            mMain = new ArticleModel();
+            ArticleModel c = new ArticleModel();
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival"});
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space"});
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            c.TopicsList = mMain.TopicsList = list;
+            ViewBag.LblCountry = "";
+            return View(c);
         }
 
         [HttpPost]
@@ -48,7 +61,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "xyz";
                 }
-                return View();
+                return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -59,7 +72,16 @@ namespace Proyecto.Controllers
 
         public ActionResult Upload()
         {
-            return View();
+            mMain = new ArticleModel();
+            ArticleModel c = new ArticleModel();
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival"});
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space"});
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            c.TopicsList = mMain.TopicsList = list;
+            ViewBag.LblCountry = "";
+            return View(c);
         }
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, ArticleModel smodel)
@@ -86,6 +108,7 @@ namespace Proyecto.Controllers
 
                 ModelState.Remove("type");
                 ModelState.Remove("content");
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
@@ -99,7 +122,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "Please complete the remaining fields";
                 }
-                return View();
+                 return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -110,10 +133,20 @@ namespace Proyecto.Controllers
 
         // 3. ************* EDIT Articulo DETAILS ******************
         // GET: Articulo/Edit/5
+        public static ArticleModel lMain;
         public ActionResult Edit(int articleId)
         {
+            lMain = new ArticleModel();
             ArticleDBHandle sdb = new ArticleDBHandle();
-            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+            ArticleModel model = sdb.GetArticle().Find(smodel => smodel.articleId == articleId);            
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            model.TopicsList =  list;
+            ViewBag.LblCountry = "";
+            return View(model);
         }
 
         // POST: Articulo/Edit/5
@@ -139,7 +172,7 @@ namespace Proyecto.Controllers
                 {
                     ViewBag.Message = "Please complete the remaining fields";
                 }
-                return View();
+                return RedirectToAction("CommunityArticles");
             }
             catch
             {
@@ -168,6 +201,19 @@ namespace Proyecto.Controllers
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
+        public ActionResult isALike(int articleId)
+        {
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            bool like = true;
+            return View(sdb.updateLikes(articleId, like));
+        }
+
+        public ActionResult isADisLike(int articleId)
+        {
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            bool like = false;
+            return View(sdb.updateLikes(articleId, like));
+        }
         //public ActionResult HtmlRaw(ArticleModel smodel)
         //{
         //    ViewBag.message = smodel.content; 
@@ -177,8 +223,17 @@ namespace Proyecto.Controllers
         // Metodo para  editar articulos largos
         public ActionResult EditLong(int articleId)
         {
+            lMain = new ArticleModel();
             ArticleDBHandle sdb = new ArticleDBHandle();
-            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+            ArticleModel model = sdb.GetArticle().Find(smodel => smodel.articleId == articleId);
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            model.TopicsList = list;
+            ViewBag.LblCountry = "";
+            return View(model);
         }
 
         // POST: Articulo/Edit/5
@@ -186,12 +241,7 @@ namespace Proyecto.Controllers
         //public ActionResult Edit(int id, ArticuloModel smodel)
         public ActionResult EditLong(int articleId, HttpPostedFileBase file, ArticleModel smodel)
         {
-            //try
-            //{
-            //    ArticuloDBHandle sdb = new ArticuloDBHandle();
-            //    sdb.UpdateDetails(smodel);
-            //    return RedirectToAction("Index");
-            //}
+
             try
             {
                 if (file != null && file.ContentLength > 0)
@@ -213,6 +263,7 @@ namespace Proyecto.Controllers
                 }
 
                 ModelState.Remove("content");
+                ModelState.Remove("type");
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
@@ -352,6 +403,8 @@ namespace Proyecto.Controllers
                 return View();
             }
         }
+
+
 
 
     }

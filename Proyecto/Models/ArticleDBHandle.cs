@@ -411,5 +411,53 @@ namespace Proyecto.Models
                 return false;
         }
 
+
+        public bool updateLikes(int articleId, bool likeFlag)
+        {
+            //Update of like or dislike count
+            connection();
+            String query;
+            if (likeFlag)
+            {
+                        query = "UPDATE Article " +
+                       "SET likesCount = likesCount + 1 " +
+                       "WHERE articleId = @articleId";
+            }
+            else
+            {
+                       query = "UPDATE Article " +
+                       "SET dislikesCount = dislikesCount + 1 " +
+                       "WHERE articleId = @articleId";
+            }
+
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i < 1)
+                return false;
+
+            //Update of like balance
+            connection();
+            query = "UPDATE Article " +
+                    "SET likeBalance = likesCount - dislikesCount " +
+                    "WHERE articleId = @articleId";
+
+
+            SqlCommand cmd1 = new SqlCommand(query, con);
+            cmd1.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+
     }
 }
