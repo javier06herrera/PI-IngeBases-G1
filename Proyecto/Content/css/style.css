@@ -10,10 +10,10 @@
 	src: url("../fonts/ufonts.com_copperplate-gothic-regular.ttf") format("truetype");
 }
 a {
-	text-decoration: none;
+    /*text-decoration: none;*/
 }
 a:hover {
-	text-decoration: none;
+	/*text-decoration: none;*/
 }
 
 .SearchTopic {
