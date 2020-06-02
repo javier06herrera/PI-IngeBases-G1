@@ -20,6 +20,7 @@ accessCount		INT NOT NULL DEFAULT 0,
 likesCount		INT NOT NULL DEFAULT 0, 
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
+
 );
 
 
@@ -334,3 +335,6 @@ INSERT INTO REVIEWS
 
 select *
 from Article
+
+update Article
+set baseGrade = Add(
