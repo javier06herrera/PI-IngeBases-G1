@@ -57,5 +57,9 @@ namespace Proyecto.Models
         [Display(Name = "Points")]
         public int points { get; set; }
 
+
+        [Display(Name = "Skills")]
+        public string skills { get; set; }
+
     }
 }

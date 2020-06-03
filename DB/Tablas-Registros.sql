@@ -1,12 +1,12 @@
-DROP TABLE HAS_SKILL;
-DROP TABLE Skill;
-DROP TABLE WRITES;
-DROP TABLE REVIEWS;
-DROP TABLE Question;
-DROP TABLE CommunityMember;
-DROP TABLE INVOLVES;
-DROP TABLE Article;
-DROP TABLE Topic;
+--DROP TABLE HAS_SKILL;
+--DROP TABLE Skill;
+--DROP TABLE WRITES;
+--DROP TABLE REVIEWS;
+--DROP TABLE Question;
+--DROP TABLE CommunityMember;
+--DROP TABLE INVOLVES;
+--DROP TABLE Article;
+--DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -81,33 +81,34 @@ CREATE TABLE CommunityMember(
 memberId			INT IDENTITY(1,1) PRIMARY KEY,
 name				VARCHAR(75) NOT NULL,
 lastName			VARCHAR(75) NOT NULL,
-birthDate			DATE	NOT NULL,
-age					INT		NOT NULL,	
+birthDate			DATE			 	,
+age					INT					,	
 addressCity			VARCHAR(150) NOT NULL,
 addressCountry		VARCHAR(150) NOT NULL,
-hobbies				VARCHAR(300) NOT NULL,
-languages			VARCHAR(300) NOT NULL,
+hobbies				VARCHAR(300) 		,
+languages			VARCHAR(300) 		,
 email				VARCHAR(100) NOT NULL,
 mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
-memberRank			VARCHAR(100) NOT NULL,
+memberRank			VARCHAR(100) 		,
 points				INT	NOT NULL DEFAULT 0,
+skills				VARCHAR(MAX) NOT NULL
 )
 
 INSERT INTO CommunityMember
-VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','Generic',DEFAULT)
+VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','Generic',DEFAULT,'Versatility')
 
 INSERT INTO CommunityMember
-VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','Generic', DEFAULT)
+VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','Generic', DEFAULT, 'Creativity')
 
 INSERT INTO CommunityMember
-VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','Generic',DEFAULT)
+VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','Generic',DEFAULT,'Math-skills')
 
 INSERT INTO CommunityMember
-VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','Generic',DEFAULT)
+VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','Generic',DEFAULT,'Adaptability')
 
 INSERT INTO CommunityMember
-VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','Generic',DEFAULT)
+VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','Generic',DEFAULT,'Organized')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
@@ -347,3 +348,6 @@ where articleId = 1
 update Article
 set likeBalance = likesCount - dislikesCount
 where articleId = 1
+
+SELECT *
+FROM CommunityMember

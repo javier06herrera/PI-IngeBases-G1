@@ -2,56 +2,63 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<div class="container">
-    <hr>
-    <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-            <h4 class="card-title mt-3 text-center">Sign Up</h4>
-            <p class="text-center">Get started with your free account</p>
-            <form>
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="Name" type="text">
-                    <input name="" class="form-control" placeholder="Last Name" type="text">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="Email address" type="email">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="Phone number" type="text">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa"></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="City" type="text">
-                    <input name="" class="form-control" placeholder="Country" type="text">
-                </div> <!-- form-group// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="Job" type="text">
-                </div> <!-- form-group end.// -->
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class=""></i> </span>
-                    </div>
-                    <input name="" class="form-control" placeholder="Describe your skills" type="text">
-                </div> <!-- form-group// -->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-                </div> <!-- form-group// -->
-            </form>
-        </article>
-    </div> <!-- card.// -->
-</div>
+    <div class="container">
+        <hr>
+        <div class="card bg-light">
+            <article class="card-body mx-auto" style="max-width: 400px;">
+                <h4 class="card-title mt-3 text-center">Sign Up</h4>
+                <p class="text-center">Get started with your free account</p>
+                <form>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { placeholder = "Name", @class = "form-control" } })
+                        @Html.EditorFor(model => model.lastName, new { htmlAttributes = new { placeholder = "Last Name", @class = "form-control" } })
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "E-mail", @class = "form-control" } })
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.mobile, new { htmlAttributes = new { placeholder = "Mobile Number", @class = "form-control" } })
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa"></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.addressCity, new { htmlAttributes = new { placeholder = "Address City", @class = "form-control" } })
+                        @Html.EditorFor(model => model.addressCountry, new { htmlAttributes = new { placeholder = "Address Country", @class = "form-control" } })
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.job, new { htmlAttributes = new { placeholder = "Job Title", @class = "form-control" } })
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class=""></i> </span>
+                        </div>
+                        @Html.EditorFor(model => model.skills, new { htmlAttributes = new { placeholder = "Enter your skills here", @class = "form-control" } })
+                    </div> <!-- form-group// -->
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </div> <!-- form-group// -->
+                </form>
+            </article>
+        </div> <!-- card.// -->
+    </div>
+
+}

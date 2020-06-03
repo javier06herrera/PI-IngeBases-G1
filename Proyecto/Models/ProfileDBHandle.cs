@@ -26,8 +26,8 @@ namespace Proyecto.Models
             ProfileModel memberProfile = new ProfileModel();
             string query = "SELECT * " +
                             "FROM CommunityMember CM " +
-                            "WHERE CM.memberId = @memberId"; 
-                            
+                            "WHERE CM.memberId = @memberId";
+
             using (connection)
             {
                 command = new SqlCommand(query, connection);
@@ -54,10 +54,38 @@ namespace Proyecto.Models
                         memberProfile.points = Convert.ToInt32(reader["points"]);
                     }
                 }
-                
+
                 reader.Close();
                 return memberProfile;
             }
+        }
+
+        
+        public ProfileModel AddProfile(ProfileModel pmodel)
+        {
+
+            string query = "INSERT INTO CommunityMember (name, lastName, addressCity, addressCountry, email, mobile, job, skills) " +
+                           "VALUES(@name, @lastName, @addressCity, @addressCountry, @email, @mobile, @job, @skills)";
+
+            command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@name", pmodel.name);
+            command.Parameters.AddWithValue("@lastName", pmodel.lastName);
+            command.Parameters.AddWithValue("@addressCity", pmodel.addressCity);
+            command.Parameters.AddWithValue("@addressCountry", pmodel.addressCountry);
+            command.Parameters.AddWithValue("@mobile", pmodel.mobile);
+            command.Parameters.AddWithValue("@email", pmodel.email);
+            command.Parameters.AddWithValue("@job", pmodel.job);
+            command.Parameters.AddWithValue("@skills", pmodel.skills);
+
+            using (connection)
+            {
+                connection.Open();
+                int codeError = command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return pmodel;
         }
     }
 }

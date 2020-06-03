@@ -13,10 +13,24 @@ namespace Proyecto.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
+        [HttpPost]
+        public ActionResult Registration(ProfileModel pmodel)
+        {
+            ProfileDBHandle sdb = new ProfileDBHandle();
+            sdb.AddProfile(pmodel);
+            ViewBag.Message = "Profile added successfully";
+
+            return RedirectToAction("HomePage","Article",null);
+        }
+
         public ActionResult Registration()
         {
             return View();
         }
+
+
+
+        
 
         public ActionResult Profile()
         {
@@ -28,5 +42,6 @@ namespace Proyecto.Controllers
 
             return View();
         }
+
     }
 }
