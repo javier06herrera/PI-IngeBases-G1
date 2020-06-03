@@ -31,12 +31,7 @@ namespace Proyecto.Controllers
         {
             mMain = new ArticleModel();
             ArticleModel c = new ArticleModel();
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival"});
-            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space"});
-            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
-            c.TopicsList = mMain.TopicsList = list;
+            c.TopicsList = mMain.TopicsList = DropFill();
             ViewBag.LblCountry = "";
             return View(c);
         }
@@ -59,27 +54,35 @@ namespace Proyecto.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "xyz";
+                    ViewBag.Message = "Creation of article failed";
+                    smodel.TopicsList = DropFill();
+                    return View(smodel);
                 }
                 return RedirectToAction("CommunityArticles");
             }
             catch
             {
-                ViewBag.Message = "Failed";
-                return View();
+                ViewBag.Message = "Creation of article failed";
+                smodel.TopicsList = DropFill();
+                return View(smodel);
             }
+        }
+
+        public List<SelectListItem> DropFill()
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
+            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
+            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
+            return list;
         }
 
         public ActionResult Upload()
         {
             mMain = new ArticleModel();
             ArticleModel c = new ArticleModel();
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival"});
-            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space"});
-            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
-            c.TopicsList = mMain.TopicsList = list;
+            c.TopicsList = mMain.TopicsList = DropFill();
             ViewBag.LblCountry = "";
             return View(c);
         }
@@ -121,13 +124,16 @@ namespace Proyecto.Controllers
                 else
                 {
                     ViewBag.Message = "Please complete the remaining fields";
+                    smodel.TopicsList = DropFill();
+                    return View(smodel);
                 }
                  return RedirectToAction("CommunityArticles");
             }
             catch
             {
-                ViewBag.Message = "Failed";
-                return View();
+                ViewBag.Message = "Creation of article failed";
+                smodel.TopicsList = DropFill();
+                return View(smodel);
             }
         }
 
@@ -139,12 +145,7 @@ namespace Proyecto.Controllers
             lMain = new ArticleModel();
             ArticleDBHandle sdb = new ArticleDBHandle();
             ArticleModel model = sdb.GetArticle().Find(smodel => smodel.articleId == articleId);            
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
-            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
-            model.TopicsList =  list;
+            model.TopicsList =  DropFill();
             ViewBag.LblCountry = "";
             return View(model);
         }
@@ -171,13 +172,16 @@ namespace Proyecto.Controllers
                 else
                 {
                     ViewBag.Message = "Please complete the remaining fields";
+                    smodel.TopicsList = DropFill();
+                    return View(smodel);
                 }
                 return RedirectToAction("CommunityArticles");
             }
             catch
             {
                 ViewBag.Message = "Failed";
-                return View();
+                smodel.TopicsList = DropFill();
+                return View(smodel);
             }
         }
 
@@ -238,12 +242,7 @@ namespace Proyecto.Controllers
             lMain = new ArticleModel();
             ArticleDBHandle sdb = new ArticleDBHandle();
             ArticleModel model = sdb.GetArticle().Find(smodel => smodel.articleId == articleId);
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Novel:Survival", Value = "Novel:Survival" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Robotics", Value = "Science Fiction:Robotics" });
-            list.Add(new SelectListItem { Text = "Science Fiction:Space", Value = "Science Fiction:Space" });
-            list.Add(new SelectListItem { Text = "Novel:Banana Republic", Value = "Novel:Banana Republic" });
-            model.TopicsList = list;
+            model.TopicsList = DropFill();
             ViewBag.LblCountry = "";
             return View(model);
         }
@@ -285,13 +284,15 @@ namespace Proyecto.Controllers
                 else
                 {
                     ViewBag.Message = "Please complete the remaining fields";
+                    smodel.TopicsList = DropFill();
+                    return View(smodel);
                 }
-                return View();
             }
             catch
             {
                 ViewBag.Message = "Failed";
-                return View();
+                smodel.TopicsList = DropFill();
+                return View(smodel);
             }
         }
 
