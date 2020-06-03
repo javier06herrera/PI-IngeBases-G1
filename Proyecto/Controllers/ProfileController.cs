@@ -41,9 +41,9 @@ namespace Proyecto.Controllers
         public ActionResult Profile()
         {
             ProfileDBHandle sdb = new ProfileDBHandle();
-            ArticleDBHandle sdb1 = new ArticleDBHandle();
+            //ArticleDBHandle sdb1 = new ArticleDBHandle();
 
-            ViewData["Articles"] = sdb1.GetArticle();
+            ViewData["Articles"] = sdb.fetchMyArticles(1);
             ViewData["Profile"] = sdb.getMemberProfile(1);
 
             return View();

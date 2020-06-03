@@ -67,6 +67,17 @@ namespace Proyecto.Models
             }
 
 
+            //Insert a relation with member
+            connection();
+            AddNewArticle = "INSERT INTO WRITES " +
+                            "VALUES ( 1 , @articleId)";
+            SqlCommand cmd2 = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
+            cmd2.Parameters.AddWithValue("@articleId", smodel.articleId);
+
+            con.Open();
+            i = cmd2.ExecuteNonQuery();
+            con.Close();
+
             if (i >= 1)
                 return true;
             else
@@ -462,6 +473,7 @@ namespace Proyecto.Models
             else
                 return false;
         }
+
 
 
     }

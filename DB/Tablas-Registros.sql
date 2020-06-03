@@ -1,12 +1,12 @@
---DROP TABLE HAS_SKILL;
---DROP TABLE Skill;
---DROP TABLE WRITES;
---DROP TABLE REVIEWS;
---DROP TABLE Question;
---DROP TABLE CommunityMember;
---DROP TABLE INVOLVES;
---DROP TABLE Article;
---DROP TABLE Topic;
+DROP TABLE HAS_SKILL;
+DROP TABLE Skill;
+DROP TABLE WRITES;
+DROP TABLE REVIEWS;
+DROP TABLE Question;
+DROP TABLE CommunityMember;
+DROP TABLE INVOLVES;
+DROP TABLE Article;
+DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -333,21 +333,3 @@ INSERT INTO REVIEWS
 --    answer      VARCHAR (MAX) NULL,
 --    PRIMARY KEY CLUSTERED (questionId ASC)
 --);
-
-select *
-from Article
-
-update Article
-set likesCount = likesCount + 2
-where articleId = 1
-
-update Article
-set dislikesCount = dislikesCount + 1
-where articleId = 1
-
-update Article
-set likeBalance = likesCount - dislikesCount
-where articleId = 1
-
-SELECT *
-FROM CommunityMember
