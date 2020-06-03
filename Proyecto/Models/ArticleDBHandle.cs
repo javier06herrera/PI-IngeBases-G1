@@ -384,7 +384,7 @@ namespace Proyecto.Models
         public bool AddQuestion(QuestionModel smodel, bool type)
         {
             connection();
-            string sendQuestion = "INSERT INTO Question " +
+            string sendQuestion = "INSERT INTO Question (question, faq, answer, status) " +
                                   "VALUES (@question, @faq, @answer, @status)";
             SqlCommand cmd = new SqlCommand(sendQuestion, con);
             cmd.Parameters.AddWithValue("@question", smodel.question);

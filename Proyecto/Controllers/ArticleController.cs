@@ -367,7 +367,9 @@ namespace Proyecto.Controllers
         {
             try
             {
+                smodel.faq = "posted";
                 ModelState.Remove("answer");//To avoid the answer check. It cant be null but in this case it is
+                ModelState.Remove("status");
                 if (ModelState.IsValid) //If the data is valid
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
