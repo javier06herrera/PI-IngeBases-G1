@@ -20,24 +20,24 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.question)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.answer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
 
-        <th>
-            @Html.DisplayNameFor(model => model.faq)
-        </th>
+            <th>
+                @Html.DisplayNameFor(model => model.faq)
+            </th>
 
-        <td>
-            @Html.ActionLink("Publish/Unpublish", "PublishQuestion", new { questionId = item.questionId })
-        </td>
-    </tr>
+            <td>
+                @Html.ActionLink("Publish/Unpublish", "PublishQuestion", new { questionId = item.questionId })
+            </td>
+        </tr>
     }
 </table>
