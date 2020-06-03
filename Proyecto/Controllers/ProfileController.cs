@@ -13,7 +13,7 @@ namespace Proyecto.Controllers
     public class ProfileController : Controller
     {
         // GET: Profile
-        public ActionResult Index()
+        public ActionResult Registration()
         {
             return View();
         }

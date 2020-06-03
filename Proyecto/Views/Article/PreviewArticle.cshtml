@@ -22,6 +22,9 @@
                         <div class="art-category"><a href="#"><i class="fa fa-folder"></i>@Html.DisplayFor(model => model.topicName)</a></div>
                         <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(model => model.likesCount)</div>
                         <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(model => model.dislikesCount)</div>
+
+                        <div class="art-comments">Viewed @Html.DisplayFor(model => model.accessCount) times</div>
+
                     </div>
                     <div class="article-content">
                         @Html.Raw(HttpUtility.HtmlDecode(Model.content))
