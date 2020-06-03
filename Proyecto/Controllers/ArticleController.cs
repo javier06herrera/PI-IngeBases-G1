@@ -279,7 +279,7 @@ namespace Proyecto.Controllers
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
                     sdb.UpdateDetails(smodel,"long");
-                    return RedirectToAction("Index");
+                    return RedirectToAction("CommunityArticles");
                 }
                 else
                 {
