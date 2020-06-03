@@ -63,5 +63,7 @@ namespace Proyecto.Models
         [Display(Name = "Skills")]
         public string skills { get; set; }
 
-    }
+        public int articleCount { get; set; }
+
+}
 }

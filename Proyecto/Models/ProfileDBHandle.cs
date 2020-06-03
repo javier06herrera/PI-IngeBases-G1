@@ -57,8 +57,20 @@ namespace Proyecto.Models
                 }
 
                 reader.Close();
-                return memberProfile;
             }
+            SqlConnection connection1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
+            query = "SELECT COUNT(*) " +
+                   "FROM  WRITES " +
+                   "WHERE memberId = @memberId";
+
+            SqlCommand cmd1 = new SqlCommand(query, connection1);
+            cmd1.Parameters.AddWithValue("@memberId", memberId);
+            connection1.Open();
+            memberProfile.articleCount = Convert.ToInt32(cmd1.ExecuteScalar());
+            connection1.Close();
+
+            return memberProfile;
+
         }
 
 
@@ -137,6 +149,76 @@ namespace Proyecto.Models
             return true;
             
 
+        }
+
+        //Combines all the topics of an Article
+        public string topicMerge(int articleId, DataTable topicList)
+        {
+            string topicsLine = "";
+            foreach (DataRow topic in topicList.Rows)
+            {
+                if (Convert.ToInt32(topic["articleId"]) == articleId)
+                {
+                    topicsLine = topicsLine + topic["category"] + ":" + topic["topicName"] + ", ";
+                }
+            }
+            topicsLine.Remove(topicsLine.Length - 2, 1);
+            return topicsLine;
+        }
+
+
+        // Ver resultados de busqueda
+        public List<ArticleModel> fetchMyArticles(int memberId)
+        {
+            List<ArticleModel> articleList = new List<ArticleModel>();
+
+
+            //Fetch of the entire list of articles without topics
+            string fetchArticles = "SELECT * " +
+                                   "FROM Article A " +
+                                   "JOIN WRITES W ON A.articleId = W.ArticleId "+
+                                   "WHERE W.memberId = @memberId "+
+                                   "ORDER BY publishDate DESC";
+            SqlCommand cmd = new SqlCommand(fetchArticles, connection);
+            cmd.Parameters.AddWithValue("@memberId", memberId);
+            SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
+            DataTable articleTable = new DataTable();
+            connection.Open();
+            sd1.Fill(articleTable);
+            foreach (DataRow article in articleTable.Rows)
+            {
+                articleList.Add(
+                    new ArticleModel
+                    {
+                        articleId = Convert.ToInt32(article["articleId"]),
+                        name = Convert.ToString(article["name"]),
+                        topicName = " ",
+                        Abstract = Convert.ToString(article["Abstract"]),
+                        publishDate = Convert.ToString(article["publishDate"]),
+                        content = Convert.ToString(article["content"]),
+                        type = Convert.ToString(article["type"]),
+                        baseGrade = Convert.ToInt32(article["baseGrade"]),
+                        accessCount = Convert.ToInt32(article["accessCount"]),
+                        likesCount = Convert.ToInt32(article["likesCount"]),
+                        dislikesCount = Convert.ToInt32(article["dislikesCount"]),
+                        likeBalance = Convert.ToInt32(article["likeBalance"])
+                    });
+            }
+            connection.Close();
+
+            //Fetch of the entire list of topics
+            string fetchTopics = "SELECT * " +
+                                 "FROM INVOLVES";
+            SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, connection);
+            DataTable topicList = new DataTable();
+            connection.Open();
+            sd2.Fill(topicList);
+            foreach (ArticleModel article in articleList)
+            {
+                article.topicName = topicMerge(article.articleId, topicList);
+            }
+            connection.Close();
+            return articleList;
         }
     }
 }
