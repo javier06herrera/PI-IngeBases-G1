@@ -186,18 +186,24 @@ namespace Proyecto.Controllers
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
 
-        public ActionResult isALike(int articleId)
+        //[HttpPost]
+        public ActionResult isALike(ArticleModel model)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
             bool like = true;
-            return View(sdb.updateLikes(articleId, like));
+            sdb.updateLikes(model.articleId, like);
+            model.likesCount = model.likesCount + 1;
+            return View("PreviewArticle", model);
         }
 
-        public ActionResult isADisLike(int articleId)
+
+        public ActionResult isADisLike(ArticleModel model)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
             bool like = false;
-            return View(sdb.updateLikes(articleId, like));
+            sdb.updateLikes(model.articleId, like);
+            model.dislikesCount = model.dislikesCount + 1;
+            return View("PreviewArticle",model);
         }
         //public ActionResult HtmlRaw(ArticleModel smodel)
         //{

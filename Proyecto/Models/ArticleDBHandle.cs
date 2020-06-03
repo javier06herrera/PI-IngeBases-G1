@@ -113,7 +113,13 @@ namespace Proyecto.Models
                         Abstract = Convert.ToString(article["Abstract"]),
                         publishDate = Convert.ToString(article["publishDate"]),
                         content = Convert.ToString(article["content"]),
-                        type = Convert.ToString(article["type"])
+                        type = Convert.ToString(article["type"]),
+                        baseGrade = Convert.ToInt32(article["baseGrade"]),
+                        accessCount = Convert.ToInt32(article["accessCount"]),
+                        likesCount = Convert.ToInt32(article["likesCount"]),
+                        dislikesCount = Convert.ToInt32(article["dislikesCount"]),
+                        likeBalance = Convert.ToInt32(article["likeBalance"])
+
                     });
             }
             con.Close();
@@ -428,7 +434,7 @@ namespace Proyecto.Models
             SqlCommand cmd1 = new SqlCommand(query, con);
             cmd1.Parameters.AddWithValue("@articleId", articleId);
             con.Open();
-            i = cmd.ExecuteNonQuery();
+            i = cmd1.ExecuteNonQuery();
             con.Close();
 
             if (i >= 1)
