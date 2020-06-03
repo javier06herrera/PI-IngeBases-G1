@@ -11,11 +11,11 @@ namespace Proyecto.Models
     {
         public int memberId { get; set; }
 
-        [Required(ErrorMessage = "Please provide a name")]
+        [Required(ErrorMessage = "Please provide your name")]
         [Display(Name = "Name")]
         public string name { get; set; }
 
-        [Required(ErrorMessage = "Please provide a lastname")]
+        [Required(ErrorMessage = "Please provide your lastname")]
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
@@ -26,11 +26,11 @@ namespace Proyecto.Models
         [Display(Name = "Age")]
         public int age { get; set; }
 
-        [Required(ErrorMessage = "Please provide a city")]
+        [Required(ErrorMessage = "Please provide the city where you live")]
         [Display(Name = "City")]
         public string addressCity { get; set; }
 
-        [Required(ErrorMessage = "Please provide a country")]
+        [Required(ErrorMessage = "Please provide the country where you live")]
         [Display(Name = "Country")]
         public string addressCountry { get; set; }
 
@@ -40,14 +40,16 @@ namespace Proyecto.Models
         [Display(Name = "Languages")]
         public string languages { get; set; }
 
-        [Required(ErrorMessage = "Please provide an e-mail")]
+        [Required(ErrorMessage = "Please provide your e-mail")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string email { get; set; }
 
+        [Required(ErrorMessage = "Please provide your mobile number")]
         [Display(Name = "Mobile")]
         public string mobile { get; set; }
 
+        [Required(ErrorMessage = "Please enter your job title")]
         [Display(Name = "Job")]
         public string job { get; set; }
 
@@ -57,7 +59,7 @@ namespace Proyecto.Models
         [Display(Name = "Points")]
         public int points { get; set; }
 
-
+        [Required(ErrorMessage = "Please describe your skills")]
         [Display(Name = "Skills")]
         public string skills { get; set; }
 

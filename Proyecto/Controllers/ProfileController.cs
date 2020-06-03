@@ -16,21 +16,27 @@ namespace Proyecto.Controllers
         [HttpPost]
         public ActionResult Registration(ProfileModel pmodel)
         {
-            ProfileDBHandle sdb = new ProfileDBHandle();
-            sdb.AddProfile(pmodel);
-            ViewBag.Message = "Profile added successfully";
-
-            return RedirectToAction("HomePage","Article",null);
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    ProfileDBHandle sdb = new ProfileDBHandle();
+                    sdb.AddProfile(pmodel);
+                    ViewBag.Message = "We successfully created your profile!";
+                    return RedirectToAction("HomePage", "Article", null);
+                }
+            }
+            catch
+            {
+                ViewBag.Message = "Please, provide your information";
+            }
+            return View();
         }
 
         public ActionResult Registration()
         {
             return View();
         }
-
-
-
-        
 
         public ActionResult Profile()
         {

@@ -11,7 +11,7 @@ namespace Proyecto.Models
         public int questionId { get; set; }
 
         [Display(Name = "Question")]
-        [Required(ErrorMessage = "Question is required.")]
+        [Required(ErrorMessage = "Type your question!")]
         public string question { get; set; }
 
         //[Display(Name = "Question")]
