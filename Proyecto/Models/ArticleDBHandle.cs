@@ -406,7 +406,7 @@ namespace Proyecto.Models
             String updateQuestion = "UPDATE Question " +
                                    "SET question = @question, " +
                                    "faq = @faq, " +
-                                   "answer = @answer" +
+                                   "answer = @answer, " +
                                    "status = @status " +
                                    "WHERE questionId = @questionId";
 
