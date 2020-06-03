@@ -23,6 +23,7 @@ namespace Proyecto.Models
 
         public ProfileModel getMemberProfile(int memberId)
         {
+            
             ProfileModel memberProfile = new ProfileModel();
             string query = "SELECT * " +
                             "FROM CommunityMember CM " +
@@ -60,7 +61,7 @@ namespace Proyecto.Models
             }
         }
 
-        
+
         public ProfileModel AddProfile(ProfileModel pmodel)
         {
 
@@ -86,6 +87,56 @@ namespace Proyecto.Models
             }
 
             return pmodel;
+        }
+        public bool updateMerits(int articleId, bool valueSign)
+        {
+            //Brings all the member that are responsible for the article
+            string query = "SELECT memberId " +
+                           "FROM WRITES " +
+                           "WHERE articleId = @articleId";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
+            DataTable membersTemp = new DataTable();
+            connection.Open();
+            sd1.Fill(membersTemp);
+            List<int> members= new List<int>();
+            foreach (DataRow dr in membersTemp.Rows)
+            {
+                members.Add(Convert.ToInt32(dr[0]));
+            }
+            connection.Close();
+
+            //For each of the members updates the point values
+            if (valueSign)
+            {
+                query = "UPDATE CommunityMember " +
+                        "SET points = points + 1 " +
+                        "WHERE memberId = @memberId";
+            }
+            else
+            {
+                query = "UPDATE CommunityMember " +
+                        "SET points = points - 1 " +
+                        "WHERE memberId = @memberId";
+            }
+
+            SqlCommand cmd1 = new SqlCommand(query, connection);
+            cmd1.Parameters.AddWithValue("@memberId", members[0]);
+            connection.Open();
+            int i;
+            i = cmd1.ExecuteNonQuery();
+            for (int j = 1; j < members.Count;j++)
+            {
+                cmd1.Parameters["@memberId"].Value = members[j];
+                i = cmd1.ExecuteNonQuery();
+                if (i < 0)
+                    return false;
+            }
+            connection.Close();
+            return true;
+            
+
         }
     }
 }

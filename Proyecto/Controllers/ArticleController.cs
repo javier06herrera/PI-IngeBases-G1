@@ -196,7 +196,9 @@ namespace Proyecto.Controllers
         {
         
             ArticleDBHandle sdb = new ArticleDBHandle();
+            ProfileDBHandle pdb = new ProfileDBHandle();
             sdb.UpdateAccess(artModel);
+            pdb.updateMerits(articleId, true);
 
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
         }
@@ -205,8 +207,10 @@ namespace Proyecto.Controllers
         public ActionResult isALike(ArticleModel model)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
+            ProfileDBHandle pdb = new ProfileDBHandle();
             bool like = true;
             sdb.updateLikes(model.articleId, like);
+            pdb.updateMerits(model.articleId, like);
             model.likesCount = model.likesCount + 1;
             return View("PreviewArticle", model);
         }
@@ -215,8 +219,10 @@ namespace Proyecto.Controllers
         public ActionResult isADisLike(ArticleModel model)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
+            ProfileDBHandle pdb = new ProfileDBHandle();
             bool like = false;
             sdb.updateLikes(model.articleId, like);
+            pdb.updateMerits(model.articleId, like);
             model.dislikesCount = model.dislikesCount + 1;
             return View("PreviewArticle",model);
         }
