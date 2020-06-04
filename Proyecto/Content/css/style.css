@@ -26,6 +26,17 @@ a:hover {
     left: 12px;
 }
 
+.myThumb1 {
+    position: relative;
+    right: 110px;
+    top: 3px;
+}
+
+.myThumb2 {
+    position: relative;
+    right: 110px;
+    top: 4px;
+}
 
 .SearchTopic {
     background-color: #007bff;

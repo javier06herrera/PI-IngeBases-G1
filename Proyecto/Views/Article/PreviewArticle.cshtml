@@ -34,8 +34,8 @@
                         <h2><small>Was This Article Helpful?</small></h2>
                         @*<a href="http://localhost:54007/Article/isALike?model=@(Model)" class="btn btn-success btn-o btn-wide"><i class="fa fa-thumbs-o-up"></i>Like</a>*@
                         @*<a href="http://localhost:54007/Article/isADislike?model=@(Model)" class="btn btn-danger btn-o btn-wide"><i class="fa fa-thumbs-o-down"></i>Dislike</a>*@
-                        @Html.ActionLink("Like", "isALike", "Article", Model, new { @class = "btn btn-success btn-o btn-wide" })
-                        @Html.ActionLink("Dislike", "isADislike", "Article", Model, new { @class = "btn btn-danger btn-o btn-wide" })
+                        @Html.ActionLink("Like", "isALike", "Article", Model, new { @class = "btn btn-success btn-o btn-wide" })<i class="myThumb1 fa fa-thumbs-o-up"></i>
+                        @Html.ActionLink("Dislike", "isADislike", "Article", Model, new { @class = "btn btn-danger btn-o btn-wide" })<i class="myThumb2 fa fa-thumbs-o-down"></i>
                     </div>
                 </div>
             </div>

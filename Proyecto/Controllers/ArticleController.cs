@@ -213,9 +213,10 @@ namespace Proyecto.Controllers
             ArticleDBHandle sdb = new ArticleDBHandle();
             ProfileDBHandle pdb = new ProfileDBHandle();
             bool like = true;
-            sdb.updateLikes(model.articleId, like);
+            int [] likeData = sdb.updateLikes(model.articleId, like);
             pdb.updateMerits(model.articleId, like);
-            model.likesCount = model.likesCount + 1;
+            model.likesCount = likeData[0];
+            model.dislikesCount = likeData[1];
             return View("PreviewArticle", model);
         }
 
@@ -225,9 +226,10 @@ namespace Proyecto.Controllers
             ArticleDBHandle sdb = new ArticleDBHandle();
             ProfileDBHandle pdb = new ProfileDBHandle();
             bool like = false;
-            sdb.updateLikes(model.articleId, like);
+            int[] likeData = sdb.updateLikes(model.articleId, like);
             pdb.updateMerits(model.articleId, like);
-            model.dislikesCount = model.dislikesCount + 1;
+            model.likesCount = likeData[0];
+            model.dislikesCount = likeData[1];
             return View("PreviewArticle",model);
         }
         //public ActionResult HtmlRaw(ArticleModel smodel)
