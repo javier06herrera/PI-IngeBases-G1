@@ -10,7 +10,7 @@
 </ol>
 <hr class="style-three">
 
-@Html.ActionLink("Publish/Unpublish", "ModeratorQuestion", new { })
+@Html.ActionLink("Publish/Unpublish", "ModeratorQuestion", new {  },new{ @class = "btn btn-primary" })
 <div class="accordion" id="questionsAndAnswers">
     @{int index = 0;}
     @foreach (var item in Model)

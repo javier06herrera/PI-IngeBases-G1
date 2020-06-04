@@ -157,10 +157,10 @@ CONSTRAINT FK_CommunityMember_Question FOREIGN KEY (memberId) REFERENCES Communi
 );
 
 INSERT INTO	Question
-VALUES (1, 'Why are we here?','posted', DEFAULT, DEFAULT)
+VALUES (1, 'How to exit VIM?','posted', 'If you are in edit mode, first press the <Esc> key. Then enter :wq + <Enter> to save and exit. And by the way this does not work', DEFAULT)
 
 INSERT INTO	Question
-VALUES ( 2,'What happened to Jimmy Hoffa?',DEFAULT, DEFAULT, DEFAULT)
+VALUES ( 2,'How to create an article?',DEFAULT, DEFAULT, DEFAULT)
 
 INSERT INTO	Question
 VALUES (3, 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
