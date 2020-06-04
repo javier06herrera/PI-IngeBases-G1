@@ -427,22 +427,22 @@ namespace Proyecto.Models
         }
 
 
-        public bool updateLikes(int articleId, bool likeFlag)
+        public int[] updateLikes(int articleId, bool likeFlag)
         {
             //Update of like or dislike count
             connection();
             String query;
             if (likeFlag)
             {
-                        query = "UPDATE Article " +
-                       "SET likesCount = likesCount + 1 " +
-                       "WHERE articleId = @articleId";
+                query = "UPDATE Article " +
+               "SET likesCount = likesCount + 1 " +
+               "WHERE articleId = @articleId";
             }
             else
             {
-                       query = "UPDATE Article " +
-                       "SET dislikesCount = dislikesCount + 1 " +
-                       "WHERE articleId = @articleId";
+                query = "UPDATE Article " +
+                "SET dislikesCount = dislikesCount + 1 " +
+                "WHERE articleId = @articleId";
             }
 
 
@@ -452,8 +452,6 @@ namespace Proyecto.Models
             int i = cmd.ExecuteNonQuery();
             con.Close();
 
-            if (i < 1)
-                return false;
 
             //Update of like balance
             connection();
@@ -468,13 +466,28 @@ namespace Proyecto.Models
             i = cmd1.ExecuteNonQuery();
             con.Close();
 
-            if (i >= 1)
-                return true;
-            else
-                return false;
+            //Bring likes and dislikes
+            int[] likeData = new int[2];
+            query = "SELECT likesCount " +
+                    "FROM Article " +
+                    "WHERE articleId = @articleId";
+            cmd1.CommandText = query;
+            cmd1.Parameters["@articleId"].Value = articleId;
+            con.Open();
+            likeData[0] = Convert.ToInt32(cmd1.ExecuteScalar());
+            con.Close();
+
+            query = "SELECT dislikesCount " +
+                    "FROM Article " +
+                    "WHERE articleId = @articleId";
+            cmd1.CommandText = query;
+            cmd1.Parameters["@articleId"].Value = articleId;
+            con.Open();
+            likeData[1] = Convert.ToInt32(cmd1.ExecuteScalar());
+            con.Close();
+
+            return likeData;
         }
-
-
 
     }
 }
