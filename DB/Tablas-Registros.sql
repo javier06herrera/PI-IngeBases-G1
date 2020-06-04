@@ -26,10 +26,10 @@ likeBalance		INT NOT NULL DEFAULT 0,
 
 
 insert into Article
-values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','C://Daniel/Defoe',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','Nací en 1632, en la ciudad de York, de una buena familia, aunque no de la región, pues mi padre era un extranjero de Brema1 que, inicialmente, se asentó en Hull2. Allí consiguió hacerse con una considerable fortuna como comerciante y, más tarde, abandonó sus negocios y se fue a vivir a York, donde se casó con mi madre, que pertenecía a la familia Robinson, una de las buenas familias del condado de la cual obtuve mi nombre, Robinson Kreutznaer. Mas, por la habitual alteración de las palabras que se hace en Inglaterra, ahora nos llaman y nosotros también nos llamamos y escribimos nuestro nombre Crusoe; y así me han llamado siempre mis compañeros.   Tenía dos hermanos mayores, uno de ellos fue coronel de un regimiento de infantería inglesa en Flandes, que antes había estado bajo el mando del célebre coronel Lockhart, y murió en la batalla de Dunkerque3 contra los españoles.    Lo que fue de mi segundo hermano, nunca lo he sabido al igual que mi padre y mi madre tampoco supieron lo que fue de mí.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 
 insert into Article
-values ('I, Robot','long','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','C://Isaac/Asimov',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+values ('I, Robot','long','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','Un  robot  no  debe  dañar  a  un  ser  humano  o,  por  su  inacción,dejar que un ser humano sufra daño.2.  Un  robot  debe  obedecer  las  órde  nes  que  le  son  dadas  por  unser  hu  mano,  excepto  cuando  estas  órdenes  están  en  oposicióncon la primera Ley.3.  Un  robot  debe  proteger  su  propia  existencia,  hasta  donde  estaprotec ción no esté en conflicto con la primera o segunda Leyes.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 
 insert into Article
 values ('Mamita Yunai','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
@@ -175,6 +175,9 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
 
  INSERT INTO WRITES
  VALUES	(1,1)
+
+ INSERT INTO WRITES
+ VALUES	(1,2)
 
  INSERT INTO WRITES
  VALUES	(2,1)
@@ -333,3 +336,4 @@ INSERT INTO REVIEWS
 --    answer      VARCHAR (MAX) NULL,
 --    PRIMARY KEY CLUSTERED (questionId ASC)
 --);
+
