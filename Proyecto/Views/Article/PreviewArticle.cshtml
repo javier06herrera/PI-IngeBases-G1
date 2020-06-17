@@ -20,8 +20,9 @@
                     <div class="article-info">
                         <div class="art-date"><a href="#"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(model => model.publishDate)</a></div>
                         <div class="art-category"><a href="#"><i class="fa fa-folder"></i>@Html.DisplayFor(model => model.topicName)</a></div>
-                        <div class="art-comments"><i class="fa fa-thumbs-o-up"></i>@Html.DisplayFor(model => model.likesCount)</div>
-                        <div class="art-comments"><i class="fa fa-thumbs-o-down"></i>@Html.DisplayFor(model => model.dislikesCount)</div>
+                        <div class="art-comments"><i class="fa fa-plus-square-o"></i>@Html.DisplayFor(model => model.likesCount)</div>
+                        <div class="art-comments"><i class="fa fa-square-o"></i>@Html.DisplayFor(model => model.neutralCount)</div>
+                        <div class="art-comments"><i class="fa fa-minus-square-o"></i>@Html.DisplayFor(model => model.dislikesCount)</div>
 
                         <div class="art-comments">Viewed @Html.DisplayFor(model => model.accessCount) times</div>
 
@@ -34,8 +35,9 @@
                         <h2><small>Was This Article Helpful?</small></h2>
                         @*<a href="http://localhost:54007/Article/isALike?model=@(Model)" class="btn btn-success btn-o btn-wide"><i class="fa fa-thumbs-o-up"></i>Like</a>*@
                         @*<a href="http://localhost:54007/Article/isADislike?model=@(Model)" class="btn btn-danger btn-o btn-wide"><i class="fa fa-thumbs-o-down"></i>Dislike</a>*@
-                        @Html.ActionLink("Like", "isALike", "Article", Model, new { @class = "btn btn-success btn-o btn-wide" })<i class="myThumb1 fa fa-thumbs-o-up"></i>
-                        @Html.ActionLink("Dislike", "isADislike", "Article", Model, new { @class = "btn btn-danger btn-o btn-wide" })<i class="myThumb2 fa fa-thumbs-o-down"></i>
+                        @Html.ActionLink("Like", "isALike", "Article", Model, new { @class = "btn btn-success btn-o btn-wide" })<i class="myThumb1 fa fa-plus-square-o"></i>
+                        @Html.ActionLink("Neutro", "isANeutro", "Article", Model, new { @class = "btn myBtn btn-o btn-wide" })<i class="myThumb2 fa fa-square-o"></i>
+                        @Html.ActionLink("Dislike", "isADislike", "Article", Model, new { @class = "btn btn-danger btn-o btn-wide" })<i class="myThumb2 fa fa-minus-square-o"></i>
                     </div>
                 </div>
             </div>

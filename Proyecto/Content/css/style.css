@@ -26,6 +26,10 @@ a:hover {
     left: 12px;
 }
 
+.myBtn {
+    background-color: #007bff;
+    color: white;
+}
 .myThumb1 {
     position: relative;
     right: 110px;
@@ -35,7 +39,7 @@ a:hover {
 .myThumb2 {
     position: relative;
     right: 110px;
-    top: 4px;
+    top: 3px;
 }
 
 .SearchTopic {

@@ -23,7 +23,7 @@ namespace Proyecto.Models
         {
             connection();
             string AddNewArticle = "INSERT INTO Article " +
-                                   "VALUES (@name, @type,@Abstract,@publishDate,@content,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+                                   "VALUES (@name, @type,@Abstract,@publishDate,@content,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
@@ -150,6 +150,7 @@ namespace Proyecto.Models
                         baseGrade = Convert.ToInt32(article["baseGrade"]),
                         accessCount = Convert.ToInt32(article["accessCount"]),
                         likesCount = Convert.ToInt32(article["likesCount"]),
+                        neutralCount = Convert.ToInt32(article["neutralCount"]),
                         dislikesCount = Convert.ToInt32(article["dislikesCount"]),
                         likeBalance = Convert.ToInt32(article["likeBalance"])
                     });
@@ -232,7 +233,7 @@ namespace Proyecto.Models
         {
             connection();
             String appendTopic = "INSERT INTO INVOLVES " +
-                                "VALUES(@articleId, @category ,@topicName)";
+                                 "VALUES(@articleId, @category ,@topicName)";
             SqlCommand cmd2 = new SqlCommand(appendTopic, con);
             cmd2.Parameters.AddWithValue("@articleId", articleId);
             cmd2.Parameters.AddWithValue("@topicName", topicName);
@@ -335,6 +336,7 @@ namespace Proyecto.Models
                         baseGrade = Convert.ToInt32(dr["baseGrade"]),
                         accessCount = Convert.ToInt32(dr["accessCount"]),
                         likesCount = Convert.ToInt32(dr["likesCount"]),
+                        neutralCount = Convert.ToInt32(dr["neutralCount"]),
                         dislikesCount = Convert.ToInt32(dr["dislikesCount"]),
                         likeBalance = Convert.ToInt32(dr["likeBalance"])
                     });
@@ -427,15 +429,21 @@ namespace Proyecto.Models
         }
 
 
-        public int[] updateLikes(int articleId, bool likeFlag)
+        public int[] updateLikes(int articleId, int voteFlag)
         {
             //Update of like or dislike count
             connection();
             String query;
-            if (likeFlag)
+            if (voteFlag == 0)
             {
                 query = "UPDATE Article " +
                "SET likesCount = likesCount + 1 " +
+               "WHERE articleId = @articleId";
+            }
+            else if (voteFlag==1)
+            {
+                query = "UPDATE Article " +
+               "SET neutralCount = neutralCount + 1" +
                "WHERE articleId = @articleId";
             }
             else
@@ -466,8 +474,8 @@ namespace Proyecto.Models
             i = cmd1.ExecuteNonQuery();
             con.Close();
 
-            //Bring likes and dislikes
-            int[] likeData = new int[2];
+            //Bring likes, neutral and dislikes
+            int[] likeData = new int[3];
             query = "SELECT likesCount " +
                     "FROM Article " +
                     "WHERE articleId = @articleId";
@@ -477,13 +485,22 @@ namespace Proyecto.Models
             likeData[0] = Convert.ToInt32(cmd1.ExecuteScalar());
             con.Close();
 
-            query = "SELECT dislikesCount " +
+            query = "SELECT neutralCount " +
                     "FROM Article " +
                     "WHERE articleId = @articleId";
             cmd1.CommandText = query;
             cmd1.Parameters["@articleId"].Value = articleId;
             con.Open();
             likeData[1] = Convert.ToInt32(cmd1.ExecuteScalar());
+            con.Close();
+
+            query = "SELECT dislikesCount " +
+                    "FROM Article " +
+                    "WHERE articleId = @articleId";
+            cmd1.CommandText = query;
+            cmd1.Parameters["@articleId"].Value = articleId;
+            con.Open();
+            likeData[2] = Convert.ToInt32(cmd1.ExecuteScalar());
             con.Close();
 
             return likeData;
