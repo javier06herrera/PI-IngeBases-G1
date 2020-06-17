@@ -90,25 +90,25 @@ languages			VARCHAR(300) 		,
 email				VARCHAR(100) NOT NULL,
 mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
-memberRank			VARCHAR(100) 		,
+memberRank			VARCHAR(100) DEFAULT 'peripheral',--peripheral, active, core, coordinator
 points				INT	NOT NULL DEFAULT 0,
 skills				VARCHAR(MAX) NOT NULL
 )
 
 INSERT INTO CommunityMember
-VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','Generic',DEFAULT,'Versatility')
+VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','coordinator',DEFAULT,'Versatility')
 
 INSERT INTO CommunityMember
-VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','Generic', DEFAULT, 'Creativity')
+VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','coordinator', DEFAULT, 'Creativity')
 
 INSERT INTO CommunityMember
-VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','Generic',DEFAULT,'Math-skills')
+VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','core',DEFAULT,'Math-skills')
 
 INSERT INTO CommunityMember
-VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','Generic',DEFAULT,'Adaptability')
+VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','core',DEFAULT,'Adaptability')
 
 INSERT INTO CommunityMember
-VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','Generic',DEFAULT,'Organized')
+VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','core',DEFAULT,'Organized')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
