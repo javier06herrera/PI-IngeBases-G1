@@ -54,6 +54,9 @@ namespace Proyecto.Models
         [Display(Name = "Likes Count")]
         public int likesCount { get; set; }
 
+        [Display(Name = "Neutral Count")]
+        public int neutralCount { get; set; }
+
         [Display(Name = "Dislikes Count")]
         public int dislikesCount { get; set; }
 

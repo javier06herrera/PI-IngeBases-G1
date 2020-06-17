@@ -200,6 +200,7 @@ namespace Proyecto.Models
                         baseGrade = Convert.ToInt32(article["baseGrade"]),
                         accessCount = Convert.ToInt32(article["accessCount"]),
                         likesCount = Convert.ToInt32(article["likesCount"]),
+                        neutralCount = Convert.ToInt32(article["neutralCount"]),
                         dislikesCount = Convert.ToInt32(article["dislikesCount"]),
                         likeBalance = Convert.ToInt32(article["likeBalance"])
                     });

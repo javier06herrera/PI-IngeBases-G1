@@ -212,24 +212,39 @@ namespace Proyecto.Controllers
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
             ProfileDBHandle pdb = new ProfileDBHandle();
-            bool like = true;
-            int [] likeData = sdb.updateLikes(model.articleId, like);
-            pdb.updateMerits(model.articleId, like);
+            int vote = 0;
+            int [] likeData = sdb.updateLikes(model.articleId, vote);
+            pdb.updateMerits(model.articleId, true);
             model.likesCount = likeData[0];
-            model.dislikesCount = likeData[1];
+            model.neutralCount = likeData[1];
+            model.dislikesCount = likeData[2];
             return View("PreviewArticle", model);
         }
 
+        //[HttpPost]
+        public ActionResult isANeutro(ArticleModel model)
+        {
+            ArticleDBHandle sdb = new ArticleDBHandle();
+            ProfileDBHandle pdb = new ProfileDBHandle();
+            int vote = 1;
+            int[] likeData = sdb.updateLikes(model.articleId, vote);
+            model.likesCount = likeData[0];
+            model.neutralCount = likeData[1];
+            model.dislikesCount = likeData[2];
+            return View("PreviewArticle", model);
+        }
 
+        //[HttpPost]
         public ActionResult isADisLike(ArticleModel model)
         {
             ArticleDBHandle sdb = new ArticleDBHandle();
             ProfileDBHandle pdb = new ProfileDBHandle();
-            bool like = false;
-            int[] likeData = sdb.updateLikes(model.articleId, like);
-            pdb.updateMerits(model.articleId, like);
+            int vote = 2;
+            int[] likeData = sdb.updateLikes(model.articleId, vote);
+            pdb.updateMerits(model.articleId, false);
             model.likesCount = likeData[0];
-            model.dislikesCount = likeData[1];
+            model.neutralCount = likeData[1];
+            model.dislikesCount = likeData[2];
             return View("PreviewArticle",model);
         }
         //public ActionResult HtmlRaw(ArticleModel smodel)
