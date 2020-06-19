@@ -18,7 +18,7 @@ namespace Proyecto.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     ProfileDBHandle sdb = new ProfileDBHandle();
                     sdb.AddProfile(pmodel);
@@ -43,8 +43,8 @@ namespace Proyecto.Controllers
             ProfileDBHandle sdb = new ProfileDBHandle();
             //ArticleDBHandle sdb1 = new ArticleDBHandle();
 
-            ViewData["Articles"] = sdb.fetchMyArticles(1);
-            ViewData["Profile"] = sdb.getMemberProfile(1);
+            ViewData["Articles"] = sdb.fetchMyArticles("barrKev@puchimail.com");
+            ViewData["Profile"] = sdb.getMemberProfile("barrKev@puchimail.com");
 
             return View();
         }

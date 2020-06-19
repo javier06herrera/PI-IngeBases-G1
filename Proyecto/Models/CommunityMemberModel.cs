@@ -8,8 +8,9 @@ namespace Proyecto.Models
 {
     public class CommunityMemberModel
     {
-        [Display(Name = "Member Identification")]
-        public int memberId { get; set; }
+        [Display(Name = "Member's Email")]
+        [Required(ErrorMessage = "Please insert the email of the member")]
+        public string email { get; set; }
 
         [Display(Name = "Member Name")]
         [Required(ErrorMessage = "Please insert the first name of the member")]
@@ -45,10 +46,6 @@ namespace Proyecto.Models
         [Display(Name = "Member's Languages")]
         [Required(ErrorMessage = "Please insert the languages of the member separated by commas")]
         public string languages { get; set; }
-
-        [Display(Name = "Member's Email")]
-        [Required(ErrorMessage = "Please insert the email of the member")]
-        public string email { get; set; }
 
         [Display(Name = "Member's Phonne Number")]
         [Required(ErrorMessage = "Please insert the phone number of the member")]
