@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 
 
 namespace Proyecto.Models
@@ -65,5 +65,39 @@ namespace Proyecto.Models
 
         public int articleCount { get; set; }
 
-}
+        public List<SelectListItem> ProfileList { get; set; }
+
+        private List<SelectListItem> categories = new List<SelectListItem>();
+        private List<SelectListItem> values = new List<SelectListItem>();
+
+        [Required(ErrorMessage = "Please select a category")]
+
+        public string selectedCategory { get; set; }
+        [Required(ErrorMessage = "Please select a category")]
+
+        public string selectedValue { get; set; }
+
+
+        
+
+        public List<SelectListItem> ValuesList
+        {
+            get { return values;  }
+        }
+
+        public List<SelectListItem> CategoryList
+        {
+            get
+            {
+                categories.Add(new SelectListItem() { Text = "Country", Value = "1" });
+                categories.Add(new SelectListItem() { Text = "Skills", Value = "2" });
+                categories.Add(new SelectListItem() { Text = "Languages", Value = "3" });
+                categories.Add(new SelectListItem() { Text = "Hobbies", Value = "4" });
+                return categories;
+
+            }
+        }
+
+
+    }
 }
