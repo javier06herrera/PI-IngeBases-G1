@@ -8,9 +8,9 @@ namespace Proyecto.Models
 {
     public class WritesModel
     {
-        [Display(Name = "Member Identification")]
-        [Required(ErrorMessage = "Please insert the identification of the member")]
-        public int memberId { get; set; }
+        [Display(Name = "Member's Email")]
+        [Required(ErrorMessage = "Please insert the email of the member")]
+        public string email { get; set; }
 
         [Display(Name = "Article Identification")]
         [Required(ErrorMessage = "Please insert the identification of the article")]

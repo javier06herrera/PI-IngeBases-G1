@@ -9,7 +9,12 @@ namespace Proyecto.Models
 {
     public class ProfileModel
     {
-        public int memberId { get; set; }
+        //public int memberId { get; set; }
+
+        [Required(ErrorMessage = "Please provide your e-mail")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string email { get; set; }
 
         [Required(ErrorMessage = "Please provide your name")]
         [Display(Name = "Name")]
@@ -39,11 +44,6 @@ namespace Proyecto.Models
 
         [Display(Name = "Languages")]
         public string languages { get; set; }
-
-        [Required(ErrorMessage = "Please provide your e-mail")]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
-        public string email { get; set; }
 
         [Required(ErrorMessage = "Please provide your mobile number")]
         [Display(Name = "Mobile")]
