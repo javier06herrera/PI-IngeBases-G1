@@ -1,0 +1,23 @@
+﻿@model Proyecto.Models.ReviewsModel
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div>
+        <h2> Formulario de Revisión</h2>
+    </div>
+
+    <div class="form-inline">
+        @Html.LabelFor(model => model.generalOpinion, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.generalOpinion, (IEnumerable<SelectListItem>)ViewBag.Options, "Please Select a Topic", new { @class = "form-group" })
+            @Html.ValidationMessageFor(model => model.generalOpinion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.ActionLink("Send", "recordReview", "Review", Model, new { @class = "btn btn-danger btn-o btn-wide" })
+
+
+
+</body>
+</html>
