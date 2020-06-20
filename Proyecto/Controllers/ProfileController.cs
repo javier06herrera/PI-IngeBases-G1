@@ -86,7 +86,7 @@ namespace Proyecto.Controllers
                 products.Add(new SelectListItem() { Text = "Movies", Value = "2" });
             }
             //return new JavaScriptSerializer().Serialize(products);
-            ViewBag.DropdownList = products
+            ViewBag.DropdownList = products;
             return products;
         }
 
