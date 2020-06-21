@@ -136,6 +136,7 @@
     <Compile Include="Models\ProfileDBHandle.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\ReviewDBHandle.cs" />
     <Compile Include="Models\ReviewsModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\TopicModel.cs" />
