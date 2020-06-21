@@ -49,6 +49,7 @@ namespace Proyecto.Controllers
 
         public ActionResult Report()
         {
+            
             return View(new ProfileModel());
         }
 
@@ -58,7 +59,7 @@ namespace Proyecto.Controllers
             return View();
         }
 
-        public List<SelectListItem> GetValuesCategory(string id)
+        public JsonResult GetValuesCategory(string id)
         {
             //get the products from the repository
             var products = new List<SelectListItem>();
@@ -86,8 +87,7 @@ namespace Proyecto.Controllers
                 products.Add(new SelectListItem() { Text = "Movies", Value = "2" });
             }
             //return new JavaScriptSerializer().Serialize(products);
-            ViewBag.DropdownList = products;
-            return products;
+            return Json(products, JsonRequestBehavior.AllowGet);
         }
 
     }
