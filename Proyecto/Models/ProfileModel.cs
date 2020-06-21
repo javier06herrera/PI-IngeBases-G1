@@ -65,5 +65,8 @@ namespace Proyecto.Models
 
         public int articleCount { get; set; }
 
+        [Display(Name = "Password")]
+        public string password { get; set; }
+
 }
 }

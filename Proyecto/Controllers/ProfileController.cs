@@ -49,5 +49,33 @@ namespace Proyecto.Controllers
             return View();
         }
 
+        
+        public ActionResult Login()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Login(ProfileModel pmodel)
+        {
+
+            ProfileDBHandle sdb = new ProfileDBHandle();
+            bool result = sdb.attemptLogin(pmodel);
+
+            if (result == true)
+            {
+                Session["user"] = pmodel.email;
+                Session["rank"] = pmodel.memberRank;
+                ViewBag.Message = "Login succesfull, Welcome!";
+                return RedirectToAction("HomePage", "Article", null);
+            }
+            else {
+                ViewBag.Message = "Please, provide valid credentials.";
+                return View();
+            }
+        }
+
     }
 }
