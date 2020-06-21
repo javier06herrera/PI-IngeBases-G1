@@ -43,7 +43,18 @@ namespace Proyecto.Controllers
         {
             ProfileDBHandle sdb = new ProfileDBHandle();
             //ArticleDBHandle sdb1 = new ArticleDBHandle();
-            string user = Session["user"].ToString(); 
+            string user;
+
+            
+            if (!(Session["user"] is null)) //Si ya alguien se logeo, entonces utiliza la sesion de la persona
+            {
+                user = Session["user"].ToString();
+            }
+            else //Si nadie se ha logeado, usar el usuario pre-determinado
+            {
+                user = "barrKev@puchimail.com";
+            }
+
             ViewData["Articles"] = sdb.fetchMyArticles(user);
             ViewData["Profile"] = sdb.getMemberProfile(user);
 

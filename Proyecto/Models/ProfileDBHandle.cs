@@ -208,8 +208,8 @@ namespace Proyecto.Models
             //Fetch of the entire list of articles without topics
             string fetchArticles = "SELECT * " +
                                    "FROM Article A " +
-                                   "JOIN WRITES W ON A.articleId = W.articleId " +
-                                   "WHERE A.articleId = @articleId " +
+                                   "JOIN WRITES W ON A.articleId = W.ArticleId " +
+                                   "WHERE W.email = @email " +
                                    "ORDER BY publishDate DESC";
             SqlCommand cmd = new SqlCommand(fetchArticles, connection);
             cmd.Parameters.AddWithValue("@email", email);
