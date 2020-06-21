@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
 using System.Web.Script.Serialization;
+using System.Runtime.InteropServices;
+using System.IO;
+
 
 namespace Proyecto.Controllers
 {
@@ -40,9 +43,20 @@ namespace Proyecto.Controllers
         {
             ProfileDBHandle sdb = new ProfileDBHandle();
             //ArticleDBHandle sdb1 = new ArticleDBHandle();
+            string user;
 
-            ViewData["Articles"] = sdb.fetchMyArticles("barrKev@puchimail.com");
-            ViewData["Profile"] = sdb.getMemberProfile("barrKev@puchimail.com");
+            
+            if (!(Session["user"] is null)) //Si ya alguien se logeo, entonces utiliza la sesion de la persona
+            {
+                user = Session["user"].ToString();
+            }
+            else //Si nadie se ha logeado, usar el usuario pre-determinado
+            {
+                user = "barrKev@puchimail.com";
+            }
+
+            ViewData["Articles"] = sdb.fetchMyArticles(user);
+            ViewData["Profile"] = sdb.getMemberProfile(user);
 
             return View();
         }
@@ -90,5 +104,59 @@ namespace Proyecto.Controllers
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
+        
+        public ActionResult Login()
+        {
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Login(ProfileModel pmodel)
+        {
+
+            ProfileDBHandle sdb = new ProfileDBHandle();
+
+            try
+            {
+                //ModelState.Remove("memberId");
+                ModelState.Remove("name");
+                ModelState.Remove("lastName");
+                ModelState.Remove("birthDate");
+                ModelState.Remove("age");
+                ModelState.Remove("addressCity");
+                ModelState.Remove("addressCountry");
+                ModelState.Remove("hobbies");
+                ModelState.Remove("languages");
+                ModelState.Remove("mobile");
+                ModelState.Remove("job");
+                ModelState.Remove("memberRank");
+                ModelState.Remove("points");
+                ModelState.Remove("skills");
+
+                if (ModelState.IsValid)
+                {
+                    bool result = sdb.attemptLogin(pmodel);
+
+                    if (result == true)
+                    {
+                        Session["user"] = pmodel.email;
+                        Session["rank"] = pmodel.memberRank;
+                        ViewBag.Message = "Login succesfull, Welcome!";
+                        return RedirectToAction("HomePage", "Article", null);
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Please, provide valid credentials.";
+                    }
+                }
+            }
+            catch(Exception e)
+            {                                      
+                ViewBag.Message = "Please fill all required fields.";              
+            }
+            return View();
+        }
     }
 }

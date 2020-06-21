@@ -99,6 +99,40 @@ namespace Proyecto.Models
 
             return pmodel;
         }
+
+        public bool attemptLogin(ProfileModel pmodel)
+        {
+            //Checks if credentials enttered in login page match credentials of any user
+            string query = "SELECT * " +
+                           "FROM CommunityMember CM " +
+                           "WHERE CM.email = @email " +
+                           "AND CM.password = @password ";
+
+            bool result = false;                     
+            command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@email", pmodel.email);
+            command.Parameters.AddWithValue("@password", pmodel.password);
+            connection.Open();
+
+           reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    //If query returns a row, then credentials matched in database
+                    result = true;
+                    pmodel.memberRank = Convert.ToString(reader["memberRank"]);
+
+                }
+            }
+
+            reader.Close();
+            connection.Close();
+
+            return result;
+        }
+
+
         public bool updateMerits(int articleId, bool valueSign)
         {
             //Brings all the member that are responsible for the article

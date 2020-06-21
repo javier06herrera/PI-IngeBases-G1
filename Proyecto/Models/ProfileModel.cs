@@ -70,11 +70,8 @@ namespace Proyecto.Models
         private List<SelectListItem> categories = new List<SelectListItem>();
         private List<SelectListItem> values = new List<SelectListItem>();
 
-        [Required(ErrorMessage = "Please select a category")]
-
+        
         public string selectedCategory { get; set; }
-        [Required(ErrorMessage = "Please select a category")]
-
         public string selectedValue { get; set; }
 
 
@@ -98,6 +95,9 @@ namespace Proyecto.Models
             }
         }
 
+        [Required(ErrorMessage = "Please provide your password.")]
+        [Display(Name = "Password")]
+        public string password { get; set; }
 
     }
 }

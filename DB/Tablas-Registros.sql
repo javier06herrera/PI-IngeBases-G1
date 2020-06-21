@@ -23,8 +23,6 @@ dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
 );
 
-
-
 insert into Article
 values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','Nací en 1632, en la ciudad de York, de una buena familia, aunque no de la región, pues mi padre era un extranjero de Brema1 que, inicialmente, se asentó en Hull2. Allí consiguió hacerse con una considerable fortuna como comerciante y, más tarde, abandonó sus negocios y se fue a vivir a York, donde se casó con mi madre, que pertenecía a la familia Robinson, una de las buenas familias del condado de la cual obtuve mi nombre, Robinson Kreutznaer. Mas, por la habitual alteración de las palabras que se hace en Inglaterra, ahora nos llaman y nosotros también nos llamamos y escribimos nuestro nombre Crusoe; y así me han llamado siempre mis compañeros.   Tenía dos hermanos mayores, uno de ellos fue coronel de un regimiento de infantería inglesa en Flandes, que antes había estado bajo el mando del célebre coronel Lockhart, y murió en la batalla de Dunkerque3 contra los españoles.    Lo que fue de mi segundo hermano, nunca lo he sabido al igual que mi padre y mi madre tampoco supieron lo que fue de mí.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 
@@ -92,23 +90,24 @@ mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
 memberRank			VARCHAR(100) 		,
 points				INT	NOT NULL DEFAULT 0,
-skills				VARCHAR(MAX) NOT NULL
+skills				VARCHAR(MAX) NOT NULL,
+password			NVARCHAR(MAX) DEFAULT 123
 )
 
 INSERT INTO CommunityMember
-VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','core',5,'Versatility')
+VALUES ( 'Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','barrKev@puchimail.com','1','Intel','core',5,'Versatility',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','core', 5, 'Creativity')
+VALUES ( 'Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','moraGlo@puchimail.com','2','Intel','core', 5, 'Creativity',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','active',3,'Math-skills')
+VALUES ( 'Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','alvAnt@puchimail.com','3','Intel','active',3,'Math-skills',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','active',3,'Adaptability')
+VALUES ( 'Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','barrDan@puchimail.com','4','Intel','active',3,'Adaptability',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','peripheral',0,'Organized')
+VALUES ( 'Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','herrJav@puchimail.com','5','Intel','peripheral',0,'Organized',DEFAULT)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
