@@ -114,12 +114,16 @@ namespace Proyecto.Models
             command.Parameters.AddWithValue("@password", pmodel.password);
             connection.Open();
 
-            reader = command.ExecuteReader();
+           reader = command.ExecuteReader();
             if (reader.HasRows)
             {
-                //If query returns a row, then credentials matched in database
-                result = true;
-                pmodel.memberRank = Convert.ToString(reader["memberRank"]);               
+                while (reader.Read())
+                {
+                    //If query returns a row, then credentials matched in database
+                    result = true;
+                    pmodel.memberRank = Convert.ToString(reader["memberRank"]);
+
+                }
             }
 
             reader.Close();
@@ -204,8 +208,8 @@ namespace Proyecto.Models
             //Fetch of the entire list of articles without topics
             string fetchArticles = "SELECT * " +
                                    "FROM Article A " +
-                                   "JOIN WRITES W ON A.articleId = W.ArticleId " +
-                                   "WHERE A.email = @email " +
+                                   "JOIN WRITES W ON A.articleId = W.articleId " +
+                                   "WHERE A.articleId = @articleId " +
                                    "ORDER BY publishDate DESC";
             SqlCommand cmd = new SqlCommand(fetchArticles, connection);
             cmd.Parameters.AddWithValue("@email", email);
