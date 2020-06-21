@@ -123,6 +123,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -340,6 +341,7 @@
     <None Include="packages.config" />
     <Content Include="Views\Article\HomePage.cshtml" />
     <Content Include="Views\Profile\Registration.cshtml" />
+    <Content Include="Views\Review\reviewForm.cshtml" />
     <Content Include="Views\Profile\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
