@@ -25,11 +25,32 @@ namespace Proyecto.Controllers
             return View();
         }
 
-
         public ActionResult recordReview(ReviewsModel model)
         {
             //Console.WriteLine(model.options);
             return View("reviewForm");
+        }
+
+
+        //I3: Controller of Pending Reviews View
+        public ActionResult PendingReviews()
+        {
+            string user;
+            ReviewDBHandle dbh = new ReviewDBHandle();
+
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+
+            ViewData["PendingArticles"] = dbh.fetchPendingArticles(user);
+
+            return View();
         }
     }
 }

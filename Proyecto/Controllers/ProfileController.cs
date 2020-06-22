@@ -46,11 +46,11 @@ namespace Proyecto.Controllers
             string user;
 
             
-            if (!(Session["user"] is null)) //Si ya alguien se logeo, entonces utiliza la sesion de la persona
+            if (!(Session["user"] is null)) //If someone has already sign in
             {
                 user = Session["user"].ToString();
             }
-            else //Si nadie se ha logeado, usar el usuario pre-determinado
+            else //If no one is signed up (for developers testing) ToBeRemoved
             {
                 user = "barrKev@puchimail.com";
             }
