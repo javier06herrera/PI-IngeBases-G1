@@ -9,41 +9,34 @@ namespace Proyecto.Controllers
 {
     public class ReviewController : Controller
     {
-        // GET: Review
-        public ActionResult reviewForm()
+        //I3: Get method to control review form, this method provides a model
+        public ActionResult ReviewForm(ArticleModel article)
         {
-            List<SelectListItem> lst = new List<SelectListItem>();
-
-            lst.Add(new SelectListItem() { Text = "1", Value = "1" });
-            lst.Add(new SelectListItem() { Text = "2", Value = "2" });
-            lst.Add(new SelectListItem() { Text = "3", Value = "3" });
-            lst.Add(new SelectListItem() { Text = "4", Value = "4" });
-            lst.Add(new SelectListItem() { Text = "5", Value = "5" });
-
-            ViewBag.Options = lst;
-
-            return View();
+            
+            ReviewsModel reviews = new ReviewsModel();
+            reviews.articleId = article.articleId;
+            ViewData["Reviews"] = reviews;
+            ViewData["Article"] = article;
+            return View(reviews);
         }
 
-        public ActionResult recordReview()
-        {
-            return View();
-        }
-
-
-        //Iteración 3
+        //I3: Post method to control review form
         [HttpPost]
-        public ActionResult recordReview(ReviewsModel model)
+        public ActionResult ReviewForm(ReviewsModel model)
         {
-            model.articleId = 1;
-            //model.email = "alvAnt@puchimail.com";
-            //model.comments = "Sin comentarios";
-            //model.generalOpinion = 5;
-            //model.communityContribution = 5;
-            //model.articleStructure = 5;
-            //model.totalGrade = 5;
-            //model.state = "reviewed";
-
+            string user;
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+            ReviewDBHandle dbh = new ReviewDBHandle();
+            model.email = user;
+            dbh.registerGrades(model);
 
             ReviewDBHandle sdb = new ReviewDBHandle();
             EmailController eController = new EmailController();
@@ -53,10 +46,9 @@ namespace Proyecto.Controllers
             ArticleModel aModel = new ArticleModel();
 
 
-            //Saves the review on the database
-            sdb.AddReview(model);
+              
 
-      
+
             string aAuthor = pdh.getArticleAuthor(model.articleId);
             string cMail = pdh.getCoordinatorMail();
             aModel = adh.getOneArticle(model.articleId);
@@ -73,8 +65,34 @@ namespace Proyecto.Controllers
                 eController.SendMail(eModel);
             }
 
-            return View();
+            
 
+            return RedirectToAction("PendingReviews");
+        }
+
+
+
+        //I3: Controller of Pending Reviews View
+        public ActionResult PendingReviews()
+        {
+            string user;
+            ReviewDBHandle dbh = new ReviewDBHandle();
+
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+
+
+        public ActionResult recordReview(ReviewsModel model)
+        {
+            //Console.WriteLine(model.options);
+            return View("reviewForm");
         }
     }
 }

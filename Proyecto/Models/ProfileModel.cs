@@ -67,33 +67,33 @@ namespace Proyecto.Models
 
         public List<SelectListItem> ProfileList { get; set; }
 
-        private List<SelectListItem> categories = new List<SelectListItem>();
-        private List<SelectListItem> values = new List<SelectListItem>();
+        //private List<SelectListItem> categories = new List<SelectListItem>();
+        //private List<SelectListItem> values = new List<SelectListItem>();
 
         
-        public string selectedCategory { get; set; }
-        public string selectedValue { get; set; }
+        //public string selectedCategory { get; set; }
+        //public string selectedValue { get; set; }
 
 
         
 
-        public List<SelectListItem> ValuesList
-        {
-            get { return values;  }
-        }
+        //public List<SelectListItem> ValuesList
+        //{
+        //    get { return values;  }
+        //}
 
-        public List<SelectListItem> CategoryList
-        {
-            get
-            {
-                categories.Add(new SelectListItem() { Text = "Country", Value = "1" });
-                categories.Add(new SelectListItem() { Text = "Skills", Value = "2" });
-                categories.Add(new SelectListItem() { Text = "Languages", Value = "3" });
-                categories.Add(new SelectListItem() { Text = "Hobbies", Value = "4" });
-                return categories;
+        //public List<SelectListItem> CategoryList
+        //{
+        //    get
+        //    {
+        //        categories.Add(new SelectListItem() { Text = "Country", Value = "1" });
+        //        categories.Add(new SelectListItem() { Text = "Skills", Value = "2" });
+        //        categories.Add(new SelectListItem() { Text = "Languages", Value = "3" });
+        //        categories.Add(new SelectListItem() { Text = "Hobbies", Value = "4" });
+        //        return categories;
 
-            }
-        }
+        //    }
+        //}
 
         [Required(ErrorMessage = "Please provide your password.")]
         [Display(Name = "Password")]
