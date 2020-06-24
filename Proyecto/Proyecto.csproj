@@ -350,11 +350,9 @@
     <Content Include="Views\Review\ReviewForm.cshtml" />
     <Content Include="Views\Profile\Login.cshtml" />
     <Content Include="Views\Review\PendingReviews.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Review\PendingVeredicts.cshtml" />
-=======
     <Content Include="Views\Report\ReportUsers.cshtml" />
->>>>>>> master
+
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
