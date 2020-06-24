@@ -56,7 +56,7 @@ namespace Proyecto.Models
         public bool checkReviewers(int articleId)
         {
             List<ReviewsModel> allReviewsList = new List<ReviewsModel>();
-            List<ReviewsModel> reviewedReviewsList = new List<ReviewsModel>();
+            List<ReviewsModel> completedReviewsList = new List<ReviewsModel>();
 
             //Fetch of the entire list of reviews
             connection();
