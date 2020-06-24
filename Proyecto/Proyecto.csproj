@@ -46,9 +46,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -99,9 +103,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -123,6 +124,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -130,12 +132,15 @@
     <Compile Include="Models\ArticleDBHandle.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommunityMemberModel.cs" />
+    <Compile Include="Models\DBConnectHandler.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
     <Compile Include="Models\ProfileDBHandle.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\ReportDBHandle.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\ReviewDBHandle.cs" />
     <Compile Include="Models\ReviewsModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
@@ -345,7 +350,11 @@
     <Content Include="Views\Review\ReviewForm.cshtml" />
     <Content Include="Views\Profile\Login.cshtml" />
     <Content Include="Views\Review\PendingReviews.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Review\PendingVeredicts.cshtml" />
+=======
+    <Content Include="Views\Report\ReportUsers.cshtml" />
+>>>>>>> master
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

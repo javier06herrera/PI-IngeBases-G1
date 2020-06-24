@@ -42,6 +42,10 @@ a:hover {
     top: 3px;
 }
 
+.myTag{
+    display: inline
+}
+
 .SearchTopic {
     background-color: #007bff;
     color: white;

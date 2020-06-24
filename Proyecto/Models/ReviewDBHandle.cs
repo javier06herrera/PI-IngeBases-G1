@@ -12,11 +12,17 @@ namespace Proyecto.Models
     public class ReviewDBHandle
     {
         private SqlConnection con;
+
+        //I3: Must replace conn and cmd definitions
+        private DBConnectHanler conn = new DBConnectHanler();
+
+        
         private void connection()
         {
             string constring = ConfigurationManager.ConnectionStrings["ArticleConn"].ToString();
             con = new SqlConnection(constring);
         }
+
 
         // Se agrega un nuevo articulo
         public bool AddReview(ReviewsModel smodel)
@@ -52,31 +58,33 @@ namespace Proyecto.Models
             List<ReviewsModel> allReviewsList = new List<ReviewsModel>();
             List<ReviewsModel> reviewedReviewsList = new List<ReviewsModel>();
 
-
-
             //Fetch of the entire list of reviews
             connection();
             string fetchReviews = "SELECT R.articleId, R.email, R.state " +
-                                   "FROM REVIEWS R " +
-                                   "WHERE R.articleId = @articleId";
+                                  "FROM REVIEWS R " +
+                                  "WHERE R.articleId = @articleId";
 
-            SqlDataAdapter sd1 = new SqlDataAdapter(fetchReviews, con);
-            DataTable reviewTable = new DataTable();
 
-            sd1.InsertCommand.Parameters.Add("@articleId",
-            SqlDbType.BigInt, articleId, "articleId");
+
+            SqlCommand command = new SqlCommand(fetchReviews, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
+                      
 
             con.Open();
-            sd1.Fill(reviewTable);
-            foreach (DataRow review in reviewTable.Rows)
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
             {
-                allReviewsList.Add(
+                while (reader.Read())
+                {
+                    allReviewsList.Add(
                     new ReviewsModel
                     {
-                        articleId = Convert.ToInt32(review["articleId"]),
-                        email = Convert.ToString(review["email"]),
-                        state = Convert.ToString(review["state"])
+                        articleId = Convert.ToInt32(reader["articleId"]),
+                        email = Convert.ToString(reader["email"]),
+                        state = Convert.ToString(reader["state"])
                     });
+                }
+
             }
             con.Close();
 
@@ -88,31 +96,32 @@ namespace Proyecto.Models
                                    "WHERE R.articleId = @articleId " +
                                    "AND R.state = 'reviewed'";
 
-            sd1 = new SqlDataAdapter(fetchReviews, con);
-            reviewTable = new DataTable();
+            command = new SqlCommand(fetchReviews, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
 
-            sd1.InsertCommand.Parameters.Add("@articleId",
-            SqlDbType.BigInt, articleId, "articleId");
 
             con.Open();
-            sd1.Fill(reviewTable);
-            foreach (DataRow review in reviewTable.Rows)
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
             {
-                reviewedReviewsList.Add(
+                while (reader.Read())
+                {
+                    completedReviewsList.Add(
                     new ReviewsModel
                     {
-                        articleId = Convert.ToInt32(review["articleId"]),
-                        email = Convert.ToString(review["email"]),
-                        state = Convert.ToString(review["state"])
+                        articleId = Convert.ToInt32(reader["articleId"]),
+                        email = Convert.ToString(reader["email"]),
+                        state = Convert.ToString(reader["state"])
                     });
+                }
+
             }
             con.Close();
 
-            if (allReviewsList.Count == reviewedReviewsList.Count)
+            if (allReviewsList.Count == completedReviewsList.Count)
                 return true;
             else
                 return false;
-
         }
 
         //I3: This method is used to merge all the topics of a file into a single string
@@ -147,10 +156,10 @@ namespace Proyecto.Models
                                    "AND R.state = 'not reviewed' ";
             //DB connection arrangement
             SqlCommand cmd = new SqlCommand(fetchArticles, con);
-            cmd.Parameters.AddWithValue("@email", reviewerEmail);
+            
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
             DataTable articleTable = new DataTable();
-
+            cmd.Parameters.AddWithValue("@email", reviewerEmail);
             //Open connection with the DB
             con.Open();
             //Buffer of data from the DB
@@ -201,6 +210,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
+
         public List<ArticleModel> fetchVeredictArticles(string reviewerEmail)
         {
             List<ArticleModel> veredictArticleList = new List<ArticleModel>();
@@ -208,6 +218,34 @@ namespace Proyecto.Models
             //FOR QUE RECORRE TODOS LOS ARTICULOS Y LOS AGREGA A LA LISTA SI ESTAN EN REVISION Y YA LO REVISARON TODOS LOS REVISORES
 
             return veredictArticleList;
+		}
+        
+        public bool registerGrades(ReviewsModel model)
+        {
+
+            SqlCommand cmd = conn.setWritingQuery(  "UPDATE Reviews " +
+                                                    "SET    comments = @comments, " +
+                                                    "       generalOpinion = @generalOpinion, " +
+                                                    "       communityContribution = @communityContribution, " +
+                                                    "       articleStructure = @articleStructure, " +
+                                                    "       totalGrade = @totalGrade, " +
+                                                    "       state = @state " +
+                                                    "WHERE  articleId = @articleId " +
+                                                    "AND    email = @email");
+            cmd.Parameters.AddWithValue("@comments",model.comments);
+            cmd.Parameters.AddWithValue("@generalOpinion", model.generalOpinion);
+            cmd.Parameters.AddWithValue("@communityContribution", model.communityContribution);
+            cmd.Parameters.AddWithValue("@articleStructure", model.articleStructure);
+            cmd.Parameters.AddWithValue("@totalGrade", model.totalGrade);
+            cmd.Parameters.AddWithValue("@state", "reviewed");
+            cmd.Parameters.AddWithValue("@articleId",model.articleId);
+            cmd.Parameters.AddWithValue("@email",model.email);
+
+            conn.conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.conn.Close();
+            return true;
+
         }
     }
 }

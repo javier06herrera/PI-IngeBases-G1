@@ -253,5 +253,70 @@ namespace Proyecto.Models
             connection.Close();
             return articleList;
         }
+
+        //Iteración 3
+        public string getCoordinatorMail()
+        {
+
+            ProfileModel memberProfile = new ProfileModel();
+            string query = "SELECT email " +
+                            "FROM CommunityMember " +
+                            "WHERE memberRank = 'coordinator'";
+
+            command = new SqlCommand(query, connection);
+            connection.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    memberProfile.email = Convert.ToString(reader["email"]);
+                }
+            }
+
+            reader.Close();
+
+            connection.Close();
+            
+            return memberProfile.email;
+
+        }
+
+        //Iteración 3
+        public string getArticleAuthor(int articleId)
+        {
+  
+            string authors = "";
+
+
+            ProfileModel memberProfile = new ProfileModel();
+            string query = "SELECT CM.name, CM.lastName " +
+                            "FROM CommunityMember CM " +
+                            "JOIN WRITES W " +
+                            "ON W.email = CM.email " +
+                            "WHERE W.articleId = @articleId";
+
+   
+            command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@articleId", articleId);
+            connection.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    memberProfile.name = Convert.ToString(reader["name"]);
+                    memberProfile.lastName = Convert.ToString(reader["lastName"]);
+                    authors += memberProfile.name + " " + memberProfile.lastName + ", ";
+                }
+            }
+
+            reader.Close();
+
+            connection.Close();
+            
+            return authors;
+
+        }
     }
 }

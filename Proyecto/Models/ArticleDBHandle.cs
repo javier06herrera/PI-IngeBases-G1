@@ -312,8 +312,6 @@ namespace Proyecto.Models
             SqlCommand cmd = new SqlCommand(getResults, con);
             cmd.Parameters.AddWithValue("@topicName", topic);
 
-
-
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
 
@@ -506,5 +504,46 @@ namespace Proyecto.Models
             return likeData;
         }
 
+        //Iteración 3
+        public ArticleModel getOneArticle(int articleId)
+        {
+            connection();
+
+            ArticleModel article = new ArticleModel();
+            string query = "SELECT * " +
+                            "FROM Article A " +
+                            "WHERE A.articleId = @articleId";
+
+            SqlCommand command = new SqlCommand(query, con); // Nombre procedimiento, 
+            command.Parameters.AddWithValue("@articleId", articleId);
+            SqlDataReader rd;
+
+          
+            con.Open();
+            rd = command.ExecuteReader();
+            if (rd.HasRows)
+            {
+                while (rd.Read())
+                {
+                    article.articleId = Convert.ToInt32(rd["articleId"]);
+                    article.name = Convert.ToString(rd["name"]);
+                    article.type = Convert.ToString(rd["type"]);
+                    article.Abstract = Convert.ToString(rd["Abstract"]);
+                    article.publishDate = Convert.ToString(rd["publishDate"]);
+                    article.content = Convert.ToString(rd["content"]);
+                    article.baseGrade = Convert.ToInt32(rd["baseGrade"]);
+                    article.accessCount = Convert.ToInt32(rd["accessCount"]);
+                    article.likesCount = Convert.ToInt32(rd["likesCount"]);
+                    article.neutralCount = Convert.ToInt32(rd["neutralCount"]);
+                    article.dislikesCount = Convert.ToInt32(rd["dislikesCount"]);
+                    article.likeBalance = Convert.ToInt32(rd["likeBalance"]);
+                }
+            }
+
+            rd.Close();
+            con.Close();
+
+            return article;
+        }
     }
 }

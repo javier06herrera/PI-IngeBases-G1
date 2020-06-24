@@ -61,48 +61,50 @@ namespace Proyecto.Controllers
             return View();
         }
 
-        public ActionResult Report()
-        {
+
+        //* No borrar, pues pueden servir de guia para Js mientras termina el proyecto
+        //public ActionResult Report()
+        //{
             
-            return View(new ProfileModel());
-        }
+        //    return View(new ProfileModel());
+        //}
 
-        [HttpPost]
-        public ActionResult Report(ProfileModel smodel)
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public ActionResult Report(ProfileModel smodel)
+        //{
+        //    return View();
+        //}
 
-        public JsonResult GetValuesCategory(string id)
-        {
-            //get the products from the repository
-            var products = new List<SelectListItem>();
+        //public JsonResult GetValuesCategory(string id)
+        //{
+        //    //get the products from the repository
+        //    var products = new List<SelectListItem>();
 
-            if(id == "1")
-            {
-                products.Add(new SelectListItem() { Text = "Costa Rica", Value = "1" });
-                products.Add(new SelectListItem() { Text = "Mexico", Value = "2" });
-            }
+        //    if(id == "1")
+        //    {
+        //        products.Add(new SelectListItem() { Text = "Costa Rica", Value = "1" });
+        //        products.Add(new SelectListItem() { Text = "Mexico", Value = "2" });
+        //    }
 
-            else if (id == "2")
-            {
-                products.Add(new SelectListItem() { Text = "Networking", Value = "1" });
-                products.Add(new SelectListItem() { Text = "DataBases", Value = "2" });
-            }
+        //    else if (id == "2")
+        //    {
+        //        products.Add(new SelectListItem() { Text = "Networking", Value = "1" });
+        //        products.Add(new SelectListItem() { Text = "DataBases", Value = "2" });
+        //    }
 
-            else if(id == "3")
-            {
-                products.Add(new SelectListItem() { Text = "English", Value = "1" });
-                products.Add(new SelectListItem() { Text = "Italian", Value = "2" });
-            }
-            else if(id == "4")
-            {
-                products.Add(new SelectListItem() { Text = "Sports", Value = "1" });
-                products.Add(new SelectListItem() { Text = "Movies", Value = "2" });
-            }
-            //return new JavaScriptSerializer().Serialize(products);
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
+        //    else if(id == "3")
+        //    {
+        //        products.Add(new SelectListItem() { Text = "English", Value = "1" });
+        //        products.Add(new SelectListItem() { Text = "Italian", Value = "2" });
+        //    }
+        //    else if(id == "4")
+        //    {
+        //        products.Add(new SelectListItem() { Text = "Sports", Value = "1" });
+        //        products.Add(new SelectListItem() { Text = "Movies", Value = "2" });
+        //    }
+        //    //return new JavaScriptSerializer().Serialize(products);
+        //    return Json(products, JsonRequestBehavior.AllowGet);
+        //}
 
         //I3
         public ActionResult Login()
