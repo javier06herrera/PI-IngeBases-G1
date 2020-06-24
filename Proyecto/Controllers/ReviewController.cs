@@ -38,16 +38,11 @@ namespace Proyecto.Controllers
             model.email = user;
             dbh.registerGrades(model);
 
-            ReviewDBHandle sdb = new ReviewDBHandle();
             EmailController eController = new EmailController();
             EmailModel eModel = new EmailModel();
             ProfileDBHandle pdh = new ProfileDBHandle();
             ArticleDBHandle adh = new ArticleDBHandle();
             ArticleModel aModel = new ArticleModel();
-
-
-              
-
 
             string aAuthor = pdh.getArticleAuthor(model.articleId);
             string cMail = pdh.getCoordinatorMail();
@@ -60,12 +55,10 @@ namespace Proyecto.Controllers
                 "ya ha sido revisado por sus revisores";
             eModel.mail = cMail;
 
-            if (sdb.checkReviewers(model.articleId))
+            if (dbh.checkReviewers(model.articleId))
             {
                 eController.SendMail(eModel);
             }
-
-            
 
             return RedirectToAction("PendingReviews");
         }
@@ -87,12 +80,11 @@ namespace Proyecto.Controllers
             {
                 user = "barrKev@puchimail.com";
             }
+            ViewData["PendingArticles"] = dbh.fetchPendingArticles(user);
 
+            return View();
 
-        public ActionResult recordReview(ReviewsModel model)
-        {
-            //Console.WriteLine(model.options);
-            return View("reviewForm");
         }
+
     }
 }
