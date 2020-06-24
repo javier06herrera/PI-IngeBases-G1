@@ -213,7 +213,9 @@ CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleI
 
 INSERT INTO REVIEWS
  VALUES	(1,3,DEFAULT)
-
+ 
+SELECT *
+FROM CommunityMember
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------

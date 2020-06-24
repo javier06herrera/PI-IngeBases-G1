@@ -48,7 +48,7 @@ namespace Proyecto.Controllers
             
             if (!(Session["user"] is null)) //If someone has already sign in
             {
-                user = Session["user"].ToString();
+                user = Session["user"].ToString();               
             }
             else //If no one is signed up (for developers testing) ToBeRemoved
             {
@@ -143,6 +143,7 @@ namespace Proyecto.Controllers
                     {
                         Session["user"] = pmodel.email;
                         Session["rank"] = pmodel.memberRank;
+                        ViewData["rank"] = pmodel.memberRank;
                         ViewBag.Message = "Login succesfull, Welcome!";
                         return RedirectToAction("HomePage", "Article", null);
                     }
