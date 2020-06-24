@@ -88,7 +88,7 @@ languages			VARCHAR(300) 		,
 email				VARCHAR(100) NOT NULL,
 mobile				VARCHAR(15) NOT NULL UNIQUE,
 job					VARCHAR(MAX) NOT NULL,
-memberRank			VARCHAR(100) 		,
+memberRank			VARCHAR(100) 		, --active, core, coordinator, peripheral
 points				INT	NOT NULL DEFAULT 0,
 skills				VARCHAR(MAX) NOT NULL,
 password			NVARCHAR(MAX) DEFAULT 123
@@ -213,7 +213,6 @@ CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleI
 
 INSERT INTO REVIEWS
  VALUES	(1,3,DEFAULT)
-
 
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------

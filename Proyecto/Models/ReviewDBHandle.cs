@@ -12,6 +12,11 @@ namespace Proyecto.Models
     public class ReviewDBHandle
     {
         private SqlConnection con;
+
+        //I3: Must replace conn and cmd definitions
+        private DBConnectHanler conn = new DBConnectHanler();
+
+        
         private void connection()
         {
             string constring = ConfigurationManager.ConnectionStrings["ArticleConn"].ToString();
@@ -57,8 +62,8 @@ namespace Proyecto.Models
             //Fetch of the entire list of reviews
             connection();
             string fetchReviews = "SELECT R.articleId, R.email, R.state " +
-                                   "FROM REVIEWS R " +
-                                   "WHERE R.articleId = @articleId";
+                                  "FROM REVIEWS R " +
+                                  "WHERE R.articleId = @articleId";
 
             SqlDataAdapter sd1 = new SqlDataAdapter(fetchReviews, con);
             DataTable reviewTable = new DataTable();
@@ -147,10 +152,10 @@ namespace Proyecto.Models
                                    "AND R.state = 'not reviewed' ";
             //DB connection arrangement
             SqlCommand cmd = new SqlCommand(fetchArticles, con);
-            cmd.Parameters.AddWithValue("@email", reviewerEmail);
+            
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
             DataTable articleTable = new DataTable();
-
+            cmd.Parameters.AddWithValue("@email", reviewerEmail);
             //Open connection with the DB
             con.Open();
             //Buffer of data from the DB
@@ -199,6 +204,34 @@ namespace Proyecto.Models
             }
             con.Close();
             return articleList;
+        }
+
+        
+        public bool registerGrades(ReviewsModel model)
+        {
+
+            SqlCommand cmd = conn.setWritingQuery(  "UPDATE Reviews " +
+                                                    "SET    comments = @comments, " +
+                                                    "       generalOpinion = @generalOpinion, " +
+                                                    "       communityContribution = @communityContribution, " +
+                                                    "       articleStructure = @articleStructure, " +
+                                                    "       totalGrade = @totalGrade, " +
+                                                    "       state = @state " +
+                                                    "WHERE  articleId = @articleId " +
+                                                    "AND    email = @email");
+            cmd.Parameters.AddWithValue("@comments",model.comments);
+            cmd.Parameters.AddWithValue("@generalOpinion", model.generalOpinion);
+            cmd.Parameters.AddWithValue("@communityContribution", model.communityContribution);
+            cmd.Parameters.AddWithValue("@articleStructure", model.articleStructure);
+            cmd.Parameters.AddWithValue("@totalGrade", model.totalGrade);
+            cmd.Parameters.AddWithValue("@state", "reviewed");
+            cmd.Parameters.AddWithValue("@articleId",model.articleId);
+            cmd.Parameters.AddWithValue("@email",model.email);
+
+            conn.conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.conn.Close();
+            return true;
         }
     }
 }

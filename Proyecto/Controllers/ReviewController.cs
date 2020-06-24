@@ -9,27 +9,37 @@ namespace Proyecto.Controllers
 {
     public class ReviewController : Controller
     {
-        // GET: Review
-        public ActionResult reviewForm()
+        //I3: Get method to control review form, this method provides a model
+        public ActionResult ReviewForm(ArticleModel article)
         {
-            List<SelectListItem> lst = new List<SelectListItem>();
-
-            lst.Add(new SelectListItem() { Text = "1", Value = "1" });
-            lst.Add(new SelectListItem() { Text = "2", Value = "2" });
-            lst.Add(new SelectListItem() { Text = "3", Value = "3" });
-            lst.Add(new SelectListItem() { Text = "4", Value = "4" });
-            lst.Add(new SelectListItem() { Text = "5", Value = "5" });
-
-            ViewBag.Options = lst;
-
-            return View();
+            
+            ReviewsModel reviews = new ReviewsModel();
+            reviews.articleId = article.articleId;
+            ViewData["Reviews"] = reviews;
+            ViewData["Article"] = article;
+            return View(reviews);
         }
 
-        public ActionResult recordReview(ReviewsModel model)
+        //I3: Post method to control review form
+        [HttpPost]
+        public ActionResult ReviewForm(ReviewsModel model)
         {
-            //Console.WriteLine(model.options);
-            return View("reviewForm");
+            string user;
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+            ReviewDBHandle dbh = new ReviewDBHandle();
+            model.email = user;
+            dbh.registerGrades(model);
+            return RedirectToAction("PendingReviews");
         }
+
 
 
         //I3: Controller of Pending Reviews View

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
 namespace Proyecto.Models
@@ -18,7 +19,7 @@ namespace Proyecto.Models
         [Required(ErrorMessage = "Please insert the email of the member")]
         public string email { get; set; }
 
-        [Display(Name = "Comments of the review member")]
+        [Display(Name = "Comments")]
         public string comments { get; set; } //checked -- not checked
 
         [Display(Name = "General Overview")]
@@ -40,8 +41,29 @@ namespace Proyecto.Models
         [Display(Name = "Status of revision")]
         public string state { get; set; } //checked -- not checked
 
+        public List<SelectListItem> options = new List<SelectListItem>();
+
+        public List<SelectListItem> optionList
+        {
+            get
+            {
+                if (options.Count < 1 )
+                {
+                    options.Add(new SelectListItem() { Text = "1", Value = "1" });
+                    options.Add(new SelectListItem() { Text = "2", Value = "2" });
+                    options.Add(new SelectListItem() { Text = "3", Value = "3" });
+                    options.Add(new SelectListItem() { Text = "4", Value = "4" });
+                    options.Add(new SelectListItem() { Text = "5", Value = "5" });
+
+                }
+
+                return options;
+            }
+        }
         
+
     }
+    
     
 }
 

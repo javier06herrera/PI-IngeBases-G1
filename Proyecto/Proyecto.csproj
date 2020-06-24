@@ -132,6 +132,7 @@
     <Compile Include="Models\ArticleDBHandle.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommunityMemberModel.cs" />
+    <Compile Include="Models\DBConnectHandler.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
