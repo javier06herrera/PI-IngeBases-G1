@@ -18,41 +18,10 @@ namespace Proyecto.Models
             con = new SqlConnection(constring);
         }
 
-        // Se agrega un nuevo articulo
-        public bool AddReview(ReviewsModel smodel)
-        {
-            connection();
-            string AddNewArticle = "INSERT INTO REVIEWS " +
-                                   "VALUES (@articleId, @email, @comments ,@generalOpinion ,@communityContribution,@articleStructure,@totalGrade,@state)";
-            SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
-
-            cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
-            cmd.Parameters.AddWithValue("@email", smodel.email);
-            cmd.Parameters.AddWithValue("@comments", smodel.comments);
-            cmd.Parameters.AddWithValue("@generalOpinion", smodel.generalOpinion);
-            cmd.Parameters.AddWithValue("@communityContribution", smodel.communityContribution);
-            cmd.Parameters.AddWithValue("@articleStructure", smodel.communityContribution);
-            cmd.Parameters.AddWithValue("@articleStructure", smodel.articleStructure);
-            cmd.Parameters.AddWithValue("@totalGrade", smodel.totalGrade);
-            cmd.Parameters.AddWithValue("@state", smodel.state);
-
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
-
-     
-            if (i >= 1)
-                return true;
-            else
-                return false;
-        }
-
         public bool checkReviewers(int articleId)
         {
             List<ReviewsModel> allReviewsList = new List<ReviewsModel>();
-            List<ReviewsModel> reviewedReviewsList = new List<ReviewsModel>();
-
-  
+            List<ReviewsModel> completedReviewsList = new List<ReviewsModel>();
 
             //Fetch of the entire list of reviews
             connection();
@@ -60,23 +29,27 @@ namespace Proyecto.Models
                                    "FROM REVIEWS R " +
                                    "WHERE R.articleId = @articleId";
 
-            SqlDataAdapter sd1 = new SqlDataAdapter(fetchReviews, con);
-            DataTable reviewTable = new DataTable();
 
-            sd1.InsertCommand.Parameters.Add("@articleId",
-            SqlDbType.BigInt, articleId, "articleId");
+
+            SqlCommand command = new SqlCommand(fetchReviews, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
+                      
 
             con.Open();
-            sd1.Fill(reviewTable);
-            foreach (DataRow review in reviewTable.Rows)
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
             {
-                allReviewsList.Add(
+                while (reader.Read())
+                {
+                    allReviewsList.Add(
                     new ReviewsModel
                     {
-                        articleId = Convert.ToInt32(review["articleId"]),
-                        email = Convert.ToString(review["email"]),
-                        state = Convert.ToString(review["state"])
+                        articleId = Convert.ToInt32(reader["articleId"]),
+                        email = Convert.ToString(reader["email"]),
+                        state = Convert.ToString(reader["state"])
                     });
+                }
+
             }
             con.Close();
 
@@ -88,31 +61,32 @@ namespace Proyecto.Models
                                    "WHERE R.articleId = @articleId " +
                                    "AND R.state = 'reviewed'";
 
-            sd1 = new SqlDataAdapter(fetchReviews, con);
-            reviewTable = new DataTable();
+            command = new SqlCommand(fetchReviews, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
 
-            sd1.InsertCommand.Parameters.Add("@articleId",
-            SqlDbType.BigInt, articleId, "articleId");
 
             con.Open();
-            sd1.Fill(reviewTable);
-            foreach (DataRow review in reviewTable.Rows)
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
             {
-                reviewedReviewsList.Add(
+                while (reader.Read())
+                {
+                    completedReviewsList.Add(
                     new ReviewsModel
                     {
-                        articleId = Convert.ToInt32(review["articleId"]),
-                        email = Convert.ToString(review["email"]),
-                        state = Convert.ToString(review["state"])
+                        articleId = Convert.ToInt32(reader["articleId"]),
+                        email = Convert.ToString(reader["email"]),
+                        state = Convert.ToString(reader["state"])
                     });
+                }
+
             }
             con.Close();
 
-            if (allReviewsList.Count == reviewedReviewsList.Count)
+            if (allReviewsList.Count == completedReviewsList.Count)
                 return true;
             else
                 return false;
-
         }
     }
 }
