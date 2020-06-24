@@ -221,12 +221,9 @@ INSERT INTO REVIEWS
 INSERT INTO REVIEWS
  VALUES	(3,'moraGlo@puchimail.com','Sin comentarios',5,5,5,5,DEFAULT)
 
- Select topicName
- from INVOLVES
- where articleId in (
-			select articleId
-			from REVIEWS R
-			where email = 'moraGlo@puchimail.com')
+INSERT INTO CommunityMember VALUES
+('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
+'Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
