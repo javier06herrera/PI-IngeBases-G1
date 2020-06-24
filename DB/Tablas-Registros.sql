@@ -215,7 +215,16 @@ INSERT INTO REVIEWS
  VALUES	(1,3,DEFAULT)
  
 SELECT *
-FROM CommunityMember
+FROM Article A
+JOIN REVIEWS R ON
+A.articleId = R.articleId
+WHERE R.email = 'barrKev@puchimail.com'
+AND R.state = 'not reviewed'
+
+UPDATE REVIEWS
+SET state = 'not reviewed'
+WHERE email = 'barrKev@puchimail.com'
+
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------

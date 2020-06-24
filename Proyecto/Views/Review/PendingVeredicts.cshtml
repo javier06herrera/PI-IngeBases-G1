@@ -3,36 +3,24 @@
     IEnumerable<Proyecto.Models.ArticleModel> articles = ViewData["PendingArticles"] as IEnumerable<Proyecto.Models.ArticleModel>;
 }
 
-
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>PendingReviews</title>
+    <title>PendingVeredicts</title>
 </head>
 <body>
-    <h2>Pending Articles</h2>
+    <h2>Pending Veredicts</h2>
     <div class="article-content">
         @foreach (Proyecto.Models.ArticleModel item in articles)
         {
             <div class="card card-default">
-
-
-                @if (item.type == "short")
-                {
-                    <div class="article-heading-abb">
-                        <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
-                    </div>
-                }
-
-                else
-                {
-                    <div class="article-heading-abb">
-                        <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
-                    </div>
-                }
-
+                <div class="article-heading-abb">
+                    
+                    <a href="http://localhost:54007/Article/PreviewArticle?articleId=@(item.articleId)"> <i class="fa fa-eye"></i>@Html.DisplayFor(modelItem => item.name) </a>
+                </div>
+                
                 <div class="article-info">
                     <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
                     <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
@@ -43,8 +31,6 @@
                         @Html.DisplayFor(modelItem => item.Abstract)
                     </p>
                 </div>
-
-                @Html.ActionLink("Review", "ReviewForm", "Review", new { @class = "btn btn-outline-dark btn-sm" })
             </div>
         }
     </div>

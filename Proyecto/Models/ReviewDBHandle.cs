@@ -40,7 +40,7 @@ namespace Proyecto.Models
             int i = cmd.ExecuteNonQuery();
             con.Close();
 
-     
+
             if (i >= 1)
                 return true;
             else
@@ -52,7 +52,7 @@ namespace Proyecto.Models
             List<ReviewsModel> allReviewsList = new List<ReviewsModel>();
             List<ReviewsModel> reviewedReviewsList = new List<ReviewsModel>();
 
-  
+
 
             //Fetch of the entire list of reviews
             connection();
@@ -188,7 +188,7 @@ namespace Proyecto.Models
                                             "AND    state = 'not reviewed') " +
                                  "ORDER BY articleId";
             cmd.CommandText = fetchTopics;
-            cmd.Parameters["@email"].Value =reviewerEmail;
+            cmd.Parameters["@email"].Value = reviewerEmail;
             SqlDataAdapter sd2 = new SqlDataAdapter(cmd);
             DataTable topicList = new DataTable();
             con.Open();
@@ -199,6 +199,15 @@ namespace Proyecto.Models
             }
             con.Close();
             return articleList;
+        }
+
+        public List<ArticleModel> fetchVeredictArticles(string reviewerEmail)
+        {
+            List<ArticleModel> veredictArticleList = new List<ArticleModel>();
+
+            //FOR QUE RECORRE TODOS LOS ARTICULOS Y LOS AGREGA A LA LISTA SI ESTAN EN REVISION Y YA LO REVISARON TODOS LOS REVISORES
+
+            return veredictArticleList;
         }
     }
 }

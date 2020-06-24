@@ -1,5 +1,16 @@
 ﻿@{
     Proyecto.Models.ProfileModel profile = ViewData["memberRank"] as Proyecto.Models.ProfileModel;
+
+    if ((Session["user"] is null)) //If no one has logged in sets member rank to default user (core)
+    {
+        //loads default member rank 
+        ViewData["rank"] = "core";
+
+    }
+    else
+    {
+        ViewData["rank"] = Session["rank"].ToString();
+    }
 }
 
 <div class="container-fluid featured-area-white-border">
@@ -13,15 +24,26 @@
                     <a href="http://localhost:54007/Profile/Profile"><i class="fa fa-user"></i>My Profile</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-pencil"></i> Sign Up</a>
+                    <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-sign-in"></i> Sign Up</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
                     <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
-                </div>                
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-check-square-o"></i> Reviews</a>
                 </div>
-                
+
+                @*Only core and coordinator members can review articles*@
+                @if (ViewData["rank"].ToString() == "core" || ViewData["rank"].ToString() == "coordinator")
+                {
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-pencil"></i> Reviews</a>
+                    </div>
+                }
+                @*Only coordinator members can give a veredict on articles*@
+                @if (ViewData["rank"].ToString() == "coordinator")
+                {
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-check-square-o"></i> Veredicts</a>
+                    </div>
+                }
             </div>
         </div>
     </div>

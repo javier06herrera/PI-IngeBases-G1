@@ -104,7 +104,7 @@ namespace Proyecto.Controllers
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
-        
+        //I3
         public ActionResult Login()
         {
 
@@ -112,6 +112,7 @@ namespace Proyecto.Controllers
 
         }
 
+        //I3
         [HttpPost]
         public ActionResult Login(ProfileModel pmodel)
         {
@@ -120,7 +121,6 @@ namespace Proyecto.Controllers
 
             try
             {
-                //ModelState.Remove("memberId");
                 ModelState.Remove("name");
                 ModelState.Remove("lastName");
                 ModelState.Remove("birthDate");
