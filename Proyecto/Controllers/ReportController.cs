@@ -40,9 +40,9 @@ namespace Proyecto.Controllers
             {
                 query = "SELECT H.skillName As 'Value', (Count(*)) As 'Count' " +
                                 " FROM CommunityMember C, HAS_SKILL H, Skill S " +
-                                " WHERE C.memberId = H.memberId " +
-                                " AND H.category = S.subject_category " +
-                                " AND H.skillName = subject_skillName " +
+                                " WHERE C.email = H.email  " +
+                                " AND H.category = S.subjectCategory " +
+                                " AND H.skillName = subjectSkillName " +
                                 " Group By H.skillName ";
                 List<ReportModel> dataPoints = sdb.GetCountryStats(query);
                 ViewBag.Skills = JsonConvert.SerializeObject(dataPoints);
