@@ -2,58 +2,165 @@
 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
-          rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-    <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css"
+		  rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+	<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(function () {
-        $('.listbox').multiselect({
-            includeSelectAllOption: true
-        });
-    });
+	$(function () {
+		$('.listbox').multiselect({
+			includeSelectAllOption: true
+		});
+	});
 </script>
 @if (ViewBag.Message != null)
 {
-    <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-    </script>
+	<script type="text/javascript">
+			window.onload = function () {
+				alert("@ViewBag.Message");
+			};
+	</script>
 }
 
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+	@Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Report Users</h4>
-        <hr />
-        <div class="form-group">
-            <div class="col-md-10">
-                <label class="control-label col-md-2"></label> @ViewBag.Message
-            </div>
-        </div>
+	<div class="form-horizontal">
+		<h4>Report Users</h4>
+		<hr />
+		<div class="form-group">
+			<div class="col-md-10">
+				<label class="control-label col-md-2"></label> @ViewBag.Message
+			</div>
+		</div>
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.selectedCategory, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownListFor(model => model.selectedCategory, new SelectList(Model.CategoryList, "Value", "Text"), "--Please select a topic--", new { @class = "form-control" })*@
-                @Html.ListBoxFor(m => m.selectedCategory, Model.CategoryList, new { @class = "listbox" })
-                @Html.ValidationMessageFor(model => model.selectedCategory, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		<div class="form-group">
+			@Html.LabelFor(model => model.selectedCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.ListBoxFor(m => m.selectedCategory, Model.CategoryList, new { @class = "listbox" })
+				@Html.ValidationMessageFor(model => model.selectedCategory, "", new { @class = "text-danger" })
+			</div>
+		</div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</div>
 
-    </div>
+
+		@if (ViewBag.Country != null)
+		{<div id="chartContainer1" style="width: 80%; height:400px;"></div>
+		}
+		@if (ViewBag.Skills != null)
+		{<div id="chartContainer2" style="width: 80%; height:400px;"></div>
+		}
+
+		@if (ViewBag.Languages != null)
+		{<div id="chartContainer3" style="width: 80%; height:400px;"></div>
+		}
+		@if (ViewBag.Hobbies != null)
+		{<div id="chartContainer4" style="width: 80%; height:400px;"></div>
+		}
+
+
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+			<script type="text/javascript">
+
+			var chart = new CanvasJS.Chart("chartContainer1", {
+				theme: "light2",
+				animationEnabled: true,
+				title: {
+					text: "Country Distribution of Community Members"
+				},
+				subtitles: [
+					{ text: "" }
+				],
+				data: [
+				{
+					type: "column", //change type to bar, line, area, pie, etc
+										//Uncomment below line to add data coming from the controller.
+					dataPoints:@Html.Raw(ViewBag.Country)
+				}
+				]
+			});
+			chart.render();
+			chart = {};
+			</script>
+
+			<script type="text/javascript">
+
+			var chart = new CanvasJS.Chart("chartContainer2", {
+				theme: "light2",
+				animationEnabled: true,
+				title: {
+					text: "Skills Distribution of Community Members"
+				},
+				subtitles: [
+					{ text: "" }
+				],
+				data: [
+				{
+					type: "column", //change type to bar, line, area, pie, etc
+										//Uncomment below line to add data coming from the controller.
+					dataPoints:@Html.Raw(ViewBag.Skills)
+				}
+				]
+			});
+			chart.render();
+			chart = {};
+			</script>
+
+			<script type="text/javascript">
+
+			var chart = new CanvasJS.Chart("chartContainer3", {
+				theme: "light2",
+				animationEnabled: true,
+				title: {
+					text: "Languages Distribution of Community Members"
+				},
+				subtitles: [
+					{ text: "" }
+				],
+				data: [
+				{
+					type: "column", //change type to bar, line, area, pie, etc
+										//Uncomment below line to add data coming from the controller.
+					dataPoints:@Html.Raw(ViewBag.Languages)
+				}
+				]
+			});
+			chart.render();
+			chart = {};
+			</script>
+
+			<script type="text/javascript">
+			var chart4 = new CanvasJS.Chart("chartContainer4", {
+				theme: "light2",
+				animationEnabled: true,
+				title: {
+					text: "Hobbies Distribution of Community Members"
+				},
+				subtitles: [
+					{ text: "" }
+				],
+				data: [
+				{
+					type: "column", //change type to bar, line, area, pie, etc
+										//Uncomment below line to add data coming from the controller.
+					dataPoints:@Html.Raw(ViewBag.Hobbies)
+				}
+				]
+			});
+				chart4.render();
+				chart4 = {};
+			</script>
+	</div>
 }
