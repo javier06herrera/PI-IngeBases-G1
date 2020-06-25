@@ -17,12 +17,12 @@
 
 
 <body>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Index", "CommunityProgressReport", FormMethod.Get))
     {
 
         <div class="container-fluid">
             <label>Member rank</label>
-            <select id="memberCategories" multiple="multiple">
+            <select id="memberRanks" multiple="multiple">
                 <option value="Cordinator">Cordinator</option>
                 <option value="Core">Core</option>
                 <option value="Active">Active</option>
