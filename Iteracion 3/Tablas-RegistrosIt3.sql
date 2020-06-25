@@ -238,12 +238,6 @@ INSERT INTO CommunityMember VALUES
 ('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
 'Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 
-SELECT *
-FROM REVIEWS
-
-UPDATE REVIEWS
-SET state = 'reviewed'
-WHERE articleId = 2
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
