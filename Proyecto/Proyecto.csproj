@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommunityProgressReportController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Models\ArticleDBHandle.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommunityMemberModel.cs" />
+    <Compile Include="Models\CommunityProgressReportModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
@@ -146,6 +148,7 @@
   <ItemGroup>
     <Content Include="Content\css\bootstrap-grid.css" />
     <Content Include="Content\css\bootstrap-grid.min.css" />
+    <Content Include="Content\css\bootstrap-multiselect.css" />
     <Content Include="Content\css\bootstrap-reboot.css" />
     <Content Include="Content\css\bootstrap-reboot.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -167,13 +170,18 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\ufonts.com_copperplate-gothic-regular.ttf" />
+    <Content Include="Scripts\js\bootstrap-multiselect.js" />
+    <Content Include="Scripts\js\Chart.js" />
+    <Content Include="Scripts\js\CommunityProgressReport.js" />
     <Content Include="Scripts\js\bootstrap.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
-    <Content Include="Scripts\js\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\js\main.js" />
+    <Content Include="Scripts\js\multiselect.core.js" />
+    <Content Include="Scripts\js\multiselect.min.js" />
     <Content Include="Scripts\js\npm.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\search.js" />
+    <Content Include="Scripts\js\modernizr-2.8.3.js" />
+    <Content Include="Scripts\js\popper.min.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
@@ -345,6 +353,7 @@
     <Content Include="Views\Review\ReviewForm.cshtml" />
     <Content Include="Views\Profile\Login.cshtml" />
     <Content Include="Views\Review\PendingReviews.cshtml" />
+    <Content Include="Views\CommunityProgressReport\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
