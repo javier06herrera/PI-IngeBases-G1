@@ -12,7 +12,6 @@ namespace Proyecto.Controllers
         //I3: Get method to control review form, this method provides a model
         public ActionResult ReviewForm(ArticleModel article)
         {
-            
             ReviewsModel reviews = new ReviewsModel();
             reviews.articleId = article.articleId;
             ViewData["Reviews"] = reviews;
