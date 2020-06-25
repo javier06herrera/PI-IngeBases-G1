@@ -234,7 +234,8 @@ namespace Proyecto.Models
                         likesCount = Convert.ToInt32(article["likesCount"]),
                         neutralCount = Convert.ToInt32(article["neutralCount"]),
                         dislikesCount = Convert.ToInt32(article["dislikesCount"]),
-                        likeBalance = Convert.ToInt32(article["likeBalance"])
+                        likeBalance = Convert.ToInt32(article["likeBalance"]),
+                        checkedStatus = Convert.ToString(article["checkedStatus"])
                     });
             }
             connection.Close();

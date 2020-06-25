@@ -90,20 +90,8 @@ namespace Proyecto.Controllers
         //I3
         public ActionResult PendingVeredicts()
         {
-            string user;
             ReviewDBHandle reviewDBHandle = new ReviewDBHandle();
-
-            //Fetching user credentials
-            if (!(Session["user"] is null)) //If someone has already sign in retrieve rank
-            {
-                user = Session["user"].ToString();
-            }
-            else //If no one is signed up sets member rank to default member (core)
-            {
-                user = "barrKev@puchimail.com";
-            }
-
-            ViewData["PendingVeredicts"] = reviewDBHandle.fetchVeredictArticles(user);
+            ViewData["PendingVeredicts"] = reviewDBHandle.fetchVeredictArticles();
 
             return View();
         }

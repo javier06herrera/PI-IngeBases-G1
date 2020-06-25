@@ -1,12 +1,12 @@
---DROP TABLE HAS_SKILL;
---DROP TABLE Skill;
---DROP TABLE WRITES;
---DROP TABLE REVIEWS;
---DROP TABLE Question;
---DROP TABLE CommunityMember;
---DROP TABLE INVOLVES;
---DROP TABLE Article;
---DROP TABLE Topic;
+----DROP TABLE HAS_SKILL;
+----DROP TABLE Skill;
+----DROP TABLE WRITES;
+----DROP TABLE REVIEWS;
+----DROP TABLE Question;
+----DROP TABLE CommunityMember;
+----DROP TABLE INVOLVES;
+----DROP TABLE Article;
+----DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -214,6 +214,11 @@ CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleI
 INSERT INTO REVIEWS
  VALUES	(1,3,DEFAULT)
  
+SELECT *
+FROM Article A
+JOIN REVIEWS R
+ON A.articleId = R.articleId
+WHERE A.state = 'not reviewed'
 
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------

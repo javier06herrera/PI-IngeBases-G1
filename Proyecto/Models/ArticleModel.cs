@@ -63,6 +63,9 @@ namespace Proyecto.Models
         [Display(Name = "Like Balance")]
         public int likeBalance { get; set; }
 
+        [Display(Name ="Checked Flag")]
+        public string checkedStatus {get; set;}
+
 
     }
 
