@@ -546,5 +546,27 @@ namespace Proyecto.Models
 
             return article;
         }
+
+        //Iteación 3
+        public bool updateArticleState(ArticleModel model)
+        {
+            connection();
+            String updateQuestion = "UPDATE Article " +
+                                   "SET checkedStatus = 'pending assignation' " +                                  
+                                   "WHERE articleId = @articleId";
+
+            SqlCommand cmd = new SqlCommand(updateQuestion, con);
+            cmd.Parameters.AddWithValue("@articleId", model.articleId);
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
+
+
     }
 }
