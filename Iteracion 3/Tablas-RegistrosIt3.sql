@@ -1,4 +1,4 @@
---DROP TABLE HAS_SKILL;
+--DROP TABLE HAS_SKILL;-
 --DROP TABLE Skill;
 --DROP TABLE WRITES;
 --DROP TABLE REVIEWS;
@@ -21,7 +21,13 @@ likesCount		INT NOT NULL DEFAULT 0,
 neutralCount	INT NOT NULL DEFAULT 0,
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
-checkedStatus	VARCHAR(15) NOT NULL DEFAULT 'not checked' --checked / not checked / published
+checkedStatus	VARCHAR(25) NOT NULL DEFAULT 'on edition' 
+											--on edition: El autor está en proceso de edición
+											--pending collaboration: El autor envía el artículo y el autor no ha solicitado colaboración
+											--pending assignation: El artículo está en proceso de assignación de revisores
+											--not checked: Faltan miembros revisores de concluir, 
+											--checked: Todos los revisores concluyeron su revisión
+											--published: Fue Aceptado por el coordinador
 );
 
 
@@ -219,7 +225,7 @@ CONSTRAINT FK_CommunityMember_REVIEW FOREIGN KEY (email) REFERENCES CommunityMem
 CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
  )
 
- INSERT INTO REVIEWS
+INSERT INTO REVIEWS
  VALUES	(1,'alvAnt@puchimail.com','Sin comentarios',5,5,5,5,'reviewed')
 
 INSERT INTO REVIEWS
@@ -238,12 +244,13 @@ INSERT INTO CommunityMember VALUES
 ('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
 'Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 
-SELECT *
-FROM REVIEWS
-
-UPDATE REVIEWS
-SET state = 'reviewed'
-WHERE articleId = 2
+CREATE TABLE IS_NOMINATED(
+answer VARCHAR(100) DEFAULT 'pending',
+comments VARCHAR(100)  DEFAULT 'no aplica',
+PRIMARY KEY(email,ArticleId),
+CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
+ )
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
