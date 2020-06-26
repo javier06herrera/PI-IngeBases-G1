@@ -17,13 +17,14 @@ namespace Proyecto.Models
             string constring = ConfigurationManager.ConnectionStrings["ArticleConn"].ToString();
             con = new SqlConnection(constring);
         }
-        public List<ReportModel> GetCountryStats(string topic)
+        public List<ReportModel> GetCountryStats(string query)
         {
+            connection();
             List<ReportModel> valuesList = new List<ReportModel>();
-            string getResults = "SELECT A.addressCountry, Count(*) " +
-                                " FROM Article A " +
-                                " Group By A.addressCountry ";
-            SqlCommand cmd = new SqlCommand(getResults, con);
+            //string getResults = "SELECT C.addressCountry, (Count(*)) As 'Count' " +
+            //                    " FROM CommunityMember C " +
+            //                    " Group By C.addressCountry ";
+            SqlCommand cmd = new SqlCommand(query, con);
             //cmd.Parameters.AddWithValue("@topicName", topic);
 
 
@@ -38,11 +39,7 @@ namespace Proyecto.Models
             foreach (DataRow dr in dt.Rows)
             {
                 valuesList.Add(
-                    new ReportModel
-                    {
-                        count = Convert.ToInt32(dr["count"]),
-                        value = Convert.ToString(dr["value"]),
-                    });
+                    new ReportModel(Convert.ToString(dr["Value"]), Convert.ToInt32(dr["Count"])));                 
             }
             return valuesList;
         }
