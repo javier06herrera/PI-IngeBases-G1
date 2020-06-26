@@ -1,0 +1,57 @@
+﻿
+@model IEnumerable<Proyecto.Models.ArticleModel>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Colaboration</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Abstract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.publishDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.topicName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abstract)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.publishDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.topicName)
+                </td>
+                <td>
+                    @Html.ActionLink("Ask Colaboration", "askColaboration", "Colaboration",item,null)
+          
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
