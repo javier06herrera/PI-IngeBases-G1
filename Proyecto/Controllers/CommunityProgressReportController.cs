@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace Proyecto.Controllers
 {
@@ -22,12 +23,10 @@ namespace Proyecto.Controllers
         public string GetFilteredValues(string[] selectedMemberRanks, string filter)
         {
             CommunityProgressReportDBHandle dataBaseHandler = new CommunityProgressReportDBHandle();
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
             string query = this.GetQuery(selectedMemberRanks,filter);
-            List<string> values = dataBaseHandler.GetFilteredValues(query);
-
-            return serializer.Serialize(values);
+            DataTable table = dataBaseHandler.GetFilteredValues(query);
+            return JsonConvert.SerializeObject(table);
         }
 
         public string GetQuery(string [] selectedMemberRanks, string filter)
