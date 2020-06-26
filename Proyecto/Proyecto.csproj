@@ -131,6 +131,7 @@
     <Compile Include="Models\ArticleDBHandle.cs" />
     <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\CommunityMemberModel.cs" />
+    <Compile Include="Models\CommunityProgressReportDBHandle.cs" />
     <Compile Include="Models\CommunityProgressReportModel.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
@@ -345,6 +346,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="obj\Debug\" />
+    <Folder Include="Views\CommunityProgressReportDBHandle\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,6 +4,7 @@
     var filtersDropdown = document.getElementById("filters");
     var selectedMemberRanks = getSelectedItems(memberRankDropdown);
     var selectedFilters = getSelectedItems(filtersDropdown);
+    var values = getValues(selectedMemberRanks, selectedFilters);
 }
 
 function getSelectedItems(dropdownlist)
@@ -17,10 +18,32 @@ function getSelectedItems(dropdownlist)
         currentOption = dropdownlist.options[item];
         if (currentOption.selected)
         {
-            selectedItems.push(currentOption);
+            selectedItems.push(currentOption.value);
         }
     }
     return selectedItems;
+}
+
+function getValues(selectedMemberRanks, selectedFilters)
+{
+    var valuesList = null;
+
+    $.ajax({
+        url: '/CommunityProgressReport/GetValues',
+        data:
+        {
+            selectedMemberRanks: selectedMemberRanks,
+            selectedFilters: selectedFilters
+        },
+        type: 'post',
+        dataType: 'json',
+        async: false,
+        success: function (results) 
+        {
+            valuesList = results;
+        }
+    });
+    return valuesList;
 }
 
 function getGraphic(canvas)
