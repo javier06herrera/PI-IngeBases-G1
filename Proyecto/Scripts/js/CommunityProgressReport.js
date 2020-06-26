@@ -35,7 +35,7 @@ function generateReport(selectedMemberRanks, selectedFilters)
     // For each filter, get the required data, create a canvas and graphicate it.
     for (var filter = 0; filter < selectedFilters.length; ++filter)
     {
-        values = getFilteredValues(selectedMemberRanks, filter);
+        values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
         canvas = createCanvas();
         drawGraphics(canvas, values);
     }
@@ -52,7 +52,7 @@ function getFilteredValues(selectedMemberRanks, filter)
         },
         type: 'post',
         dataType: 'json',
-        async: false,
+        async : false,
         success: function (results) {
             filteredValues = results;
         }
@@ -88,7 +88,7 @@ function drawGraphics(canvas, values)
                 {
                     label: "Population (millions)",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                    data: values;
+                    data: values,
                 }
             ]
         },
