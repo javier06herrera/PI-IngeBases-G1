@@ -9,12 +9,8 @@
     <title>Colaboration</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
         <tr>
-          
             <th>
                 @Html.DisplayNameFor(model => model.name)
             </th>
@@ -32,24 +28,28 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Abstract)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.publishDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.topicName)
-                </td>
-                <td>
-                    @Html.ActionLink("Ask Colaboration", "askColaboration", "Colaboration",item,null)
-          
-                </td>
-            </tr>
+            if (item.checkedStatus == "pending collaboration")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Abstract)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.publishDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.topicName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Ask Colaboration", "askColaboration", "Colaboration", item, null)
+
+                    </td>
+                </tr>
+            }
+
         }
 
     </table>

@@ -1,12 +1,12 @@
---DROP TABLE HAS_SKILL;-
---DROP TABLE Skill;
---DROP TABLE WRITES;
---DROP TABLE REVIEWS;
---DROP TABLE Question;
---DROP TABLE CommunityMember;
---DROP TABLE INVOLVES;
---DROP TABLE Article;
---DROP TABLE Topic;
+DROP TABLE HAS_SKILL;
+DROP TABLE Skill;
+DROP TABLE WRITES;
+DROP TABLE REVIEWS;
+DROP TABLE Question;
+DROP TABLE CommunityMember;
+DROP TABLE INVOLVES;
+DROP TABLE Article;
+DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -21,7 +21,7 @@ likesCount		INT NOT NULL DEFAULT 0,
 neutralCount	INT NOT NULL DEFAULT 0,
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
-checkedStatus	VARCHAR(25) NOT NULL DEFAULT 'on edition' 
+checkedStatus	VARCHAR(50) NOT NULL DEFAULT 'on edition' 
 											--on edition: El autor está en proceso de edición
 											--pending collaboration: El autor envía el artículo y el autor no ha solicitado colaboración
 											--pending assignation: El artículo está en proceso de assignación de revisores
@@ -247,6 +247,8 @@ INSERT INTO CommunityMember VALUES
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
 comments VARCHAR(100)  DEFAULT 'no aplica',
+email VARCHAR(100),
+articleId	INT,
 PRIMARY KEY(email,ArticleId),
 CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
