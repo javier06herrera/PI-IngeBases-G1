@@ -182,7 +182,8 @@ namespace Proyecto.Models
                         likesCount = Convert.ToInt32(article["likesCount"]),
                         neutralCount = Convert.ToInt32(article["neutralCount"]),
                         dislikesCount = Convert.ToInt32(article["dislikesCount"]),
-                        likeBalance = Convert.ToInt32(article["likeBalance"])
+                        likeBalance = Convert.ToInt32(article["likeBalance"]),
+                        checkedStatus = Convert.ToString(article["checkedStatus"])
                     });
             }
             con.Close();
@@ -211,12 +212,75 @@ namespace Proyecto.Models
         }
 
 
-        public List<ArticleModel> fetchVeredictArticles(string reviewerEmail)
+        public List<ArticleModel> fetchVeredictArticles()
         {
+            //Stablishes a connection string
+            connection();
             List<ArticleModel> veredictArticleList = new List<ArticleModel>();
 
-            //FOR QUE RECORRE TODOS LOS ARTICULOS Y LOS AGREGA A LA LISTA SI ESTAN EN REVISION Y YA LO REVISARON TODOS LOS REVISORES
+            string fetchArticles = "SELECT * " +
+                                   "FROM Article A " +                                  
+                                   "WHERE A.checkedStatus = 'not checked' ";
 
+            //DB connection arrangement
+            SqlCommand cmd = new SqlCommand(fetchArticles, con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable articleTable = new DataTable();
+
+            con.Open();
+            sda.Fill(articleTable);
+
+            foreach (DataRow article in articleTable.Rows)
+            {
+
+                int artId = Convert.ToInt32(article["articleId"]);
+                //Add only articles that are ready to be given a veredict
+                if (checkReviewers(artId) == true)
+                {
+                    veredictArticleList.Add(
+                        new ArticleModel
+                        {
+                            articleId = Convert.ToInt32(article["articleId"]),
+                            name = Convert.ToString(article["name"]),
+                            topicName = " ",
+                            Abstract = Convert.ToString(article["Abstract"]),
+                            publishDate = Convert.ToString(article["publishDate"]),
+                            content = Convert.ToString(article["content"]),
+                            type = Convert.ToString(article["type"]),
+                            baseGrade = Convert.ToInt32(article["baseGrade"]),
+                            accessCount = Convert.ToInt32(article["accessCount"]),
+                            likesCount = Convert.ToInt32(article["likesCount"]),
+                            neutralCount = Convert.ToInt32(article["neutralCount"]),
+                            dislikesCount = Convert.ToInt32(article["dislikesCount"]),
+                            likeBalance = Convert.ToInt32(article["likeBalance"]),
+                            checkedStatus = Convert.ToString(article["checkedStatus"])
+                        });
+                }
+            }
+
+            con.Close();
+
+            //Retrieve topics of the list topics
+            string fetchTopics = "SELECT * " +
+                     "FROM   INVOLVES " +
+                     "WHERE  articleId in ( " +
+                                "SELECT articleId " +
+                                "FROM   REVIEWS " +
+                                "WHERE  state = 'reviewed') " +                                
+                     "ORDER BY articleId";
+
+            cmd.CommandText = fetchTopics;
+            SqlDataAdapter sda2 = new SqlDataAdapter(cmd);
+            DataTable topicList = new DataTable();
+            con.Open();
+            sda2.Fill(topicList);
+
+            foreach (ArticleModel article in veredictArticleList)
+            {
+               article.topicName = topicMerge(article.articleId, topicList);
+            }
+
+            con.Close();
             return veredictArticleList;
 		}
         

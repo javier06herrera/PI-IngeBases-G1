@@ -42,8 +42,8 @@ a:hover {
     top: 3px;
 }
 
-.myTag{
-    display: inline
+.myTextArea{
+    width: 100px;
 }
 
 .SearchTopic {

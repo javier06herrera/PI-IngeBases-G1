@@ -1,12 +1,12 @@
-DROP TABLE HAS_SKILL;
-DROP TABLE Skill;
-DROP TABLE WRITES;
-DROP TABLE REVIEWS;
-DROP TABLE Question;
-DROP TABLE CommunityMember;
-DROP TABLE INVOLVES;
-DROP TABLE Article;
-DROP TABLE Topic;
+--DROP TABLE HAS_SKILL;-
+--DROP TABLE Skill;
+--DROP TABLE WRITES;
+--DROP TABLE REVIEWS;
+--DROP TABLE Question;
+--DROP TABLE CommunityMember;
+--DROP TABLE INVOLVES;
+--DROP TABLE Article;
+--DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -21,7 +21,13 @@ likesCount		INT NOT NULL DEFAULT 0,
 neutralCount	INT NOT NULL DEFAULT 0,
 dislikesCount	INT NOT NULL DEFAULT 0,
 likeBalance		INT NOT NULL DEFAULT 0,
-checked			VARCHAR(15) NOT NULL DEFAULT 'not checked' --checked / not checked
+checkedStatus	VARCHAR(25) NOT NULL DEFAULT 'on edition' 
+											--on edition: El autor está en proceso de edición
+											--pending collaboration: El autor envía el artículo y el autor no ha solicitado colaboración
+											--pending assignation: El artículo está en proceso de assignación de revisores
+											--not checked: Faltan miembros revisores de concluir, 
+											--checked: Todos los revisores concluyeron su revisión
+											--published: Fue Aceptado por el coordinador
 );
 
 
@@ -34,6 +40,10 @@ values ('I, Robot','long','Elaborate philosophic implications concerning the thr
 
 insert into Article
 values ('Mamita Yunai','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+
+insert into Article
+values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -54,6 +64,9 @@ VALUES ('Novel', 'Survival')
 
 INSERT INTO	Topic
 VALUES ('Novel', 'Banana Republic')
+
+INSERT INTO	Topic
+VALUES ('Novel', 'Pirate Island')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE INVOLVES(
@@ -76,6 +89,9 @@ VALUES	(2,'Science Fiction', 'Space')
 
 INSERT INTO INVOLVES
 VALUES	(3,'Novel', 'Banana Republic')
+
+INSERT INTO INVOLVES
+VALUES	(4,'Novel', 'Pirate Island')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
@@ -191,6 +207,9 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
 
 INSERT INTO WRITES
  VALUES	('herrJav@puchimail.com',3)
+
+ INSERT INTO WRITES
+ VALUES	('barrKev@puchimail.com',4)
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -206,7 +225,7 @@ CONSTRAINT FK_CommunityMember_REVIEW FOREIGN KEY (email) REFERENCES CommunityMem
 CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
  )
 
- INSERT INTO REVIEWS
+INSERT INTO REVIEWS
  VALUES	(1,'alvAnt@puchimail.com','Sin comentarios',5,5,5,5,'reviewed')
 
 INSERT INTO REVIEWS
@@ -225,6 +244,13 @@ INSERT INTO CommunityMember VALUES
 ('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
 'Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 
+CREATE TABLE IS_NOMINATED(
+answer VARCHAR(100) DEFAULT 'pending',
+comments VARCHAR(100)  DEFAULT 'no aplica',
+PRIMARY KEY(email,ArticleId),
+CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
+ )
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
