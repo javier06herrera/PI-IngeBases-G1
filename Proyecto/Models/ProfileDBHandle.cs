@@ -184,6 +184,21 @@ namespace Proyecto.Models
 
         }
 
+        public void updateMerits(string author, int merits)
+        {
+            string query = "UPDATE CommunityMember " +
+                           "SET points = points + @merits " +
+                           "WHERE email = @author ";
+
+            command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@author", author);
+            command.Parameters.AddWithValue("@merits", merits);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+
+        }
+
         //Combines all the topics of an Article
         public string topicMerge(int articleId, DataTable topicList)
         {

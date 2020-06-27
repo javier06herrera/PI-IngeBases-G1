@@ -1,13 +1,13 @@
-DROP TABLE IS_NOMINATED;
-DROP TABLE HAS_SKILL;
-DROP TABLE Skill;
-DROP TABLE WRITES;
-DROP TABLE REVIEWS;
-DROP TABLE Question;
-DROP TABLE CommunityMember;
-DROP TABLE INVOLVES;
-DROP TABLE Article;
-DROP TABLE Topic;
+--DROP TABLE IS_NOMINATED;
+--DROP TABLE HAS_SKILL;
+--DROP TABLE Skill;
+--DROP TABLE WRITES;
+--DROP TABLE REVIEWS;
+--DROP TABLE Question;
+--DROP TABLE CommunityMember;
+--DROP TABLE INVOLVES;
+--DROP TABLE Article;
+--DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -37,7 +37,7 @@ insert into Article
 values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','Nací en 1632, en la ciudad de York, de una buena familia, aunque no de la región, pues mi padre era un extranjero de Brema1 que, inicialmente, se asentó en Hull2. Allí consiguió hacerse con una considerable fortuna como comerciante y, más tarde, abandonó sus negocios y se fue a vivir a York, donde se casó con mi madre, que pertenecía a la familia Robinson, una de las buenas familias del condado de la cual obtuve mi nombre, Robinson Kreutznaer. Mas, por la habitual alteración de las palabras que se hace en Inglaterra, ahora nos llaman y nosotros también nos llamamos y escribimos nuestro nombre Crusoe; y así me han llamado siempre mis compañeros.   Tenía dos hermanos mayores, uno de ellos fue coronel de un regimiento de infantería inglesa en Flandes, que antes había estado bajo el mando del célebre coronel Lockhart, y murió en la batalla de Dunkerque3 contra los españoles.    Lo que fue de mi segundo hermano, nunca lo he sabido al igual que mi padre y mi madre tampoco supieron lo que fue de mí.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 
 insert into Article
-values ('I, Robot','long','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','Un  robot  no  debe  dañar  a  un  ser  humano  o,  por  su  inacción,dejar que un ser humano sufra daño.2.  Un  robot  debe  obedecer  las  órde  nes  que  le  son  dadas  por  unser  hu  mano,  excepto  cuando  estas  órdenes  están  en  oposicióncon la primera Ley.3.  Un  robot  debe  proteger  su  propia  existencia,  hasta  donde  estaprotec ción no esté en conflicto con la primera o segunda Leyes.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+values ('I, Robot','long','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','Un  robot  no  debe  dañar  a  un  ser  humano  o,  por  su  inacción,dejar que un ser humano sufra daño.2.  Un  robot  debe  obedecer  las  órde  nes  que  le  son  dadas  por  unser  hu  mano,  excepto  cuando  estas  órdenes  están  en  oposicióncon la primera Ley.3.  Un  robot  debe  proteger  su  propia  existencia,  hasta  donde  estaprotec ción no esté en conflicto con la primera o segunda Leyes.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'not checked');
 
 insert into Article
 values ('Mamita Yunai','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
@@ -45,6 +45,8 @@ values ('Mamita Yunai','long','Life of a "criollo" politician and his fight agai
 insert into Article
 values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
 
+insert into Article
+values ('Animal Farm','long','Metaphor about the rotting structure of a raising empire','12-02-1999','One day, Squealer takes the sheep off to a remote spot to teach them a new chant. Not long afterward, the animals have just finished their day’s work when they hear the terrified neighing of a horse. It is Clover, and she summons the others hastily to the yard. There, the animals gaze in amazement at Squealer walking toward them on his hind legs. Napoleon soon appears as well, walking upright; worse, he carries a whip. Before the other animals have a chance to react to the change, the sheep begin to chant, as if on cue: “Four legs good, two legs better!” Clover, whose eyes are failing in her old age, asks Benjamin to read the writing on the barn wall where the Seven Commandments were originally inscribed. Only the last commandment remains: “all animals are equal.” However, it now carries an addition: “but some animals are more equal than others.” In the days that follow, Napoleon openly begins smoking a pipe, and the other pigs subscribe to human magazines, listen to the radio, and begin to install a telephone, also wearing human clothes that they have salvaged from Mr. Jones’s wardrobe.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -69,6 +71,11 @@ VALUES ('Novel', 'Banana Republic')
 INSERT INTO	Topic
 VALUES ('Novel', 'Pirate Island')
 
+INSERT INTO	Topic
+VALUES ('Satire', 'Politics')
+
+INSERT INTO	Topic
+VALUES ('Story', 'Fiction')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE INVOLVES(
 articleId INT,
@@ -94,6 +101,13 @@ VALUES	(3,'Novel', 'Banana Republic')
 INSERT INTO INVOLVES
 VALUES	(4,'Novel', 'Pirate Island')
 
+INSERT INTO INVOLVES
+VALUES	(5,'Satire', 'Politics')
+
+INSERT INTO INVOLVES
+VALUES	(5,'Story', 'Fiction')
+
+
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
 email				VARCHAR(100) PRIMARY KEY,
@@ -117,17 +131,19 @@ INSERT INTO CommunityMember
 VALUES ( 'barrKev@puchimail.com','Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','1','Intel','core',5,'Versatility',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'moraGlo@puchimail.com','Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','2','Intel','core', 5, 'Creativity',DEFAULT)
+VALUES ( 'glorymoravi@gmail.com','Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','2','Intel','core', 5, 'Creativity',DEFAULT)
 
 INSERT INTO CommunityMember
 VALUES ( 'alvAnt@puchimail.com','Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','3','Intel','active',3,'Math-skills',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'barrDan@puchimail.com','Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','4','Intel','active',3,'Adaptability',DEFAULT)
+VALUES ( 'dbarrantescr@gmail.com','Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','4','Intel','active',3,'Adaptability',DEFAULT)
 
 INSERT INTO CommunityMember
 VALUES ( 'herrJav@puchimail.com','Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','5','Intel','peripheral',0,'Organized',DEFAULT)
 
+INSERT INTO CommunityMember 
+VALUES('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica','Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
 subjectCategory  VARCHAR(100),
@@ -155,7 +171,7 @@ INSERT INTO HAS_SKILL
 VALUES ('barrKev@puchimail.com', 'Musica', 'Tocar piano')
 
 INSERT INTO HAS_SKILL
-VALUES ('moraGlo@puchimail.com', 'Diseño', 'Adobe')
+VALUES ('glorymoravi@gmail.com', 'Diseño', 'Adobe')
 
 INSERT INTO HAS_SKILL
 VALUES ('alvAnt@puchimail.com', 'Musica', 'Tocar piano')
@@ -178,7 +194,7 @@ INSERT INTO	Question
 VALUES ('barrKev@puchimail.com', 'How to exit VIM?','posted', 'If you are in edit mode, first press the <Esc> key. Then enter :wq + <Enter> to save and exit. And by the way this does not work', DEFAULT)
 
 INSERT INTO	Question
-VALUES ('moraGlo@puchimail.com','How to create an article?',DEFAULT, DEFAULT, DEFAULT)
+VALUES ('glorymoravi@gmail.com','How to create an article?',DEFAULT, DEFAULT, DEFAULT)
 
 INSERT INTO	Question
 VALUES ('alvAnt@puchimail.com', 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
@@ -198,19 +214,22 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
  VALUES	('barrKev@puchimail.com',2)
 
  INSERT INTO WRITES
- VALUES	('moraGlo@puchimail.com',1)
+ VALUES	('glorymoravi@gmail.com',1)
 
  INSERT INTO WRITES
  VALUES	('alvAnt@puchimail.com',2)
 
  INSERT INTO WRITES
- VALUES	('barrDan@puchimail.com',2)
+ VALUES	('dbarrantescr@gmail.com',2)
 
-INSERT INTO WRITES
+ INSERT INTO WRITES
  VALUES	('herrJav@puchimail.com',3)
 
  INSERT INTO WRITES
  VALUES	('barrKev@puchimail.com',4)
+
+ INSERT INTO WRITES
+ VALUES	('herrJav@puchimail.com',5)
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -233,152 +252,24 @@ INSERT INTO REVIEWS
  VALUES	(1,'barrKev@puchimail.com','Sin comentarios',5,5,5,75,DEFAULT)
 
 INSERT INTO REVIEWS
- VALUES	(2,'moraGlo@puchimail.com','Sin comentarios',5,5,5,25,DEFAULT)
+ VALUES	(2,'glorymoravi@gmail.com','Sin comentarios',5,5,5,25,'reviewed')
 
 INSERT INTO REVIEWS
- VALUES	(2,'barrDan@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
+ VALUES	(2,'dbarrantescr@gmail.com','Sin comentarios',5,5,5,30,'reviewed')
 
 INSERT INTO REVIEWS
- VALUES	(3,'moraGlo@puchimail.com','Sin comentarios',5,5,5,60,DEFAULT)
+ VALUES	(3,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
 
-INSERT INTO CommunityMember VALUES
-('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
-'Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
-comments VARCHAR(100)  DEFAULT 'no aplica',
+comments VARCHAR(100)  DEFAULT 'no comment',
 email VARCHAR(100),
 articleId	INT,
 PRIMARY KEY(email,ArticleId),
 CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
- )
- 
- SELECT *
- FROM WRITES
- WHERE articleId = 2
+)
 
- SELECT *
- FROM REVIEWS
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
-
---DROP TABLE Creates;
---DROP TABLE Member;
---DROP TABLE ForeignParticipant;
---DROP TABLE CommunityUser;
---DROP TABLE ArticleTopic;
---DROP TABLE Article;
---DROP TABLE Faq;
-
---CREATE TABLE Article
---( 
---articleId   INT IDENTITY(1,1) PRIMARY KEY,
---name		VARCHAR(50) NOT NULL UNIQUE,
---type        BIT NOT NULL, --LONG(0) SHORT(1)
---abstract	VARCHAR(MAX) NOT NULL,
---publishDate DATE NOT NULL,
---content		VARCHAR(MAX) NOT NULL,
-
---);
-
-
---insert into Article
---values ('Robinson Crusoe',1,'Naufragio de un inglés del siglo 17','12-02-1999','C://Daniel/Defoe');
-
---insert into Article
---values ('Yo Robot',1,'Problemáticas filosóficas en la aplicación de las leyes de la robótica','12-02-1999','C://Isaac/Asimov');
----------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE ArticleTopic
---(
---articleId INT,
---topic VARCHAR(50),
---PRIMARY KEY(articleId, topic),
---CONSTRAINT FK_ArticleTopic_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE 
---)
-
---INSERT INTO ArticleTopic
---values (1,'Naufragio')
-
---INSERT INTO ArticleTopic
---values (1,'Novela Francesa')
-
---INSERT INTO ArticleTopic
---values (2,'Filosofía')
-
---INSERT INTO ArticleTopic
---values (2,'Ciencia Ficción')
--------------------------------------------------------------------------------------------------------------------
---CREATE TABLE CommunityUser
---(
---userId		INT  IDENTITY PRIMARY KEY,
---name		VARCHAR(50) NOT NULL,
---lastName	VARCHAR(100) NOT NULL,
---userState   INT NOT NULL DEFAULT(0)
---);
-
---insert into CommunityUser
---values ('Daniel', 'Barrantes',1);
-
---insert into CommunityUser
---values ('Antonio', 'Alvarez',1);
---------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE ForeignParticipant
---(
---userId int PRIMARY KEY,
---participantAttributes	VARCHAR(MAX) NOT NULL,
---CONSTRAINT FK_ForeignParticipant_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE 
---);
-
---insert into ForeignParticipant
---values (1, 'Datos_de_Participante');
-
---insert into ForeignParticipant
---values (2, 'Datos_de_Participante');
-
-----------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Member
---(
---userId int PRIMARY KEY,
---memberRank				INT  NOT NULL, --1:Coordinador 2:Nucleo 3:Activo
---memberAttributes		VARCHAR(MAX) NOT NULL,
---CONSTRAINT FK_Member_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE
---);
-
---insert into Member
---values (1, 1 , 'Datos_de_Participante');
-
---insert into Member
---values (2, 2, 'Datos_de_Participante');
-
---------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Creates
---(
---articleId int NOT NULL,
---userId int NOT NULL,
---PRIMARY KEY(articleId,userId),
---CONSTRAINT FK_Creates_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE,
---CONSTRAINT FK_Creates_Member FOREIGN KEY (userId) REFERENCES Member(userId) ON DELETE NO ACTION ON UPDATE CASCADE
---);
-
---insert into Creates
---values (1,1);
---insert into Creates
---values (2,2);
----------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Faq (
---    questionId  INT           IDENTITY (1, 1) NOT NULL,
---    question    VARCHAR (MAX) NOT NULL,
---    status      BIT           NOT NULL,
---    answer      VARCHAR (MAX) NULL,
---    PRIMARY KEY CLUSTERED (questionId ASC)
---);
-
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','barrKev@puchimail.com', 5)

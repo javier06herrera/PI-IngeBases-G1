@@ -113,13 +113,13 @@ namespace Proyecto.Controllers
             //Set the article status to 'published' 
             ArticleDBHandle aDBH = new ArticleDBHandle();
             aDBH.acceptArticle(artId);
+   
+            //Author gets merits according to the average of its grade, plus extra from its member rank if applies
+            grantMerits(artId);
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
             rDBH.removeReviews(artId);
-
-            //Author gets merits according to the average of its grade, plus extra from its member rank if applies
-
 
             //Send accepted notification to authors
             sendAuthorMails(artId, "accepted");
@@ -142,9 +142,6 @@ namespace Proyecto.Controllers
 
             //Send accepted with modification notification to authors
             sendAuthorMails(artId, "accepted with modifications");
-
-            //Update merits for published article
-            grantMerits(artId);
 
             return RedirectToAction("HomePage", "Article", null);
         }
@@ -171,7 +168,7 @@ namespace Proyecto.Controllers
 
         //I3: Sends notification to all authors when article is accepted
         public void sendAuthorMails(int artId, string veredict)
-        { 
+        {
             EmailModel eModel = new EmailModel();
             EmailController eController = new EmailController();
             ArticleDBHandle aDBH = new ArticleDBHandle();
@@ -179,27 +176,61 @@ namespace Proyecto.Controllers
 
             //Send notification mail to separate authors
             List<string> authors = aDBH.getAuthors(artId);
+            eModel.subject = "One of your articles has been " + veredict + "!";
+            eModel.message = "Your article " + aModel.name + " has been " + veredict +
+                             " by the community coordinator, go check out your profile!\n";
 
-                foreach (string author in authors)
-                {
-                    eModel.subject = "One of your articles has been " + veredict + "!";
-                    eModel.mail = author;
-                    eModel.message = "Your article " + aModel.name + " has been "+ veredict + 
-                        "by the community coordinator, go check it out in your profile!";
+            //If article was accepted with modifications, also add reviewers comments 
+            if (veredict == "accepted with modifications")
+            {
+                eModel.message += fetchReviewerComments(artId);
+            }
 
-                    eController.SendMail(eModel);
-                }
+            //For each destinatary notify veredict result
+            foreach (string author in authors)
+            {
+                eModel.mail = author;
+                eController.SendMail(eModel);
+            }
         }
 
-        //I3: Grants merits to all writers of a given accepted article
+        //I3: Calculates and updates merits for given accepted article
         public void grantMerits(int artId)
         {
             //Collect authors list
             ArticleDBHandle aDBH = new ArticleDBHandle();
+            ReviewDBHandle rDBH = new ReviewDBHandle();
             List<string> authors = aDBH.getAuthors(artId);
 
-            int meritsGiven = 0;
+            //Numerator (contains the grade * member merits)
+            int meritsGiven = rDBH.sumTotalGrades(authors.Count(), artId);
+
+            //Denominator (contains the sum of all reviewers merits)
+            int sumOfMerits = 0;
+
+            foreach (string author in authors)
+            {
+                sumOfMerits += rDBH.fetchMerits(author);
+            }
+
+            meritsGiven = meritsGiven/sumOfMerits;
+
+            //Finally, for each author of this article, update their merits
+            ProfileDBHandle pDBH = new ProfileDBHandle();
+            foreach (string author in authors)
+            {
+                pDBH.updateMerits(author, meritsGiven);
+            }
+        }
+
+        public string fetchReviewerComments(int artId)
+        {
+            string comments = "\n";
+            ReviewDBHandle rDBH = new ReviewDBHandle();
+
+            comments += rDBH.addReviewerComments(comments, artId);
             
+            return comments;
         }
     }
 }

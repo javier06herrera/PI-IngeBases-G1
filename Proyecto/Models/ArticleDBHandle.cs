@@ -545,7 +545,7 @@ namespace Proyecto.Models
             return article;
         }
 
-
+        //I3: Sets an article status to published after being accepted by coordinator member
         public void acceptArticle(int articleId)
         {
             connection();
@@ -561,7 +561,7 @@ namespace Proyecto.Models
             con.Close();
         }
 
-
+        //I3: Resets an article revision process to its start after being rejected by coordinator member
         public void rejectArticle(int articleId)
         {
             connection();

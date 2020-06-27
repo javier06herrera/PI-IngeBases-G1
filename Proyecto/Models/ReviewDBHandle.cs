@@ -377,6 +377,7 @@ namespace Proyecto.Models
             con.Close();
         }
 
+        //I3: Returns the merits asociated for a given member
         public int fetchMerits(string memberEmail)
         {
             SqlCommand cmd = conn.setSimpleReturnQuery("SELECT points " +
@@ -387,6 +388,70 @@ namespace Proyecto.Models
             int merits = Convert.ToInt32( cmd.ExecuteScalar());
             conn.conn.Close();
             return merits;
+        }
+
+        //I3: Returns sum of all totalGrades assigned by reviewers for a given article
+        public int sumTotalGrades(int authorCount, int articleId)
+        {
+            int merits = 0;
+
+            connection();
+
+            string query = "SELECT * " +
+                           "FROM REVIEWS " +
+                           "WHERE articleId = @articleId";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            SqlDataReader reader;
+
+            con.Open();
+            reader = cmd.ExecuteReader();
+            //For each review sum the given grade
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    merits += Convert.ToInt32(reader["totalGrade"]);
+                }
+            }
+
+            con.Close();
+
+            return merits;
+        }
+
+        public string addReviewerComments(string comments, int articleId)
+        {
+            connection();
+
+            string query = "SELECT * " +
+                           "FROM REVIEWS R JOIN " +
+                           "CommunityMember CM ON " +
+                           "R.email = CM.email " +
+                           "WHERE articleId = @articleId";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable reviewsTable = new DataTable();
+
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            sda.Fill(reviewsTable);
+
+            //For each review, add to the string comments the comment of the respective reviewer
+            foreach (DataRow review in reviewsTable.Rows)
+            {
+                comments += "Reviewer " + Convert.ToString(review["name"]) + " " +
+                             Convert.ToString(review["lastName"]) + " says: " +
+                             Convert.ToString(review["comments"]) + "\n";
+            }
+
+            con.Close();
+
+
+            return comments;
         }
     }
 }
