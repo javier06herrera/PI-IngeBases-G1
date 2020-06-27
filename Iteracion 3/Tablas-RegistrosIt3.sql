@@ -247,7 +247,7 @@ INSERT INTO CommunityMember VALUES
 
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
-comments VARCHAR(100)  DEFAULT 'no aplica',
+comments VARCHAR(MAX)  DEFAULT 'no aplica',
 email VARCHAR(100),
 articleId	INT,
 PRIMARY KEY(email,ArticleId),
