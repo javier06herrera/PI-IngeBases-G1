@@ -144,7 +144,7 @@ namespace Proyecto.Controllers
             eModel.subject = "Your article has been accepted!";
             eModel.mail = rModel.email;
             eModel.message = "Your article has been accepted and published" +
-                "by the community coordinator, go check it out in your profile!"
+                "by the community coordinator, go check it out in your profile!";
 
 
             return RedirectToAction("HomePage", "Article", null);
