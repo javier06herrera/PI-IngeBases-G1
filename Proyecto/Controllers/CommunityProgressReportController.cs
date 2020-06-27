@@ -19,6 +19,8 @@ namespace Proyecto.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         public string GetFilteredValues(string[] selectedMemberRanks, string filter)
         {
@@ -45,9 +47,16 @@ namespace Proyecto.Controllers
                             "GROUP BY CM.memberRank";
                     break;
                 case "Article score":
-                    query = " ";
+                    query = "SELECT CM.memberRank AS [Member rank], AVG(A.baseGrade + likeBalance + accessCount) AS [Average Points]\n" +
+                            "FROM CommunityMember CM\n" +
+                            "JOIN WRITES W\n" +
+                            "ON CM.email = W.email\n" +
+                            "JOIN Article A\n" +
+                            "ON  W.articleId = A.articleId\n" +
+                            memberRanks + "\n" +
+                            "AND A.checkedStatus = 'published'\n" +
+                            "GROUP BY CM.memberRank ";
                     break;
-
                 case "Number of articles peer category and topic":
                     query = " ";
                     break;
@@ -64,7 +73,7 @@ namespace Proyecto.Controllers
             string membersCondition = null;
             if (selectedMemberRanks.Length < MAX_NUMBER_OF_MEMBERS)
             {
-                membersCondition = "WHERE ";
+                membersCondition = "WHERE (";
                 for (int memberRank = 0; memberRank < selectedMemberRanks.Length; ++memberRank)
                 {
                     membersCondition += "CM.memberRank = " + "'" + selectedMemberRanks[memberRank].ToLower() + "'";
@@ -73,8 +82,12 @@ namespace Proyecto.Controllers
                         membersCondition += " OR ";
                     }
                 }
+                membersCondition += ")";
             }
-            membersCondition += " ";
+            else
+            {
+                membersCondition = string.Empty;
+            }
             return membersCondition;
         }
     }

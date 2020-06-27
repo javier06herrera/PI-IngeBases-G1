@@ -355,8 +355,8 @@
     <Content Include="Views\Review\ReviewForm.cshtml" />
     <Content Include="Views\Profile\Login.cshtml" />
     <Content Include="Views\Review\PendingReviews.cshtml" />
-    <Content Include="Views\CommunityProgressReport\Index.cshtml" />
     <Content Include="Scripts\js\modernizr-2.8.3" />
+    <Content Include="Views\CommunityProgressReport\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

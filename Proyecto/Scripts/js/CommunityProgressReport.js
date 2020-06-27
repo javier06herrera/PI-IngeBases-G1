@@ -56,6 +56,7 @@ function getFilteredValues(selectedMemberRanks, filter)
         success: function (results) {
             filteredValues = results;
         }
+
     });
     return filteredValues;
 }

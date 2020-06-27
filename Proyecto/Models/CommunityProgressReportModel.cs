@@ -8,7 +8,7 @@ namespace Proyecto.Models
 {
     public class CommunityProgressReportModel
     {
-        public int[] SelectedFiltersIds { get; set; }
-        public IEnumerable<SelectListItem> Filters { get; set; }
+        public string[] SelectedMemberRanks { get; set; }
+        public string[] SelectedFilters { get; set; }
     }
 }
