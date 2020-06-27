@@ -113,9 +113,7 @@ namespace Proyecto.Models
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
-            con.Close();
-
-
+            con.Close();            
         }
 
 
@@ -545,6 +543,37 @@ namespace Proyecto.Models
             con.Close();
 
             return article;
+        }
+
+        public void acceptArticle(int articleId)
+        {
+            connection();
+            String query = "UPDATE Article " +
+                            "SET checkedStatus = 'published' " +
+                            "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+
+        public void rejectArticle(int articleId)
+        {
+            connection();
+            String query = "UPDATE Article " +
+                            "SET checkedStatus = 'on edition' " +
+                            "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }

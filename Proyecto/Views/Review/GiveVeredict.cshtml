@@ -1,0 +1,52 @@
+﻿@{
+    IEnumerable<Proyecto.Models.ReviewsModel> reviews = ViewData["CurrentVeredict"] as IEnumerable<Proyecto.Models.ReviewsModel>;
+    int reviewsCount = reviews.Count();
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PendingVeredicts</title>
+</head>
+<body>
+    <h2>Veredict Article</h2>
+    <div class="review-content">
+        @{ int index = 0; }
+        @foreach (Proyecto.Models.ReviewsModel item in reviews)
+        {
+            <div class="card card-default">
+                <div class="article-heading-abb">
+                    <div class="art-date"><i class="fa fa-pencil-square-o"></i> Reviewer mail: @Html.DisplayFor(modelItem => item.email)</div>
+                </div>
+
+                <div class="article-info">
+                    <div class="art-category"><i class="fa fa-star"></i>@Html.DisplayNameFor(modelItem => item.generalOpinion): @Html.DisplayFor(modelItem => item.generalOpinion)</div>
+                    <div class="art-category"><i class="fa fa-star"></i>@Html.DisplayNameFor(modelItem => item.communityContribution): @Html.DisplayFor(modelItem => item.communityContribution)</div>
+                    <div class="art-category"><i class="fa fa-star"></i>@Html.DisplayNameFor(modelItem => item.articleStructure): @Html.DisplayFor(modelItem => item.articleStructure)</div>
+                    <div class="art-category"><i class="fa fa-star"></i>@Html.DisplayNameFor(modelItem => item.totalGrade): @Html.DisplayFor(modelItem => item.totalGrade)</div>
+                </div>
+
+                <div class="article-content">
+                    <p class="block-with-text">
+                        @Html.DisplayFor(modelItem => item.comments)
+                    </p>
+                </div>
+            </div>
+
+            if (index + 1 == reviewsCount)
+            {
+                @Html.ActionLink("Accept this article", "acceptVeredict", "Review", item, new { @class = "btn btn-success btn-o btn-wide" })<i class="accept fa fa-check"></i>
+                @Html.ActionLink("Accept this article with modifications", "acceptModVeredict", "Review", item, new { @class = "btn myBtn btn-o btn-wide" })<i class="acceptMod fa fa-pencil"></i>
+                @Html.ActionLink("Reject this article", "rejectVeredict", "Review", item, new { @class = "btn btn-danger btn-o btn-wide" })<i class="reject fa fa-times"></i>
+            }
+            else{ 
+                index += 1;
+            }
+
+        }
+    </div>
+</body>
+</html>

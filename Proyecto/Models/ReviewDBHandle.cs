@@ -211,7 +211,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
-
+        //I3
         public List<ArticleModel> fetchVeredictArticles()
         {
             //Stablishes a connection string
@@ -310,6 +310,77 @@ namespace Proyecto.Models
             conn.conn.Close();
             return true;
 
+        }
+
+        //I3
+        public List<ReviewsModel> collectReviews(int articleId)
+        {
+            connection();
+            List<ReviewsModel> reviewsList = new List<ReviewsModel>();
+
+            //Collects all completed reviews from this article
+            string fetchReviews = "SELECT * " +
+                                  "FROM REVIEWS R " +
+                                  "WHERE R.articleId = @articleId " +
+                                  "AND R.state = 'reviewed' ";
+
+            SqlCommand cmd = new SqlCommand(fetchReviews, con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable reviewsTable = new DataTable();
+
+            //Retrieve data from DB
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            sda.Fill(reviewsTable);
+
+            //Loop to format collected data into table
+            foreach (DataRow review in reviewsTable.Rows)
+            {
+                reviewsList.Add(
+                    new ReviewsModel {
+                        articleId = Convert.ToInt32(review["articleId"]),
+                        email = Convert.ToString(review["email"]),
+                        comments = Convert.ToString(review["comments"]),
+                        generalOpinion= Convert.ToInt32(review["generalOpinion"]),
+                        communityContribution = Convert.ToInt32(review["communityContribution"]),
+                        articleStructure = Convert.ToInt32(review["articleStructure"]),
+                        totalGrade = Convert.ToInt32(review["totalGrade"]),
+                        state = Convert.ToString(review["state"])
+                    }                    
+                );
+            }
+
+            con.Close();
+            return reviewsList;
+        }
+
+        public void removeReviews(int articleId)
+        {
+            connection();
+            String query = "DELETE FROM REVIEWS " +
+                           "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void resetReviews(int articleId)
+        {
+            connection();
+            String query = "UPDATE REVIEWS " +
+                           "SET state = 'not reviewed' " +
+                           "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }

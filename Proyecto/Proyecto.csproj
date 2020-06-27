@@ -352,7 +352,7 @@
     <Content Include="Views\Review\PendingReviews.cshtml" />
     <Content Include="Views\Review\PendingVeredicts.cshtml" />
     <Content Include="Views\Report\ReportUsers.cshtml" />
-
+    <Content Include="Views\Review\GiveVeredict.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

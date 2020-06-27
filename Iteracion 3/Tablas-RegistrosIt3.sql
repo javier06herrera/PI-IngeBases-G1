@@ -1,12 +1,13 @@
---DROP TABLE HAS_SKILL;-
---DROP TABLE Skill;
---DROP TABLE WRITES;
---DROP TABLE REVIEWS;
---DROP TABLE Question;
---DROP TABLE CommunityMember;
---DROP TABLE INVOLVES;
---DROP TABLE Article;
---DROP TABLE Topic;
+DROP TABLE IS_NOMINATED;
+DROP TABLE HAS_SKILL;
+DROP TABLE Skill;
+DROP TABLE WRITES;
+DROP TABLE REVIEWS;
+DROP TABLE Question;
+DROP TABLE CommunityMember;
+DROP TABLE INVOLVES;
+DROP TABLE Article;
+DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -251,6 +252,8 @@ PRIMARY KEY(email,ArticleId),
 CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
  )
+ 
+
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
