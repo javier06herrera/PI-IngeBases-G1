@@ -19,7 +19,7 @@ namespace Proyecto.Models
             string constring = ConfigurationManager.ConnectionStrings[connectionString].ToString();
             this.conn = new SqlConnection(constring);
         }
-        public SqlCommand setWritingQuery(string query)
+        public SqlCommand setSimpleReturnQuery(string query)
         {
             connect();
             SqlCommand cmd = new SqlCommand(query, this.conn);

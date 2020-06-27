@@ -286,8 +286,8 @@ namespace Proyecto.Models
         
         public bool registerGrades(ReviewsModel model)
         {
-
-            SqlCommand cmd = conn.setWritingQuery(  "UPDATE Reviews " +
+            model.totalGrade = fetchMerits(model.email) * (model.generalOpinion + model.communityContribution + model.articleStructure);
+            SqlCommand cmd = conn.setSimpleReturnQuery(  "UPDATE Reviews " +
                                                     "SET    comments = @comments, " +
                                                     "       generalOpinion = @generalOpinion, " +
                                                     "       communityContribution = @communityContribution, " +
@@ -310,6 +310,18 @@ namespace Proyecto.Models
             conn.conn.Close();
             return true;
 
+        }
+
+        public int fetchMerits(string memberEmail)
+        {
+            SqlCommand cmd = conn.setSimpleReturnQuery("SELECT points " +
+                                                        "FROM CommunityMember " +
+                                                        "WHERE email = @email");
+            cmd.Parameters.AddWithValue("@email", memberEmail);
+            conn.conn.Open();
+            int merits = Convert.ToInt32( cmd.ExecuteScalar());
+            conn.conn.Close();
+            return merits;
         }
     }
 }
