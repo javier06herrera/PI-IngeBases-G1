@@ -42,6 +42,10 @@ a:hover {
     top: 3px;
 }
 
+.myTextArea{
+    width: 100px;
+}
+
 .SearchTopic {
     background-color: #007bff;
     color: white;

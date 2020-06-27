@@ -9,27 +9,59 @@ namespace Proyecto.Controllers
 {
     public class ReviewController : Controller
     {
-        // GET: Review
-        public ActionResult reviewForm()
+        //I3: Get method to control review form, this method provides a model
+        public ActionResult ReviewForm(ArticleModel article)
         {
-            List<SelectListItem> lst = new List<SelectListItem>();
-
-            lst.Add(new SelectListItem() { Text = "1", Value = "1" });
-            lst.Add(new SelectListItem() { Text = "2", Value = "2" });
-            lst.Add(new SelectListItem() { Text = "3", Value = "3" });
-            lst.Add(new SelectListItem() { Text = "4", Value = "4" });
-            lst.Add(new SelectListItem() { Text = "5", Value = "5" });
-
-            ViewBag.Options = lst;
-
-            return View();
+            ReviewsModel reviews = new ReviewsModel();
+            reviews.articleId = article.articleId;
+            ViewData["Reviews"] = reviews;
+            ViewData["Article"] = article;
+            return View(reviews);
         }
 
-        public ActionResult recordReview(ReviewsModel model)
+        //I3: Post method to control review form
+        [HttpPost]
+        public ActionResult ReviewForm(ReviewsModel model)
         {
-            //Console.WriteLine(model.options);
-            return View("reviewForm");
+            string user;
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+            ReviewDBHandle dbh = new ReviewDBHandle();
+            model.email = user;
+            dbh.registerGrades(model);
+
+            EmailController eController = new EmailController();
+            EmailModel eModel = new EmailModel();
+            ProfileDBHandle pdh = new ProfileDBHandle();
+            ArticleDBHandle adh = new ArticleDBHandle();
+            ArticleModel aModel = new ArticleModel();
+
+            string aAuthor = pdh.getArticleAuthor(model.articleId);
+            string cMail = pdh.getCoordinatorMail();
+            aModel = adh.getOneArticle(model.articleId);
+
+            eModel.subject = "Article review completed: ";
+            eModel.message = "The article " + aModel.name +
+                " published on " + aModel.publishDate +
+                " by " + aAuthor +
+                "has been reviewed";
+            eModel.mail = cMail;
+
+            if (dbh.checkReviewers(model.articleId))
+            {
+                eController.SendMail(eModel);
+            }
+
+            return RedirectToAction("PendingReviews");
         }
+
 
 
         //I3: Controller of Pending Reviews View
@@ -47,8 +79,18 @@ namespace Proyecto.Controllers
             {
                 user = "barrKev@puchimail.com";
             }
-
             ViewData["PendingArticles"] = dbh.fetchPendingArticles(user);
+
+            return View();
+
+        }
+
+
+        //I3
+        public ActionResult PendingVeredicts()
+        {
+            ReviewDBHandle reviewDBHandle = new ReviewDBHandle();
+            ViewData["PendingVeredicts"] = reviewDBHandle.fetchVeredictArticles();
 
             return View();
         }

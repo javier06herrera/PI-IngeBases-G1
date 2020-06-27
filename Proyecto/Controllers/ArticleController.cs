@@ -196,15 +196,18 @@ namespace Proyecto.Controllers
         //    return View();
         //}
 
-        public ActionResult PreviewArticle(int articleId, ArticleModel artModel)
+        public ActionResult PreviewArticle(ArticleModel artModel)
         {
         
             ArticleDBHandle sdb = new ArticleDBHandle();
             ProfileDBHandle pdb = new ProfileDBHandle();
-            sdb.UpdateAccess(artModel);
-            pdb.updateMerits(articleId, true);
-
-            return View(sdb.GetArticle().Find(smodel => smodel.articleId == articleId));
+            if (artModel.checkedStatus == "published")
+            {
+                sdb.UpdateAccess(artModel);
+                pdb.updateMerits(artModel.articleId, true);
+            }
+                   
+            return View(sdb.GetArticle().Find(smodel => smodel.articleId == artModel.articleId));
         }
 
         //[HttpPost]

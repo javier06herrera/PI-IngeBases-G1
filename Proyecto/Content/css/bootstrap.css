@@ -2113,9 +2113,32 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
 }
 
 .form-group {
-  margin-bottom: 1rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+    white-space: nowrap
+}
+/*0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.5fr 1.1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 1px 0px;
+    grid-template-areas: "drops Article" "drops Article" "drops Article" "comments comments";
 }
 
+.comments {
+    grid-area: comments;
+}
+
+.drops {
+    grid-area: drops;
+}
+
+.Article {
+    grid-area: Article;
+}
+
+/*0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
 .form-text {
   display: block;
   margin-top: 0.25rem;

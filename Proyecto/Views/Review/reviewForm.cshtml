@@ -1,23 +1,89 @@
-﻿@model Proyecto.Models.ReviewsModel
+﻿@{
+    //Proyecto.Models.ReviewsModel reviews = ViewData["Reviews"] as Proyecto.Models.ReviewsModel;
+    Proyecto.Models.ArticleModel article = ViewData["Article"] as Proyecto.Models.ArticleModel;
+}
+@model Proyecto.Models.ReviewsModel
 
-<!DOCTYPE html>
+@using (Html.BeginForm())
+{
+    <!DOCTYPE html>
 
-<html>
-<body>
-    <div>
-        <h2> Formulario de Revisión</h2>
-    </div>
-
-    <div class="form-inline">
-        @Html.LabelFor(model => model.generalOpinion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.generalOpinion, (IEnumerable<SelectListItem>)ViewBag.Options, "Please Select a Topic", new { @class = "form-group" })
-            @Html.ValidationMessageFor(model => model.generalOpinion, "", new { @class = "text-danger" })
+    <html>
+    <body>
+        <div>
+            <h2> Formulario de Revisión</h2>
         </div>
-    </div>
-    @Html.ActionLink("Send", "recordReview", "Review", Model, new { @class = "btn btn-danger btn-o btn-wide" })
+
+        <div class="grid-container">
+            <div class="comments">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drops">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.generalOpinion, htmlAttributes: new { @class = "  control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.generalOpinion, new SelectList(Model.optionList, "Value", "Text"), "--Please Select a grade--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.generalOpinion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.communityContribution, htmlAttributes: new { @class = " myTag control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.communityContribution, new SelectList(Model.optionList, "Value", "Text"), "--Please Select a grade--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.communityContribution, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-</body>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.articleStructure, htmlAttributes: new { @class = "  control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.articleStructure, new SelectList(Model.optionList, "Value", "Text"), "--Please Select a grade--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.articleStructure, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.totalGrade, htmlAttributes: new { @class = "   control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.totalGrade, new SelectList(Model.optionList, "Value", "Text"), "--Please Select a grade--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.totalGrade, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="Article">
+                <div class="card card-default">
+                    <div class="article-info">
+                        <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => article.publishDate)</div>
+                        <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => article.topicName)</div>
+                    </div>
+
+                    <div class="article-content">
+                        <p class="block-with-text">
+                            @Html.DisplayFor(modelItem => article.Abstract)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.comments, htmlAttributes: new { @class = "  control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.comments, new { @class = "form-control .myTextArea" })
+                        @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
+}

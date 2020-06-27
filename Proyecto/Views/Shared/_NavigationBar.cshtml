@@ -1,58 +1,49 @@
-﻿
+﻿@{
+    Proyecto.Models.ProfileModel profile = ViewData["memberRank"] as Proyecto.Models.ProfileModel;
 
-@*<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="http://localhost:54007/Articulo">Community</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    if ((Session["user"] is null)) //If no one has logged in sets member rank to default user (core)
+    {
+        //loads default member rank 
+        ViewData["rank"] = "core";
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:54007/Article/">Articles <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Article/Create">Create article</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Article/Upload">Upload Article</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Article/SearchTopic">Search Topic</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Article/ShowQuestion">FAQ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Article/ModeratorQuestion">Moderator FAQ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Email/SendMail">E-Mails</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:54007/Profile/Profile">Profile</a>
-            </li>
-
-        </ul>
-    </div>
-</nav>*@
+    }
+    else
+    {
+        ViewData["rank"] = Session["rank"].ToString();
+    }
+}
 
 <div class="container-fluid featured-area-white-border">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
+                    <a href="http://localhost:54007/Profile/Login"><i class="fa fa-key"></i> Login</a>
                 </div>
                 <div class="login-box border-right-1">
                     <a href="http://localhost:54007/Profile/Profile"><i class="fa fa-user"></i>My Profile</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-pencil"></i> Sign Up</a>
+                    <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-sign-in"></i> Sign Up</a>
                 </div>
                 <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Profile/Login"><i class="fa fa-key"></i> Login</a>
+                    <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
                 </div>
+
+                @*Only core and coordinator members can review articles*@
+                @if (ViewData["rank"].ToString() == "core" || ViewData["rank"].ToString() == "coordinator")
+                {
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-pencil"></i> Reviews</a>
+                    </div>
+                }
+                @*Only coordinator members can give a veredict on articles*@
+                @if (ViewData["rank"].ToString() == "coordinator")
+                {
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Review/PendingVeredicts"><i class="fa fa-check-square-o"></i> Veredicts</a>
+                    </div>
+                }
             </div>
         </div>
     </div>
