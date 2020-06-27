@@ -30,8 +30,8 @@ namespace Proyecto.Controllers
             CommunityProgressReportDBHandle dataBaseHandler = new CommunityProgressReportDBHandle();
 
             string query = this.GetQuery(selectedMemberRanks,filter);
-            DataTable table = dataBaseHandler.GetFilteredValues(query);
-            return JsonConvert.SerializeObject(table);
+            List<ReportModel> filteredValues = dataBaseHandler.GetFilteredValues(query);
+            return JsonConvert.SerializeObject(filteredValues);
         }
 
         public string GetQuery(string [] selectedMemberRanks, string filter)
@@ -42,7 +42,7 @@ namespace Proyecto.Controllers
             switch (filter)
             {
                 case "Number of articles":
-                    query = "SELECT	CM.memberRank AS [Member rank], COUNT(W.articleId) AS [Number of articles]\n" +
+                    query = "SELECT	CM.memberRank AS [Member rank], COUNT(W.articleId) AS [Count]\n" +
                             "FROM CommunityMember CM\n" +
                             "JOIN WRITES W\n" +
                             "ON CM.email = W.email\n" +
@@ -50,7 +50,7 @@ namespace Proyecto.Controllers
                             "GROUP BY CM.memberRank";
                     break;
                 case "Article score":
-                    query = "SELECT CM.memberRank AS [Member rank], AVG(A.baseGrade + likeBalance + accessCount) AS [Average Points]\n" +
+                    query = "SELECT CM.memberRank AS [Member rank], AVG(A.baseGrade + likeBalance + accessCount) AS [Count]\n" +
                             "FROM CommunityMember CM\n" +
                             "JOIN WRITES W\n" +
                             "ON CM.email = W.email\n" +

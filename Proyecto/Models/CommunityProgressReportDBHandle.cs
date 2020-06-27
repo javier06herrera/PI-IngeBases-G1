@@ -21,20 +21,25 @@ namespace Proyecto.Models
             
         }
 
-        public DataTable GetFilteredValues(string query)
+        public List<ReportModel> GetFilteredValues(string query)
         {
+            List<ReportModel> list = new List<ReportModel>();
             dbConnection.Open();
             command = new SqlCommand(query, dbConnection);
             reader = command.ExecuteReader();
-            DataTable table = new DataTable();
 
             if(reader.HasRows)
             {
+                DataTable table = new DataTable();
                 table.Load(reader);
+                foreach (DataRow row in table.Rows)
+                {
+                    list.Add(new ReportModel(Convert.ToString(row["Member rank"]), Convert.ToInt32(row["Count"])));
+                }
             }
             
             dbConnection.Close();
-            return table;
+            return list;
         }
     }
 }

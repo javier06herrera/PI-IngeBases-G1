@@ -32,13 +32,14 @@ function generateReport(selectedMemberRanks, selectedFilters)
 {
     var values = null;
     var canvas = null;
+    var toGraphicate = null;
     // For each filter, get the required data, create a canvas and graphicate it.
     for (var filter = 0; filter < selectedFilters.length; ++filter)
     {
         values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
-        //values = [10,20]
+        toGraphicate = getValuesAndLabels(values)
         canvas = createCanvas();
-        drawGraphics(canvas, values);
+        drawGraphics(canvas, toGraphicate[0], toGraphicate[1]);
     }
 }
 
@@ -62,6 +63,19 @@ function getFilteredValues(selectedMemberRanks, filter)
     return filteredValues;
 }
 
+function getValuesAndLabels(jsonElements)
+{
+    var values = []
+    var labels = []
+    for (var item = 0; item < jsonElements.length; ++item)
+    {
+        values.push(jsonElements[item].y)
+        labels.push(jsonElements[item].label)
+    }
+    return [values, labels]
+}
+
+
 function createCanvas()
 {
     // Generate required html elements inside a predefined row, in order to place a canvas. 
@@ -80,17 +94,16 @@ function createCanvas()
     return canvas;
 }
 
-function drawGraphics(canvas, values)
+function drawGraphics(canvas, values, labels)
 {
     new Chart(canvas, {
         type: 'doughnut',
         data: {
-            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
             datasets: [
                 {
                     label: "Population (millions)",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                    data: values,
+                    data: values
                 }
             ]
         },
