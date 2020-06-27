@@ -596,5 +596,31 @@ namespace Proyecto.Models
             else
                 return false;
         }
+
+        public List<string> getAuthors(int articleId)
+        {
+            List<string> authors = new List<string>();
+
+            connection();
+
+            string query = "SELECT * " +
+                           "FROM WRITES " +
+                           "WHERE articleId = @articleId";
+
+            SqlCommand command = new SqlCommand(query, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
+            SqlDataReader reader;
+
+            con.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    authors.Add( Convert.ToString(reader["email"]));
+                }
+            }
+            return authors;
+        }
     }
 }

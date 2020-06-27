@@ -211,18 +211,15 @@ namespace Proyecto.Models
             return articleList;
         }
 
-        //I3
+        //I3: Fetches all articles ready to be given a veredict
         public List<ArticleModel> fetchVeredictArticles()
         {
             //Stablishes a connection string
             connection();
-            List<ArticleModel> veredictArticleList = new List<ArticleModel>();
-
-            string fetchArticles = "SELECT * " +
-                                   "FROM Article A " +                                  
-                                   "WHERE A.checkedStatus = 'not checked' ";
+            List<ArticleModel> veredictArticleList = new List<ArticleModel>();        
 
             //DB connection arrangement
+            string fetchArticles = "SELECT * " + "FROM Article A " + "WHERE A.checkedStatus = 'not checked' ";
             SqlCommand cmd = new SqlCommand(fetchArticles, con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable articleTable = new DataTable();
@@ -232,7 +229,6 @@ namespace Proyecto.Models
 
             foreach (DataRow article in articleTable.Rows)
             {
-
                 int artId = Convert.ToInt32(article["articleId"]);
                 //Add only articles that are ready to be given a veredict
                 if (checkReviewers(artId) == true)
@@ -261,13 +257,9 @@ namespace Proyecto.Models
             con.Close();
 
             //Retrieve topics of the list topics
-            string fetchTopics = "SELECT * " +
-                     "FROM   INVOLVES " +
-                     "WHERE  articleId in ( " +
-                                "SELECT articleId " +
-                                "FROM   REVIEWS " +
-                                "WHERE  state = 'reviewed') " +                                
-                     "ORDER BY articleId";
+            string fetchTopics = "SELECT * " + "FROM   INVOLVES " +
+                     "WHERE  articleId in ( " +  "SELECT articleId " +
+                    "FROM   REVIEWS " + "WHERE  state = 'reviewed') " + "ORDER BY articleId";
 
             cmd.CommandText = fetchTopics;
             SqlDataAdapter sda2 = new SqlDataAdapter(cmd);
@@ -312,7 +304,7 @@ namespace Proyecto.Models
 
         }
 
-        //I3
+        //I3: Collects all reviews for a given article
         public List<ReviewsModel> collectReviews(int articleId)
         {
             connection();
@@ -354,6 +346,7 @@ namespace Proyecto.Models
             return reviewsList;
         }
 
+        //I3: When accepted or rejected, reviews are removed for the article
         public void removeReviews(int articleId)
         {
             connection();
@@ -368,6 +361,7 @@ namespace Proyecto.Models
             con.Close();
         }
 
+        //I3: When accepted with modification, reviews are restarted for the same reviewers       
         public void resetReviews(int articleId)
         {
             connection();
