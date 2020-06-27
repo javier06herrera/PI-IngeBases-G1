@@ -27,11 +27,12 @@ function getSelectedItems(dropdownlist) {
 function generateReport(selectedMemberRanks, selectedFilters) {
     var values = null;
     var canvas = null;
+    var row = document.getElementById("row");
+    row.innerHTML = "";
 
     // For each filter, get the required data, create a canvas and graphicate it.
     for (var filter = 0; filter < selectedFilters.length; ++filter) {
         values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
-        //values = [10,20]
         canvas = createCanvas();
         drawGraphics(canvas, values);
     }
@@ -105,8 +106,6 @@ function initReportUser() {
     var categoriesDropdown = document.getElementById("categories");
     // Obtain selected items in dropdowns.
     var selectedCategories = getSelectedItems(categoriesDropdown);
-    //var selectedFilters = getSelectedItems(filtersDropdown);
-    // Generate report according to selected items.
     generateReportUser(selectedCategories);
 }
 
