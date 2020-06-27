@@ -263,7 +263,7 @@ INSERT INTO REVIEWS
 
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
-comments VARCHAR(100)  DEFAULT 'no comment',
+comments VARCHAR(MAX)  DEFAULT 'not apply',
 email VARCHAR(100),
 articleId	INT,
 PRIMARY KEY(email,ArticleId),

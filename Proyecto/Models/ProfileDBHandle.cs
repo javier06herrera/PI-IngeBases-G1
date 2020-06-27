@@ -362,5 +362,20 @@ namespace Proyecto.Models
             return emails;
 
         }
+
+        public void addNomination(string email, int articleId)
+        {
+            string query = "INSERT INTO IS_NOMINATED VALUES " +
+                           " (DEFAULT,DEFAULT,@email,@articleId)";
+
+            command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@articleId", articleId);
+            command.Parameters.AddWithValue("@email", email);
+ 
+            connection.Open();
+            int codeError = command.ExecuteNonQuery();
+            connection.Close();
+            
+        }
     }
 }
