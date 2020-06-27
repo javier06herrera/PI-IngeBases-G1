@@ -113,9 +113,7 @@ namespace Proyecto.Models
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
-            con.Close();
-
-
+            con.Close();            
         }
 
 
@@ -547,6 +545,38 @@ namespace Proyecto.Models
             return article;
         }
 
+
+        public void acceptArticle(int articleId)
+        {
+            connection();
+            String query = "UPDATE Article " +
+                            "SET checkedStatus = 'published' " +
+                            "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+
+        public void rejectArticle(int articleId)
+        {
+            connection();
+            String query = "UPDATE Article " +
+                            "SET checkedStatus = 'on edition' " +
+                            "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
         //Iteación 3
         public bool updateArticleState(ArticleModel model)
         {
@@ -567,6 +597,30 @@ namespace Proyecto.Models
                 return false;
         }
 
+        public List<string> getAuthors(int articleId)
+        {
+            List<string> authors = new List<string>();
 
+            connection();
+
+            string query = "SELECT * " +
+                           "FROM WRITES " +
+                           "WHERE articleId = @articleId";
+
+            SqlCommand command = new SqlCommand(query, con);
+            command.Parameters.AddWithValue("@articleId", articleId);
+            SqlDataReader reader;
+
+            con.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    authors.Add( Convert.ToString(reader["email"]));
+                }
+            }
+            return authors;
+        }
     }
 }

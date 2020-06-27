@@ -1,3 +1,4 @@
+DROP TABLE IS_NOMINATED;
 DROP TABLE HAS_SKILL;
 DROP TABLE Skill;
 DROP TABLE WRITES;
@@ -226,19 +227,19 @@ CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleI
  )
 
 INSERT INTO REVIEWS
- VALUES	(1,'alvAnt@puchimail.com','Sin comentarios',5,5,5,5,'reviewed')
+ VALUES	(1,'alvAnt@puchimail.com','Sin comentarios',5,5,5,100,'reviewed')
 
 INSERT INTO REVIEWS
- VALUES	(1,'barrKev@puchimail.com','Sin comentarios',5,5,5,5,DEFAULT)
+ VALUES	(1,'barrKev@puchimail.com','Sin comentarios',5,5,5,75,DEFAULT)
 
 INSERT INTO REVIEWS
- VALUES	(2,'moraGlo@puchimail.com','Sin comentarios',5,5,5,5,DEFAULT)
+ VALUES	(2,'moraGlo@puchimail.com','Sin comentarios',5,5,5,25,DEFAULT)
 
 INSERT INTO REVIEWS
- VALUES	(2,'barrDan@puchimail.com','Sin comentarios',5,5,5,5,DEFAULT)
+ VALUES	(2,'barrDan@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
 
 INSERT INTO REVIEWS
- VALUES	(3,'moraGlo@puchimail.com','Sin comentarios',5,5,5,5,DEFAULT)
+ VALUES	(3,'moraGlo@puchimail.com','Sin comentarios',5,5,5,60,DEFAULT)
 
 INSERT INTO CommunityMember VALUES
 ('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica',
@@ -253,6 +254,13 @@ PRIMARY KEY(email,ArticleId),
 CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
  )
+ 
+ SELECT *
+ FROM WRITES
+ WHERE articleId = 2
+
+ SELECT *
+ FROM REVIEWS
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
 -------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
