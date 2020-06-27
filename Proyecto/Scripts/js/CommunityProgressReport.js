@@ -36,6 +36,7 @@ function generateReport(selectedMemberRanks, selectedFilters)
     for (var filter = 0; filter < selectedFilters.length; ++filter)
     {
         values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
+        //values = [10,20]
         canvas = createCanvas();
         drawGraphics(canvas, values);
     }

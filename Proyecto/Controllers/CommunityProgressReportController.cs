@@ -13,13 +13,16 @@ namespace Proyecto.Controllers
     {
         public const int MAX_NUMBER_OF_MEMBERS = 6;
 
-        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
-
+        [HttpPost]
+        public ActionResult Index(CommunityProgressReportModel model)
+        {
+            return View();
+        }
 
         [HttpPost]
         public string GetFilteredValues(string[] selectedMemberRanks, string filter)
