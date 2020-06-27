@@ -319,5 +319,33 @@ namespace Proyecto.Models
             return authors;
 
         }
+
+        public List<string> getCoreMemberEmails()
+        {
+            List<string> emails = new List<string>();
+
+            ProfileModel memberProfile = new ProfileModel();
+            string query = "SELECT email " +
+                            "FROM CommunityMember " +
+                            "WHERE memberRank = 'core'";
+
+            command = new SqlCommand(query, connection);
+            connection.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    emails.Add(Convert.ToString(reader["email"]));
+                }
+            }
+
+            reader.Close();
+
+            connection.Close();
+
+            return emails;
+
+        }
     }
 }

@@ -47,11 +47,11 @@ namespace Proyecto.Controllers
             string cMail = pdh.getCoordinatorMail();
             aModel = adh.getOneArticle(model.articleId);
 
-            eModel.subject = "Revisión de artículo completada";
-            eModel.message = "El artículo " + aModel.name +
-                " publicado el " + aModel.publishDate +
-                " por " + aAuthor +
-                "ya ha sido revisado por sus revisores";
+            eModel.subject = "Article review completed: ";
+            eModel.message = "The article " + aModel.name +
+                " published on " + aModel.publishDate +
+                " by " + aAuthor +
+                "has been reviewed";
             eModel.mail = cMail;
 
             if (dbh.checkReviewers(model.articleId))
