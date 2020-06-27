@@ -106,21 +106,28 @@ function initReportUser() {
     var categoriesDropdown = document.getElementById("categories");
     // Obtain selected items in dropdowns.
     var selectedCategories = getSelectedItems(categoriesDropdown);
-    generateReportUser(selectedCategories);
+    if (selectedCategories.length > 0) {
+        generateReportUser(selectedCategories);
+    }
+    else {
+        alert("Please select an option!");
+    }
 }
 
 function generateReportUser(selectedCategories) {
     var values = null;
     var canvas = null;
+    var title = null
     var toGraphicate = null;
     var row = document.getElementById("row");
     row.innerHTML = "";
     // For each filter, get the required data, create a canvas and graphicate it.
     for (var categories = 0; categories < selectedCategories.length; ++categories) {
         values = getFilteredValuesUser(selectedCategories[categories]);
+        title = "Distribution of " + selectedCategories[categories].toLowerCase() + " for community members";
         toGraphicate = getValuesAndLabels(values);
         canvas = createCanvas();
-        drawColumns(canvas, toGraphicate[0], toGraphicate[1]);
+        drawColumns(canvas, toGraphicate[0], toGraphicate[1], title);
     }
 }
 
@@ -152,7 +159,7 @@ function getValuesAndLabels(jsonElements) {
     return [values, labels]
 }
 
-function drawColumns(canvas, values, label) {
+function drawColumns(canvas, values, label, title) {
 
     var limit = values.length;
     var dataP = [];
@@ -161,27 +168,12 @@ function drawColumns(canvas, values, label) {
     }
 
     new Chart(canvas, {
-        //theme: "light2",
-        //animationEnabled: true,
-        //title: {
-        //    text: "Country Distribution of Community Members"
-        //},
-        //subtitles: [
-        //    { text: "" }
-        //],
-        //data: [
-        //    {
-        //        //type: "column", //change type to bar, line, area, pie, etc
-        //        //Uncomment below line to add data coming from the controller.
-        //        //data: dataP,
-        //    }
-        //]
         type: 'bar',
         data: {
             labels: label,
             datasets: [
                 {
-                    label: "Population (millions)",
+                    label: title,
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                     data: values
                 }
