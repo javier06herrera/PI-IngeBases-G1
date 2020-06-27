@@ -375,6 +375,7 @@ namespace Proyecto.Models
             con.Open();
             int i = cmd.ExecuteNonQuery();
             con.Close();
+        }
 
         public int fetchMerits(string memberEmail)
         {
@@ -389,3 +390,4 @@ namespace Proyecto.Models
         }
     }
 }
+    

@@ -197,6 +197,9 @@ namespace Proyecto.Controllers
             //Collect authors list
             ArticleDBHandle aDBH = new ArticleDBHandle();
             List<string> authors = aDBH.getAuthors(artId);
+
+            int meritsGiven = 0;
+            
         }
     }
 }
