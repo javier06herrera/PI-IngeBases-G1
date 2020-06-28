@@ -137,6 +137,7 @@
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
+    <Compile Include="Models\IsNominatedModel.cs" />
     <Compile Include="Models\ProfileDBHandle.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
@@ -360,6 +361,8 @@
     <Content Include="Views\Report\ReportUsers.cshtml" />
     <Content Include="Views\Review\GiveVeredict.cshtml" />
     <Content Include="Views\Colaboration\Colaboration.cshtml" />
+    <Content Include="Views\Review\ReviewRequests.cshtml" />
+    <Content Include="Views\Review\AnswerReviewRequest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

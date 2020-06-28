@@ -14,7 +14,6 @@ namespace Proyecto.Controllers
         {
             ReviewsModel reviews = new ReviewsModel();
             reviews.articleId = article.articleId;
-            ViewData["Reviews"] = reviews;
             ViewData["Article"] = article;
             return View(reviews);
         }
@@ -231,6 +230,69 @@ namespace Proyecto.Controllers
             comments += rDBH.addReviewerComments(comments, artId);
             
             return comments;
+        }
+
+        public ActionResult ReviewRequests()
+        {
+            string user;
+            ReviewDBHandle dbh = new ReviewDBHandle();
+
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                user = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                user = "barrKev@puchimail.com";
+            }
+
+            ViewData["ArticleRequest"] = dbh.fetchArticleReviewRequest(user);
+
+            return View();
+
+        }
+
+        public ActionResult AnswerReviewRequest(ArticleModel article)
+        {
+            IsNominatedModel nomination = new IsNominatedModel();
+            nomination.articleId = article.articleId;
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                nomination.email = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                nomination.email = "barrKev@puchimail.com";
+            }
+
+            ViewData["Article"] = article;
+            return View(nomination);
+        }
+
+        //I3: Mthod that controls wath the answer view retuns
+        [HttpPost]
+        public ActionResult AnswerReviewRequest(IsNominatedModel nomination)
+        {
+            ReviewDBHandle dbh = new ReviewDBHandle();
+
+            if (string.IsNullOrEmpty(nomination.comments))
+            {
+                nomination.comments = "No comments";
+            }
+            //Fetching user credentials
+            if (!(Session["user"] is null)) //If someone has already sign in
+            {
+                nomination.email = Session["user"].ToString();
+            }
+            else //If no one is signed up (for developers testing) ToBeRemoved
+            {
+                nomination.email = "barrKev@puchimail.com";
+            }
+            dbh.registerRequestAnswer(nomination);
+            return RedirectToAction("ReviewRequests");
+
         }
     }
 }
