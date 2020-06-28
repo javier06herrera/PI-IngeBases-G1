@@ -18,9 +18,16 @@ namespace Proyecto.Controllers
 
         public ActionResult CommunityArticles()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
+            ArticleDBHandle dbhandle = new ArticleDBHandle();
             ModelState.Clear();
-            return View(dbhandle.GetArticle());
+            List<ArticleModel> allArticles = dbhandle.GetArticle();
+            List<ArticleModel> publishedArticles= new List<ArticleModel>();
+            foreach (ArticleModel article in allArticles)
+            {
+                if (article.checkedStatus == "published")
+                    publishedArticles.Add(article);
+            }
+            return View(publishedArticles);
         }
         // 2. *************ADD NEW Articulo ******************
         // GET: Articulo/Create
