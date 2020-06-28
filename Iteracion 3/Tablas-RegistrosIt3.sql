@@ -296,3 +296,20 @@ VALUES ('pending','no comment','barrKev@puchimail.com', 5)
 --SELECT A.*, dbo.PIF_getTopics(A.articleId) as topicName
 --FROM Article A
 --ORDER BY publishDate DESC
+
+--CREATE PROC PISP_getMemberProfile @email varchar(25) AS
+--DECLARE @articleCount int 
+--SELECT @articleCount = COUNT(*)
+--FROM WRITES W
+--WHERE W.email = @email
+
+--SELECT  C.*, @articleCount AS 'articleCount'
+--FROM CommunityMember C
+--WHERE C.email = @email
+
+--CREATE PROC PISP_getMemeberArticle @email varchar(25) AS 
+--SELECT A.*, dbo.PIF_getTopics(A.articleId) AS topicName
+--FROM Article A
+--JOIN WRITES W ON A.articleId = W.articleId
+--WHERE W.email = @email
+--ORDER BY publishDate DESC
