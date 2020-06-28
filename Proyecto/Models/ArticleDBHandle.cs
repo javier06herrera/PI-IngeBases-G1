@@ -545,32 +545,17 @@ namespace Proyecto.Models
             return article;
         }
 
-        //I3: Sets an article status to published after being accepted by coordinator member
-        public void acceptArticle(int articleId)
+        //I3: Updates an article status to published after being given a veredict by coordinator member
+        public void updateArticleStatus(int articleId, string veredict)
         {
             connection();
             String query = "UPDATE Article " +
-                            "SET checkedStatus = 'published' " +
+                            "SET checkedStatus = '@veredict' " +
                             "WHERE articleId = @articleId ";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@articleId", articleId);
-
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
-        }
-
-        //I3: Resets an article revision process to its start after being rejected by coordinator member
-        public void rejectArticle(int articleId)
-        {
-            connection();
-            String query = "UPDATE Article " +
-                            "SET checkedStatus = 'on edition' " +
-                            "WHERE articleId = @articleId ";
-
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@articleId", articleId);
+            cmd.Parameters.AddWithValue("@veredict", veredict);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();

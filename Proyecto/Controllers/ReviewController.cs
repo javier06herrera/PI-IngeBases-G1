@@ -111,7 +111,7 @@ namespace Proyecto.Controllers
 
             //Set the article status to 'published' 
             ArticleDBHandle aDBH = new ArticleDBHandle();
-            aDBH.acceptArticle(artId);
+            aDBH.updateArticleStatus(artId, "published");
    
             //Author gets merits according to the average of its grade, plus extra from its member rank if applies
             grantMerits(artId);
@@ -133,7 +133,7 @@ namespace Proyecto.Controllers
             int artId = rModel.articleId;
 
             ArticleDBHandle aDBH = new ArticleDBHandle();
-            aDBH.rejectArticle(artId);
+            aDBH.updateArticleStatus(artId, "not checked");
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
@@ -153,8 +153,8 @@ namespace Proyecto.Controllers
 
             //Resets checkStatus for this article to 'on edition'
             ArticleDBHandle aDBH = new ArticleDBHandle();
-            aDBH.rejectArticle(artId);
-    
+            aDBH.updateArticleStatus(artId, "on edition");
+
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
             rDBH.removeReviews(artId);
