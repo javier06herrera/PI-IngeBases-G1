@@ -535,6 +535,20 @@ namespace Proyecto.Models
 
             return true;
         }
+
+        //I3: This method turn article status into pending collaboration so the reviewing process can begin
+        public void setNewArticleStatus(int articleId)
+        {
+            SqlCommand cmd = conn.setSimpleReturnQuery("UPDATE Article " +
+                                                        "SET checkedStatus = 'pending collaboration' " +
+                                                        "WHERE articleId = @articleId");
+            cmd.Parameters.AddWithValue("@articleid", articleId);
+
+            conn.conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.conn.Close();
+
+        }
     }
 }
     

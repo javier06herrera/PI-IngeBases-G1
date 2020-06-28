@@ -88,16 +88,36 @@
 
                             @if (item.type == "short")
                             {
-                                <div class="article-heading-abb">
-                                    <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
-                                </div>
+                                if (item.checkedStatus == "published" || item.checkedStatus == "on edition")
+                                {
+                                    <div class="article-heading-abb">
+                                        <a href="http://localhost:54007/Article/Edit?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="article-heading-abb">
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    </div>
+                                }
+
                             }
 
                             else
                             {
+
+                                if (item.checkedStatus == "published" || item.checkedStatus == "on edition")
+                                {
                                 <div class="article-heading-abb">
                                     <a href="http://localhost:54007/Article/EditLong?articleId=@(item.articleId)"> <i class="fa fa-pencil-square-o"></i>@Html.DisplayFor(modelItem => item.name) </a>
                                 </div>
+                                }
+                                else
+                                {
+                                    <div class="article-heading-abb">
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    </div>
+                                }
                             }
 
                             <div class="article-info">
@@ -116,6 +136,10 @@
                             </div>
 
                             @Html.ActionLink("Read more", "PreviewArticle", "Article", item, new { @class = "btn btn-outline-dark btn-sm" })
+                            @if (item.checkedStatus == "on edition")
+                            {
+                                @Html.ActionLink("Start Revision", "EnrollOnReviewProcess", "Review", new { articleId = item.articleId}, new { @class = "btn btn-outline-dark btn-sm" })
+                            }
                         </div>
                         }
                     </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
+using Proyecto.Controllers;
 
 namespace Proyecto.Controllers
 {
@@ -293,6 +294,14 @@ namespace Proyecto.Controllers
             dbh.registerRequestAnswer(nomination);
             return RedirectToAction("ReviewRequests");
 
+        }
+
+        public ActionResult EnrollOnReviewProcess(int articleId)
+        {
+            ReviewDBHandle dbh = new ReviewDBHandle();
+            dbh.setNewArticleStatus(articleId);
+
+            return Redirect("/Profile/Profile");
         }
     }
 }
