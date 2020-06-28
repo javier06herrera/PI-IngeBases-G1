@@ -30,18 +30,18 @@
                     <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
                 </div>
 
-                @*Only core and coordinator members can review articles*@
+                @*Only core and core member can view*@
                 @if (ViewData["rank"].ToString() == "core" || ViewData["rank"].ToString() == "coordinator")
                 {
                     <div class="login-box border-left-1 border-right-1">
-                        <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-pencil"></i> Reviews</a>
+                        <a href="http://localhost:54007/CoreMember/CoreMember"><i class="fa fa-pencil"></i> Reviews</a>
                     </div>
                 }
-                @*Only coordinator members can give a veredict on articles*@
+                @*Only coordinator member can view*@
                 @if (ViewData["rank"].ToString() == "coordinator")
                 {
                     <div class="login-box border-left-1 border-right-1">
-                        <a href="http://localhost:54007/Review/PendingVeredicts"><i class="fa fa-wrench"></i> Veredicts</a>
+                        <a href="http://localhost:54007/Coordinator/Coordinator"><i class="fa fa-wrench"></i> Management</a>
                     </div>
                 }
             </div>

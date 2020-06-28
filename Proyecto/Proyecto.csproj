@@ -123,6 +123,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ColaborationController.cs" />
+    <Compile Include="Controllers\CoordinatorController.cs" />
+    <Compile Include="Controllers\CoreMemberController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -360,9 +362,11 @@
     <Content Include="Views\Review\PendingVeredicts.cshtml" />
     <Content Include="Views\Report\ReportUsers.cshtml" />
     <Content Include="Views\Review\GiveVeredict.cshtml" />
-    <Content Include="Views\Colaboration\Colaboration.cshtml" />
     <Content Include="Views\Review\ReviewRequests.cshtml" />
     <Content Include="Views\Review\AnswerReviewRequest.cshtml" />
+    <Content Include="Views\Colaboration\Colaboration.cshtml" />
+    <Content Include="Views\Coordinator\Coordinator.cshtml" />
+    <Content Include="Views\CoreMember\CoreMember.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
