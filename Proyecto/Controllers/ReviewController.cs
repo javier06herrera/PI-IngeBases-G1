@@ -119,7 +119,7 @@ namespace Proyecto.Controllers
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
-            rDBH.removeReviews(artId);
+            rDBH.deleteFromTable(artId, "REVIEWS");
 
             //Send accepted notification to authors
             sendAuthorMails(artId, "accepted");
@@ -158,7 +158,7 @@ namespace Proyecto.Controllers
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
-            rDBH.removeReviews(artId);
+            rDBH.deleteFromTable(artId, "REVIEWS");
 
             //Send reject notification to authors
             sendAuthorMails(artId, "rejected");
