@@ -388,6 +388,89 @@ namespace Proyecto.Models
             conn.conn.Close();
             return merits;
         }
+
+        public List<ArticleModel> fetchArticleReviewRequest(string reviewerEmail)
+        {
+            //Stablishes a connection string
+            connection();
+            List<ArticleModel> articleList = new List<ArticleModel>();
+
+            //Fetching Query of a list composed by articles pending to be reviewed for a specific member
+            string fetchArticles = "SELECT * " +
+                                   "FROM Article A " +
+                                   "JOIN IS_NOMINATED I ON A.articleId = I.articleId " +
+                                   "WHERE I.email = @email " +
+                                   "AND answer = 'pending' ";
+            //DB connection arrangement
+            SqlCommand cmd = new SqlCommand(fetchArticles, con);
+
+            SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
+            DataTable articleTable = new DataTable();
+            cmd.Parameters.AddWithValue("@email", reviewerEmail);
+            //Open connection with the DB
+            con.Open();
+            //Buffer of data from the DB
+            sd1.Fill(articleTable);
+            //Loop that formats data into an array 
+            foreach (DataRow article in articleTable.Rows)
+            {
+                articleList.Add(
+                    new ArticleModel
+                    {
+                        articleId = Convert.ToInt32(article["articleId"]),
+                        name = Convert.ToString(article["name"]),
+                        topicName = " ",
+                        Abstract = Convert.ToString(article["Abstract"]),
+                        publishDate = Convert.ToString(article["publishDate"]),
+                        content = Convert.ToString(article["content"]),
+                        type = Convert.ToString(article["type"]),
+                        baseGrade = Convert.ToInt32(article["baseGrade"]),
+                        accessCount = Convert.ToInt32(article["accessCount"]),
+                        likesCount = Convert.ToInt32(article["likesCount"]),
+                        neutralCount = Convert.ToInt32(article["neutralCount"]),
+                        dislikesCount = Convert.ToInt32(article["dislikesCount"]),
+                        likeBalance = Convert.ToInt32(article["likeBalance"]),
+                        checkedStatus = Convert.ToString(article["checkedStatus"])
+                    });
+            }
+            con.Close();
+
+            //Fetch of the entire list of topics
+            string fetchTopics = "SELECT * " +
+                                 "FROM   INVOLVES ";
+            cmd.CommandText = fetchTopics;
+            SqlDataAdapter sd2 = new SqlDataAdapter(cmd);
+            DataTable topicList = new DataTable();
+            con.Open();
+            sd2.Fill(topicList);
+            foreach (ArticleModel article in articleList)
+            {
+                article.topicName = topicMerge(article.articleId, topicList);
+            }
+            con.Close();
+            return articleList;
+        }
+
+        //I3: This method register the answer of a request provided by a core member
+        public bool registerRequestAnswer(IsNominatedModel nomination)
+        {
+            SqlCommand cmd = conn.setSimpleReturnQuery("UPDATE IS_NOMINATED " +
+                                                        "SET answer = @answer, " +
+                                                        "comments = @comments " +
+                                                        "WHERE articleId = @articleId " +
+                                                        "AND email = @email ");
+            cmd.Parameters.AddWithValue("@answer", nomination.answer);
+            cmd.Parameters.AddWithValue("@comments", nomination.comments);
+            cmd.Parameters.AddWithValue("@articleId", nomination.articleId);
+            cmd.Parameters.AddWithValue("@email", nomination.email);
+
+            conn.conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.conn.Close();
+
+            return true;
+
+        }
     }
 }
     

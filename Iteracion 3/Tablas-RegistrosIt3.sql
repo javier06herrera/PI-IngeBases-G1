@@ -45,6 +45,8 @@ values ('Mamita Yunai','long','Life of a "criollo" politician and his fight agai
 insert into Article
 values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
 
+insert into Article
+values ('Animal Farm','long','Metaphor about the rotting structure of a raising empire','12-02-1999','One day, Squealer takes the sheep off to a remote spot to teach them a new chant. Not long afterward, the animals have just finished their day’s work when they hear the terrified neighing of a horse. It is Clover, and she summons the others hastily to the yard. There, the animals gaze in amazement at Squealer walking toward them on his hind legs. Napoleon soon appears as well, walking upright; worse, he carries a whip. Before the other animals have a chance to react to the change, the sheep begin to chant, as if on cue: “Four legs good, two legs better!” Clover, whose eyes are failing in her old age, asks Benjamin to read the writing on the barn wall where the Seven Commandments were originally inscribed. Only the last commandment remains: “all animals are equal.” However, it now carries an addition: “but some animals are more equal than others.” In the days that follow, Napoleon openly begins smoking a pipe, and the other pigs subscribe to human magazines, listen to the radio, and begin to install a telephone, also wearing human clothes that they have salvaged from Mr. Jones’s wardrobe.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -69,6 +71,11 @@ VALUES ('Novel', 'Banana Republic')
 INSERT INTO	Topic
 VALUES ('Novel', 'Pirate Island')
 
+INSERT INTO	Topic
+VALUES ('Satire', 'Politics')
+
+INSERT INTO	Topic
+VALUES ('Story', 'Fiction')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE INVOLVES(
 articleId INT,
@@ -93,6 +100,13 @@ VALUES	(3,'Novel', 'Banana Republic')
 
 INSERT INTO INVOLVES
 VALUES	(4,'Novel', 'Pirate Island')
+
+INSERT INTO INVOLVES
+VALUES	(5,'Satire', 'Politics')
+
+INSERT INTO INVOLVES
+VALUES	(5,'Story', 'Fiction')
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
@@ -206,11 +220,14 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
  INSERT INTO WRITES
  VALUES	('barrDan@puchimail.com',2)
 
-INSERT INTO WRITES
+ INSERT INTO WRITES
  VALUES	('herrJav@puchimail.com',3)
 
  INSERT INTO WRITES
  VALUES	('barrKev@puchimail.com',4)
+
+ INSERT INTO WRITES
+ VALUES	('herrJav@puchimail.com',5)
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -247,138 +264,14 @@ INSERT INTO CommunityMember VALUES
 
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
-comments VARCHAR(100)  DEFAULT 'no aplica',
+comments VARCHAR(100)  DEFAULT 'no comment',
 email VARCHAR(100),
 articleId	INT,
 PRIMARY KEY(email,ArticleId),
 CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES CommunityMember(email) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE
- )
- 
- SELECT *
- FROM WRITES
- WHERE articleId = 2
+)
 
- SELECT *
- FROM REVIEWS
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
--------------------------------------FIRST ITERATION SCRIPT--------------------------------------------------------------------------------------------
-
---DROP TABLE Creates;
---DROP TABLE Member;
---DROP TABLE ForeignParticipant;
---DROP TABLE CommunityUser;
---DROP TABLE ArticleTopic;
---DROP TABLE Article;
---DROP TABLE Faq;
-
---CREATE TABLE Article
---( 
---articleId   INT IDENTITY(1,1) PRIMARY KEY,
---name		VARCHAR(50) NOT NULL UNIQUE,
---type        BIT NOT NULL, --LONG(0) SHORT(1)
---abstract	VARCHAR(MAX) NOT NULL,
---publishDate DATE NOT NULL,
---content		VARCHAR(MAX) NOT NULL,
-
---);
-
-
---insert into Article
---values ('Robinson Crusoe',1,'Naufragio de un inglés del siglo 17','12-02-1999','C://Daniel/Defoe');
-
---insert into Article
---values ('Yo Robot',1,'Problemáticas filosóficas en la aplicación de las leyes de la robótica','12-02-1999','C://Isaac/Asimov');
----------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE ArticleTopic
---(
---articleId INT,
---topic VARCHAR(50),
---PRIMARY KEY(articleId, topic),
---CONSTRAINT FK_ArticleTopic_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE 
---)
-
---INSERT INTO ArticleTopic
---values (1,'Naufragio')
-
---INSERT INTO ArticleTopic
---values (1,'Novela Francesa')
-
---INSERT INTO ArticleTopic
---values (2,'Filosofía')
-
---INSERT INTO ArticleTopic
---values (2,'Ciencia Ficción')
--------------------------------------------------------------------------------------------------------------------
---CREATE TABLE CommunityUser
---(
---userId		INT  IDENTITY PRIMARY KEY,
---name		VARCHAR(50) NOT NULL,
---lastName	VARCHAR(100) NOT NULL,
---userState   INT NOT NULL DEFAULT(0)
---);
-
---insert into CommunityUser
---values ('Daniel', 'Barrantes',1);
-
---insert into CommunityUser
---values ('Antonio', 'Alvarez',1);
---------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE ForeignParticipant
---(
---userId int PRIMARY KEY,
---participantAttributes	VARCHAR(MAX) NOT NULL,
---CONSTRAINT FK_ForeignParticipant_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE 
---);
-
---insert into ForeignParticipant
---values (1, 'Datos_de_Participante');
-
---insert into ForeignParticipant
---values (2, 'Datos_de_Participante');
-
-----------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Member
---(
---userId int PRIMARY KEY,
---memberRank				INT  NOT NULL, --1:Coordinador 2:Nucleo 3:Activo
---memberAttributes		VARCHAR(MAX) NOT NULL,
---CONSTRAINT FK_Member_Users FOREIGN KEY (userId) REFERENCES CommunityUser(userId) ON DELETE NO ACTION ON UPDATE CASCADE
---);
-
---insert into Member
---values (1, 1 , 'Datos_de_Participante');
-
---insert into Member
---values (2, 2, 'Datos_de_Participante');
-
---------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Creates
---(
---articleId int NOT NULL,
---userId int NOT NULL,
---PRIMARY KEY(articleId,userId),
---CONSTRAINT FK_Creates_Articles FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE NO ACTION ON UPDATE CASCADE,
---CONSTRAINT FK_Creates_Member FOREIGN KEY (userId) REFERENCES Member(userId) ON DELETE NO ACTION ON UPDATE CASCADE
---);
-
---insert into Creates
---values (1,1);
---insert into Creates
---values (2,2);
----------------------------------------------------------------------------------------------------------------------------------
---CREATE TABLE Faq (
---    questionId  INT           IDENTITY (1, 1) NOT NULL,
---    question    VARCHAR (MAX) NOT NULL,
---    status      BIT           NOT NULL,
---    answer      VARCHAR (MAX) NULL,
---    PRIMARY KEY CLUSTERED (questionId ASC)
---);
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','barrKev@puchimail.com', 5)
 
