@@ -35,7 +35,18 @@ namespace Proyecto.Controllers
             }
             ReviewDBHandle dbh = new ReviewDBHandle();
             model.email = user;
-            dbh.registerGrades(model);
+            try {
+                if (ModelState.IsValid) {
+                    dbh.registerGrades(model); }
+                else {
+                    ViewBag.Message = "Creation of review failed";
+                    return View(model);
+                }
+            }
+            catch {
+                ViewBag.Message = "Creation of review failed";
+                return View(model);
+            }
 
             EmailController eController = new EmailController();
             EmailModel eModel = new EmailModel();
