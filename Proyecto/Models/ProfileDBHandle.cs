@@ -100,6 +100,7 @@ namespace Proyecto.Models
             return pmodel;
         }
 
+        //I3: Checks if credentials of login are correct
         public bool attemptLogin(ProfileModel pmodel)
         {
             //Checks if credentials enttered in login page match credentials of any user
@@ -108,11 +109,19 @@ namespace Proyecto.Models
                            "WHERE CM.email = @email " +
                            "AND CM.password = @password ";
 
+
             bool result = false;                     
             command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@email", pmodel.email);
             command.Parameters.AddWithValue("@password", pmodel.password);
             connection.Open();
+
+            //If password is detected as unsafe, returns false and prevents malicious login
+            bool securePassword = checkPasswordSafety(pmodel.password);
+            if (!securePassword)
+            {
+                return false;
+            }
 
            reader = command.ExecuteReader();
             if (reader.HasRows)
@@ -122,7 +131,6 @@ namespace Proyecto.Models
                     //If query returns a row, then credentials matched in database
                     result = true;
                     pmodel.memberRank = Convert.ToString(reader["memberRank"]);
-
                 }
             }
 
@@ -132,6 +140,22 @@ namespace Proyecto.Models
             return result;
         }
 
+        //I3: Checks if password contains blank space making possible an easy SQLInjection to always login
+        public bool checkPasswordSafety(string password)
+        {
+            bool safe;
+
+            if (password.Contains(" "))
+            {
+                safe = false;
+            }
+            else
+            {
+                safe = true;
+            }
+
+            return safe;
+        }
 
         public bool updateMerits(int articleId, bool valueSign)
         {
@@ -184,22 +208,27 @@ namespace Proyecto.Models
 
         }
 
+        //I3: Updates the merits of a given community member
         public void updateMerits(string author, int merits)
         {
             string query = "UPDATE CommunityMember " +
                            "SET points = points + @merits " +
                            "WHERE email = @author ";
 
-            command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@author", author);
-            command.Parameters.AddWithValue("@merits", merits);
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-
+            //If query is detected as unsafe, won't excecute query
+            bool safeQuery = checkQuerySafety(query);
+            if (safeQuery)
+            {
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@author", author);
+                command.Parameters.AddWithValue("@merits", merits);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }      
         }
 
-        //Combines all the topics of an Article
+        //I3: Combines all the topics of an Article
         public string topicMerge(int articleId, DataTable topicList)
         {
             string topicsLine = "";
@@ -215,7 +244,7 @@ namespace Proyecto.Models
         }
 
 
-        // Ver resultados de busqueda
+        //I3: Fetches all articles of a given community member
         public List<ArticleModel> fetchMyArticles(String email)
         {
             List<ArticleModel> articleList = new List<ArticleModel>();
@@ -226,6 +255,14 @@ namespace Proyecto.Models
                                    "JOIN WRITES W ON A.articleId = W.ArticleId " +
                                    "WHERE W.email = @email " +
                                    "ORDER BY publishDate DESC";
+
+            //If query is detected as unsafe, returns empty list
+            bool safeQuery = checkQuerySafety(fetchArticles);
+            if (!safeQuery)
+            {
+                return articleList;
+            }
+
             SqlCommand cmd = new SqlCommand(fetchArticles, connection);
             cmd.Parameters.AddWithValue("@email", email);
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
@@ -270,7 +307,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
-        //Iteración 3
+        //I3: Retrieves mail of coordinator member
         public string getCoordinatorMail()
         {
 
@@ -278,6 +315,13 @@ namespace Proyecto.Models
             string query = "SELECT email " +
                             "FROM CommunityMember " +
                             "WHERE memberRank = 'coordinator'";
+
+            //If query is detected as unsafe, returns error string
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return "ERROR: UNSAFE QUERY DETECTED";
+            }
 
             command = new SqlCommand(query, connection);
             connection.Open();
@@ -298,7 +342,7 @@ namespace Proyecto.Models
 
         }
 
-        //Iteración 3
+        //I3: Retrieves information of a given article
         public string getArticleAuthor(int articleId)
         {
   
@@ -312,7 +356,13 @@ namespace Proyecto.Models
                             "ON W.email = CM.email " +
                             "WHERE W.articleId = @articleId";
 
-   
+            //If query is detected as unsafe, returns empty string
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return authors;
+            }
+
             command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@articleId", articleId);
             connection.Open();
@@ -335,6 +385,8 @@ namespace Proyecto.Models
 
         }
 
+
+        //I3: Retrieves list of all emails of core members
         public List<string> getCoreMemberEmails()
         {
             List<string> emails = new List<string>();
@@ -343,6 +395,14 @@ namespace Proyecto.Models
             string query = "SELECT email " +
                             "FROM CommunityMember " +
                             "WHERE memberRank = 'core'";
+
+
+            //If query is detected as unsafe, returns empty list
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return emails;
+            }
 
             command = new SqlCommand(query, connection);
             connection.Open();
@@ -363,19 +423,42 @@ namespace Proyecto.Models
 
         }
 
+
+        //I3: Checks if a given query contains the 'DROP' statement used maliciously in a query where it shouldn't be
+        public bool checkQuerySafety(string query)
+        {
+            bool safe;
+
+            if (query.Contains("DROP"))
+            {
+                safe = false;
+            }
+            else
+            {
+                safe = true;
+            }
+
+            return safe;
+        }
+
+        //I3: Adds nomination for the potential coremember to review the article
         public void addNomination(string email, int articleId)
         {
             string query = "INSERT INTO IS_NOMINATED VALUES " +
                            " (DEFAULT,DEFAULT,@email,@articleId)";
 
-            command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@articleId", articleId);
-            command.Parameters.AddWithValue("@email", email);
- 
-            connection.Open();
-            int codeError = command.ExecuteNonQuery();
-            connection.Close();
-            
+            bool safeQuery = checkQuerySafety(query);
+            //If query is detected as unsafe, won't excecute it
+            if (safeQuery)
+            {
+                command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@articleId", articleId);
+                command.Parameters.AddWithValue("@email", email);
+
+                connection.Open();
+                int codeError = command.ExecuteNonQuery();
+                connection.Close();
+            }            
         }
     }
 }
