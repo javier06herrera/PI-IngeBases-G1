@@ -313,3 +313,49 @@ VALUES ('pending','no comment','barrKev@puchimail.com', 5)
 --JOIN WRITES W ON A.articleId = W.articleId
 --WHERE W.email = @email
 --ORDER BY publishDate DESC
+
+---------------------------------------------------------------
+--CREATE TRIGGER PIT_totalCountUpdate
+--ON Article
+--FOR  UPDATE
+--AS
+
+--DECLARE @articleId int
+--DECLARE @newLikeBalance int
+--DECLARE @oldLikeBalance int
+--select @articleId=I.articleId, @newLikeBalance = I.likesCount - I.dislikesCount
+--from inserted I
+--select @oldLikeBalance = D.likeBalance
+--from deleted D
+
+--IF UPDATE(likesCount) OR UPDATE(dislikesCount)
+--BEGIN
+--	UPDATE Article
+--	SET likeBalance = likesCount-dislikesCount
+--	WHERE articleId = @articleId 
+
+--	UPDATE	CommunityMember
+--	SET Points = Points + @newLikeBalance - @oldLikeBalance
+--	WHERE email in (
+--		SELECT W.email
+--		FROM WRITES W
+--		WHERE W.articleId = @articleId)
+--END
+---------------------------------------------------------------------------
+--CREATE TRIGGER PIT_viewsMeritUpdate
+--ON Article
+--FOR  UPDATE
+--AS
+--DECLARE @articleId int
+--SELECT @articleId = I.articleId
+--FROM inserted I
+
+--IF UPDATE(accessCount)
+--BEGIN
+--	UPDATE CommunityMember
+--	SET points = points + 1
+--	WHERE email IN (
+--			SELECT W.email
+--			FROM WRITES W
+--			WHERE W.articleId = @articleId)
+--END 

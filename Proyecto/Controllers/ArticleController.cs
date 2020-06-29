@@ -211,7 +211,7 @@ namespace Proyecto.Controllers
             if (artModel.checkedStatus == "published")
             {
                 sdb.UpdateAccess(artModel);
-                pdb.updateMerits(artModel.articleId, true);
+                //pdb.updateMerits(artModel.articleId, true);
             }
                    
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == artModel.articleId));
@@ -224,7 +224,7 @@ namespace Proyecto.Controllers
             ProfileDBHandle pdb = new ProfileDBHandle();
             int vote = 0;
             int [] likeData = sdb.updateLikes(model.articleId, vote);
-            pdb.updateMerits(model.articleId, true);
+            //pdb.updateMerits(model.articleId, true);
             model.likesCount = likeData[0];
             model.neutralCount = likeData[1];
             model.dislikesCount = likeData[2];
@@ -251,7 +251,7 @@ namespace Proyecto.Controllers
             ProfileDBHandle pdb = new ProfileDBHandle();
             int vote = 2;
             int[] likeData = sdb.updateLikes(model.articleId, vote);
-            pdb.updateMerits(model.articleId, false);
+            //pdb.updateMerits(model.articleId, false);
             model.likesCount = likeData[0];
             model.neutralCount = likeData[1];
             model.dislikesCount = likeData[2];

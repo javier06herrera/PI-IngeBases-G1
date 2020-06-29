@@ -109,7 +109,7 @@ namespace Proyecto.Models
 
             SqlCommand cmd = new SqlCommand(updateCounts, con);
             cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
-            cmd.Parameters.AddWithValue("@accessCount", smodel.accessCount);
+            //cmd.Parameters.AddWithValue("@accessCount", smodel.accessCount);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -442,26 +442,28 @@ namespace Proyecto.Models
             con.Close();
 
 
-            //Update of like balance
-            connection();
-            query = "UPDATE Article " +
-                    "SET likeBalance = likesCount - dislikesCount " +
-                    "WHERE articleId = @articleId";
+            ////Update of like balance
+            //connection();
+            //query = "UPDATE Article " +
+            //        "SET likeBalance = likesCount - dislikesCount " +
+            //        "WHERE articleId = @articleId";
 
 
-            SqlCommand cmd1 = new SqlCommand(query, con);
-            cmd1.Parameters.AddWithValue("@articleId", articleId);
-            con.Open();
-            i = cmd1.ExecuteNonQuery();
-            con.Close();
+            //SqlCommand cmd1 = new SqlCommand(query, con);
+            //cmd1.Parameters.AddWithValue("@articleId", articleId);
+            //con.Open();
+            //i = cmd1.ExecuteNonQuery();
+            //con.Close();
 
             //Bring likes, neutral and dislikes
             int[] likeData = new int[3];
             query = "SELECT likesCount " +
                     "FROM Article " +
                     "WHERE articleId = @articleId";
+            SqlCommand cmd1 = new SqlCommand(query, con);
+            cmd1.Parameters.AddWithValue("@articleId", articleId);
             cmd1.CommandText = query;
-            cmd1.Parameters["@articleId"].Value = articleId;
+            //cmd1.Parameters["@articleId"].Value = articleId;
             con.Open();
             likeData[0] = Convert.ToInt32(cmd1.ExecuteScalar());
             con.Close();
