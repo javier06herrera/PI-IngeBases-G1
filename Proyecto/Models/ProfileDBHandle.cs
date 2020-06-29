@@ -12,61 +12,62 @@ namespace Proyecto.Models
 {
     public class ProfileDBHandle
     {
-        private SqlConnection connection;
-        private SqlCommand command;
+        private SqlConnection con;
+        private SqlCommand cmd;
         private SqlDataReader reader;
 
         public ProfileDBHandle()
         {
-            connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
         }
 
         public ProfileModel getMemberProfile(String email)
         {
 
             ProfileModel memberProfile = new ProfileModel();
-            string query = "SELECT * " +
-                            "FROM CommunityMember CM " +
-                            "WHERE CM.email = @email";
+            //string query = "SELECT * " +
+            //                "FROM CommunityMember CM " +
+            //                "WHERE CM.email = @email";
 
-            using (connection)
+
+            cmd = new SqlCommand("PISP_getMemberProfile", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@email", email);
+            con.Open();
+            reader = cmd.ExecuteReader();
+            if (reader.HasRows)
             {
-                command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("email", email);
-                connection.Open();
-                reader = command.ExecuteReader();
-                if (reader.HasRows)
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        memberProfile.email = Convert.ToString(reader["email"]);
-                        memberProfile.name = Convert.ToString(reader["name"]);
-                        memberProfile.lastName = Convert.ToString(reader["lastName"]);
-                        memberProfile.birthDate = Convert.ToString(reader["birthDate"]);
-                        memberProfile.age = Convert.ToInt32(reader["age"]);
-                        memberProfile.addressCity = Convert.ToString(reader["addressCity"]);
-                        memberProfile.addressCountry = Convert.ToString(reader["addressCountry"]);
-                        memberProfile.hobbies = Convert.ToString(reader["hobbies"]);
-                        memberProfile.languages = Convert.ToString(reader["languages"]);
-                        memberProfile.mobile = Convert.ToString(reader["mobile"]);
-                        memberProfile.job = Convert.ToString(reader["job"]);
-                        memberProfile.memberRank = Convert.ToString(reader["memberRank"]);
-                        memberProfile.points = Convert.ToInt32(reader["points"]);
-                    }
+                    memberProfile.email = Convert.ToString(reader["email"]);
+                    memberProfile.name = Convert.ToString(reader["name"]);
+                    memberProfile.lastName = Convert.ToString(reader["lastName"]);
+                    memberProfile.birthDate = Convert.ToString(reader["birthDate"]);
+                    memberProfile.age = Convert.ToInt32(reader["age"]);
+                    memberProfile.addressCity = Convert.ToString(reader["addressCity"]);
+                    memberProfile.addressCountry = Convert.ToString(reader["addressCountry"]);
+                    memberProfile.hobbies = Convert.ToString(reader["hobbies"]);
+                    memberProfile.languages = Convert.ToString(reader["languages"]);
+                    memberProfile.mobile = Convert.ToString(reader["mobile"]);
+                    memberProfile.job = Convert.ToString(reader["job"]);
+                    memberProfile.memberRank = Convert.ToString(reader["memberRank"]);
+                    memberProfile.points = Convert.ToInt32(reader["points"]);
+                    memberProfile.articleCount = Convert.ToInt32(reader["articleCount"]);
                 }
-
-                reader.Close();
             }
-            SqlConnection connection1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
-            query = "SELECT COUNT(*) " +
-                   "FROM  WRITES " +
-                   "WHERE email = @email";
 
-            SqlCommand cmd1 = new SqlCommand(query, connection1);
-            cmd1.Parameters.AddWithValue("@email", email);
-            connection1.Open();
-            memberProfile.articleCount = Convert.ToInt32(cmd1.ExecuteScalar());
-            connection1.Close();
+            reader.Close();
+
+            //SqlConnection connection1 = new SqlConnection(ConfigurationManager.ConnectionStrings["ArticleConn"].ToString());
+            //query = "SELECT COUNT(*) " +
+            //       "FROM  WRITES " +
+            //       "WHERE email = @email";
+
+            //SqlCommand cmd1 = new SqlCommand(query, connection1);
+            //cmd1.Parameters.AddWithValue("@email", email);
+            //connection1.Open();
+            //memberProfile.articleCount = Convert.ToInt32(cmd1.ExecuteScalar());
+            //connection1.Close();
 
             return memberProfile;
 
@@ -79,22 +80,22 @@ namespace Proyecto.Models
             string query = "INSERT INTO CommunityMember (email,name, lastName, addressCity, addressCountry, mobile, job, skills) " +
                            "VALUES(@email,@name, @lastName, @addressCity, @addressCountry, @mobile, @job, @skills)";
 
-            command = new SqlCommand(query, connection);
+            cmd = new SqlCommand(query, con);
 
-            command.Parameters.AddWithValue("@email", pmodel.email);
-            command.Parameters.AddWithValue("@name", pmodel.name);
-            command.Parameters.AddWithValue("@lastName", pmodel.lastName);
-            command.Parameters.AddWithValue("@addressCity", pmodel.addressCity);
-            command.Parameters.AddWithValue("@addressCountry", pmodel.addressCountry);
-            command.Parameters.AddWithValue("@mobile", pmodel.mobile);
-            command.Parameters.AddWithValue("@job", pmodel.job);
-            command.Parameters.AddWithValue("@skills", pmodel.skills);
+            cmd.Parameters.AddWithValue("@email", pmodel.email);
+            cmd.Parameters.AddWithValue("@name", pmodel.name);
+            cmd.Parameters.AddWithValue("@lastName", pmodel.lastName);
+            cmd.Parameters.AddWithValue("@addressCity", pmodel.addressCity);
+            cmd.Parameters.AddWithValue("@addressCountry", pmodel.addressCountry);
+            cmd.Parameters.AddWithValue("@mobile", pmodel.mobile);
+            cmd.Parameters.AddWithValue("@job", pmodel.job);
+            cmd.Parameters.AddWithValue("@skills", pmodel.skills);
 
-            using (connection)
+            using (con)
             {
-                connection.Open();
-                int codeError = command.ExecuteNonQuery();
-                connection.Close();
+                con.Open();
+                int codeError = cmd.ExecuteNonQuery();
+                con.Close();
             }
 
             return pmodel;
@@ -124,6 +125,7 @@ namespace Proyecto.Models
             }
 
            reader = command.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -135,7 +137,7 @@ namespace Proyecto.Models
             }
 
             reader.Close();
-            connection.Close();
+            con.Close();
 
             return result;
         }
@@ -163,18 +165,18 @@ namespace Proyecto.Models
             string query = "SELECT email " +
                            "FROM WRITES " +
                            "WHERE articleId = @articleId";
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@articleId", articleId);
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
             DataTable membersTemp = new DataTable();
-            connection.Open();
+            con.Open();
             sd1.Fill(membersTemp);
             List<string> members = new List<string>();
             foreach (DataRow dr in membersTemp.Rows)
             {
                 members.Add(Convert.ToString(dr[0]));
             }
-            connection.Close();
+            con.Close();
 
             //For each of the members updates the point values
             if (valueSign)
@@ -190,9 +192,9 @@ namespace Proyecto.Models
                         "WHERE email = @email";
             }
 
-            SqlCommand cmd1 = new SqlCommand(query, connection);
+            SqlCommand cmd1 = new SqlCommand(query, con);
             cmd1.Parameters.AddWithValue("@email", members[0]);
-            connection.Open();
+            con.Open();
             int i;
             i = cmd1.ExecuteNonQuery();
             for (int j = 1; j < members.Count; j++)
@@ -202,7 +204,7 @@ namespace Proyecto.Models
                 if (i < 0)
                     return false;
             }
-            connection.Close();
+            con.Close();
             return true;
 
 
@@ -215,16 +217,17 @@ namespace Proyecto.Models
                            "SET points = points + @merits " +
                            "WHERE email = @author ";
 
+
             //If query is detected as unsafe, won't excecute query
             bool safeQuery = checkQuerySafety(query);
             if (safeQuery)
             {
-                command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@author", author);
-                command.Parameters.AddWithValue("@merits", merits);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+				cmd = new SqlCommand(query, con);
+				cmd.Parameters.AddWithValue("@author", author);
+				cmd.Parameters.AddWithValue("@merits", merits);
+				con.Open();
+				cmd.ExecuteNonQuery();
+				con.Close();
             }      
         }
 
@@ -249,25 +252,20 @@ namespace Proyecto.Models
         {
             List<ArticleModel> articleList = new List<ArticleModel>();
 
-            //Fetch of the entire list of articles without topics
-            string fetchArticles = "SELECT * " +
-                                   "FROM Article A " +
-                                   "JOIN WRITES W ON A.articleId = W.ArticleId " +
-                                   "WHERE W.email = @email " +
-                                   "ORDER BY publishDate DESC";
 
-            //If query is detected as unsafe, returns empty list
-            bool safeQuery = checkQuerySafety(fetchArticles);
+            SqlCommand cmd = new SqlCommand("PISP_getMemeberArticle", con);
+			
+			bool safeQuery = checkQuerySafety(fetchArticles);
             if (!safeQuery)
             {
                 return articleList;
             }
-
-            SqlCommand cmd = new SqlCommand(fetchArticles, connection);
+			
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
             DataTable articleTable = new DataTable();
-            connection.Open();
+            con.Open();
             sd1.Fill(articleTable);
             foreach (DataRow article in articleTable.Rows)
             {
@@ -276,7 +274,7 @@ namespace Proyecto.Models
                     {
                         articleId = Convert.ToInt32(article["articleId"]),
                         name = Convert.ToString(article["name"]),
-                        topicName = " ",
+                        topicName = Convert.ToString(article["topicName"]),
                         Abstract = Convert.ToString(article["Abstract"]),
                         publishDate = Convert.ToString(article["publishDate"]),
                         content = Convert.ToString(article["content"]),
@@ -290,20 +288,7 @@ namespace Proyecto.Models
                         checkedStatus = Convert.ToString(article["checkedStatus"])
                     });
             }
-            connection.Close();
-
-            //Fetch of the entire list of topics
-            string fetchTopics = "SELECT * " +
-                                 "FROM INVOLVES";
-            SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, connection);
-            DataTable topicList = new DataTable();
-            connection.Open();
-            sd2.Fill(topicList);
-            foreach (ArticleModel article in articleList)
-            {
-                article.topicName = topicMerge(article.articleId, topicList);
-            }
-            connection.Close();
+            con.Close();
             return articleList;
         }
 
@@ -316,6 +301,7 @@ namespace Proyecto.Models
                             "FROM CommunityMember " +
                             "WHERE memberRank = 'coordinator'";
 
+
             //If query is detected as unsafe, returns error string
             bool safeQuery = checkQuerySafety(query);
             if (!safeQuery)
@@ -323,9 +309,10 @@ namespace Proyecto.Models
                 return "ERROR: UNSAFE QUERY DETECTED";
             }
 
-            command = new SqlCommand(query, connection);
-            connection.Open();
-            reader = command.ExecuteReader();
+            cmd = new SqlCommand(query, con);
+            con.Open();
+            reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -336,8 +323,8 @@ namespace Proyecto.Models
 
             reader.Close();
 
-            connection.Close();
-            
+            con.Close();
+
             return memberProfile.email;
 
         }
@@ -345,7 +332,7 @@ namespace Proyecto.Models
         //I3: Retrieves information of a given article
         public string getArticleAuthor(int articleId)
         {
-  
+
             string authors = "";
 
 
@@ -356,6 +343,7 @@ namespace Proyecto.Models
                             "ON W.email = CM.email " +
                             "WHERE W.articleId = @articleId";
 
+
             //If query is detected as unsafe, returns empty string
             bool safeQuery = checkQuerySafety(query);
             if (!safeQuery)
@@ -363,10 +351,11 @@ namespace Proyecto.Models
                 return authors;
             }
 
-            command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@articleId", articleId);
-            connection.Open();
-            reader = command.ExecuteReader();
+            cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            con.Open();
+            reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -379,8 +368,8 @@ namespace Proyecto.Models
 
             reader.Close();
 
-            connection.Close();
-            
+            con.Close();
+
             return authors;
 
         }
@@ -404,9 +393,10 @@ namespace Proyecto.Models
                 return emails;
             }
 
-            command = new SqlCommand(query, connection);
-            connection.Open();
-            reader = command.ExecuteReader();
+            cmd = new SqlCommand(query, con);
+            con.Open();
+            reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -417,7 +407,7 @@ namespace Proyecto.Models
 
             reader.Close();
 
-            connection.Close();
+            con.Close();
 
             return emails;
 
@@ -446,6 +436,7 @@ namespace Proyecto.Models
         {
             string query = "INSERT INTO IS_NOMINATED VALUES " +
                            " (DEFAULT,DEFAULT,@email,@articleId)";
+
 
             bool safeQuery = checkQuerySafety(query);
             //If query is detected as unsafe, won't excecute it

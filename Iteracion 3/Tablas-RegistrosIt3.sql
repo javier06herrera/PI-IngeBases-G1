@@ -128,22 +128,22 @@ password            NVARCHAR(MAX) DEFAULT 123
 )
 
 INSERT INTO CommunityMember
-VALUES ( 'barrKev@puchimail.com','Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','1','Intel','core',5,'Versatility',DEFAULT)
+VALUES ( 'barrKev@puchimail.com','Kevin', 'Barrantes','10-10-1990', 30, 'Rio Segundo','Costa Rica','Read, Listen good music','Spanish, English','188888','Intel','core',5,'Versatility',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'glorymoravi@gmail.com','Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','2','Intel','core', 5, 'Creativity',DEFAULT)
+VALUES ( 'glorymoravi@gmail.com','Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','288888','Intel','core', 5, 'Creativity',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'alvAnt@puchimail.com','Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','3','Intel','active',3,'Math-skills',DEFAULT)
+VALUES ( 'alvAnt@puchimail.com','Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','388888','Intel','active',3,'Math-skills',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'dbarrantescr@gmail.com','Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','4','Intel','active',3,'Adaptability',DEFAULT)
+VALUES ( 'dbarrantescr@gmail.com','Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','48888','Intel','active',3,'Adaptability',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'herrJav@puchimail.com','Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','5','Intel','peripheral',0,'Organized',DEFAULT)
+VALUES ( 'herrJav@puchimail.com','Javier', 'Herrera','10-10-1990', 30, 'Santa Ana','Costa Rica','Play the guitar','Spanish, English','588888','Intel','peripheral',0,'Organized',DEFAULT)
 
 INSERT INTO CommunityMember 
-VALUES('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica','Coordinar','Java',24,'Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
+VALUES('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica','Coordinar','Java','24888','Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
 subjectCategory  VARCHAR(100),
@@ -273,3 +273,89 @@ CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(ar
 
 INSERT INTO IS_NOMINATED
 VALUES ('pending','no comment','barrKev@puchimail.com', 5)
+
+
+
+---------------------------------------------------------------------------------------------
+--Functions
+--CREATE FUNCTION PIF_getTopics(@articleId int)
+--RETURNS varchar(max)
+--AS
+--BEGIN
+--declare @result varchar(max)
+--set @result =''
+--select @result = @result + I.topicName + ', '
+--from Article A
+--join INVOLVES I on A.articleId = I.articleId
+--where A.articleId = @articleId
+--RETURN @result
+--END
+
+----Procedures
+--CREATE PROC PISP_getArticles AS 
+--SELECT A.*, dbo.PIF_getTopics(A.articleId) as topicName
+--FROM Article A
+--ORDER BY publishDate DESC
+
+--CREATE PROC PISP_getMemberProfile @email varchar(25) AS
+--DECLARE @articleCount int 
+--SELECT @articleCount = COUNT(*)
+--FROM WRITES W
+--WHERE W.email = @email
+
+--SELECT  C.*, @articleCount AS 'articleCount'
+--FROM CommunityMember C
+--WHERE C.email = @email
+
+--CREATE PROC PISP_getMemeberArticle @email varchar(25) AS 
+--SELECT A.*, dbo.PIF_getTopics(A.articleId) AS topicName
+--FROM Article A
+--JOIN WRITES W ON A.articleId = W.articleId
+--WHERE W.email = @email
+--ORDER BY publishDate DESC
+
+---------------------------------------------------------------
+--CREATE TRIGGER PIT_totalCountUpdate
+--ON Article
+--FOR  UPDATE
+--AS
+
+--DECLARE @articleId int
+--DECLARE @newLikeBalance int
+--DECLARE @oldLikeBalance int
+--select @articleId=I.articleId, @newLikeBalance = I.likesCount - I.dislikesCount
+--from inserted I
+--select @oldLikeBalance = D.likeBalance
+--from deleted D
+
+--IF UPDATE(likesCount) OR UPDATE(dislikesCount)
+--BEGIN
+--	UPDATE Article
+--	SET likeBalance = likesCount-dislikesCount
+--	WHERE articleId = @articleId 
+
+--	UPDATE	CommunityMember
+--	SET Points = Points + @newLikeBalance - @oldLikeBalance
+--	WHERE email in (
+--		SELECT W.email
+--		FROM WRITES W
+--		WHERE W.articleId = @articleId)
+--END
+---------------------------------------------------------------------------
+--CREATE TRIGGER PIT_viewsMeritUpdate
+--ON Article
+--FOR  UPDATE
+--AS
+--DECLARE @articleId int
+--SELECT @articleId = I.articleId
+--FROM inserted I
+
+--IF UPDATE(accessCount)
+--BEGIN
+--	UPDATE CommunityMember
+--	SET points = points + 1
+--	WHERE email IN (
+--			SELECT W.email
+--			FROM WRITES W
+--			WHERE W.articleId = @articleId)
+--END 

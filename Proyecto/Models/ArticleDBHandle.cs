@@ -109,7 +109,7 @@ namespace Proyecto.Models
 
             SqlCommand cmd = new SqlCommand(updateCounts, con);
             cmd.Parameters.AddWithValue("@articleId", smodel.articleId);
-            cmd.Parameters.AddWithValue("@accessCount", smodel.accessCount);
+            //cmd.Parameters.AddWithValue("@accessCount", smodel.accessCount);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -122,14 +122,11 @@ namespace Proyecto.Models
         public List<ArticleModel> GetArticle()
         {
             List<ArticleModel> articleList = new List<ArticleModel>();
-       
-
-            //Fetch of the entire list of articles without topics
+      
             connection();
-            string fetchArticles = "SELECT * " +
-                                   "FROM Article "+
-                                   "ORDER BY publishDate DESC";
-            SqlDataAdapter sd1 = new SqlDataAdapter(fetchArticles, con);
+            SqlCommand cmd = new SqlCommand("PISP_getArticles", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
             DataTable articleTable = new DataTable();
             con.Open();
             sd1.Fill(articleTable);
@@ -140,7 +137,7 @@ namespace Proyecto.Models
                     {
                         articleId = Convert.ToInt32(article["articleId"]),
                         name = Convert.ToString(article["name"]),
-                        topicName = " ",
+                        topicName = Convert.ToString(article["topicName"]) ,
                         Abstract = Convert.ToString(article["Abstract"]),
                         publishDate = Convert.ToString(article["publishDate"]),
                         content = Convert.ToString(article["content"]),
@@ -153,20 +150,6 @@ namespace Proyecto.Models
                         likeBalance = Convert.ToInt32(article["likeBalance"]),
                         checkedStatus = Convert.ToString(article["checkedStatus"])
                     });
-            }
-            con.Close();
-
-            //Fetch of the entire list of topics
-            connection();
-            string fetchTopics = "SELECT * " +
-                                 "FROM INVOLVES";
-            SqlDataAdapter sd2 = new SqlDataAdapter(fetchTopics, con);
-            DataTable topicList = new DataTable();
-            con.Open();
-            sd2.Fill(topicList);
-            foreach (ArticleModel article in articleList)
-            {
-                article.topicName = topicMerge(article.articleId, topicList);
             }
             con.Close();
             return articleList;
@@ -307,7 +290,8 @@ namespace Proyecto.Models
             string getResults = "SELECT A.*, I.topicName" +
                                 " FROM Article A " +
                                 " JOIN INVOLVES I ON A.articleId = I.articleId " +
-                                " WHERE I.topicName = @topicName";
+                                " WHERE I.topicName = @topicName " +
+                                " AND A.checkedStatus = 'published'";
             SqlCommand cmd = new SqlCommand(getResults, con);
             cmd.Parameters.AddWithValue("@topicName", topic);
 
@@ -458,26 +442,28 @@ namespace Proyecto.Models
             con.Close();
 
 
-            //Update of like balance
-            connection();
-            query = "UPDATE Article " +
-                    "SET likeBalance = likesCount - dislikesCount " +
-                    "WHERE articleId = @articleId";
+            ////Update of like balance
+            //connection();
+            //query = "UPDATE Article " +
+            //        "SET likeBalance = likesCount - dislikesCount " +
+            //        "WHERE articleId = @articleId";
 
 
-            SqlCommand cmd1 = new SqlCommand(query, con);
-            cmd1.Parameters.AddWithValue("@articleId", articleId);
-            con.Open();
-            i = cmd1.ExecuteNonQuery();
-            con.Close();
+            //SqlCommand cmd1 = new SqlCommand(query, con);
+            //cmd1.Parameters.AddWithValue("@articleId", articleId);
+            //con.Open();
+            //i = cmd1.ExecuteNonQuery();
+            //con.Close();
 
             //Bring likes, neutral and dislikes
             int[] likeData = new int[3];
             query = "SELECT likesCount " +
                     "FROM Article " +
                     "WHERE articleId = @articleId";
+            SqlCommand cmd1 = new SqlCommand(query, con);
+            cmd1.Parameters.AddWithValue("@articleId", articleId);
             cmd1.CommandText = query;
-            cmd1.Parameters["@articleId"].Value = articleId;
+            //cmd1.Parameters["@articleId"].Value = articleId;
             con.Open();
             likeData[0] = Convert.ToInt32(cmd1.ExecuteScalar());
             con.Close();
