@@ -218,7 +218,7 @@ namespace Proyecto.Controllers
 
             //Denominator (contains the sum of all reviewers merits)
             int sumOfMerits = 0;
-
+          
             foreach (string author in authors)
             {
                 sumOfMerits += rDBH.fetchMerits(author);
@@ -226,12 +226,16 @@ namespace Proyecto.Controllers
 
             meritsGiven = meritsGiven/sumOfMerits;
 
-            //Finally, for each author of this article, update their merits
+            //For each author of this article, update their merits
             ProfileDBHandle pDBH = new ProfileDBHandle();
             foreach (string author in authors)
             {
                 pDBH.updateMerits(author, meritsGiven);
             }
+
+            //Finally,set the article base grade to the calculated grade 
+            aDBH.updateBaseGrade(artId, meritsGiven);
+
         }
 
         public string fetchReviewerComments(int artId)
