@@ -112,10 +112,10 @@ namespace Proyecto.Models
 
 
             bool result = false;                     
-            command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@email", pmodel.email);
-            command.Parameters.AddWithValue("@password", pmodel.password);
-            connection.Open();
+            cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@email", pmodel.email);
+            cmd.Parameters.AddWithValue("@password", pmodel.password);
+            con.Open();
 
             //If password is detected as unsafe, returns false and prevents malicious login
             bool securePassword = checkPasswordSafety(pmodel.password);
@@ -124,7 +124,7 @@ namespace Proyecto.Models
                 return false;
             }
 
-           reader = command.ExecuteReader();
+           reader = cmd.ExecuteReader();
 
             if (reader.HasRows)
             {
@@ -442,13 +442,13 @@ namespace Proyecto.Models
             //If query is detected as unsafe, won't excecute it
             if (safeQuery)
             {
-                command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@articleId", articleId);
-                command.Parameters.AddWithValue("@email", email);
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@articleId", articleId);
+                cmd.Parameters.AddWithValue("@email", email);
 
-                connection.Open();
-                int codeError = command.ExecuteNonQuery();
-                connection.Close();
+                con.Open();
+                int codeError = cmd.ExecuteNonQuery();
+                con.Close();
             }            
         }
     }
