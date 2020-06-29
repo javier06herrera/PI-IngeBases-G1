@@ -42,6 +42,8 @@ namespace Proyecto.Controllers
                     " was added to your available articles tray to review";
                 eModel.mail = email;
                 eController.SendMail(eModel);
+
+                pdh.addNomination(email, model.articleId);
             }
 
             adh.updateArticleState(model);

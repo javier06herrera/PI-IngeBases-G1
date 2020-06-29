@@ -16,5 +16,23 @@ namespace Proyecto.Tests.Models
             bool result = dbh.checkReviewers(articleId);
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void fetchMeritsTest()
+        {
+            var dbh = new ReviewDBHandle();
+            string memberEmail = "barKev@puchimail.com";
+            bool result;
+            if (dbh.fetchMerits(memberEmail) >= 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+             
+            Assert.IsTrue(result);
+        }
     }
 }

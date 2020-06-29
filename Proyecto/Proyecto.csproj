@@ -124,6 +124,8 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommunityProgressReportController.cs" />
     <Compile Include="Controllers\ColaborationController.cs" />
+    <Compile Include="Controllers\CoordinatorController.cs" />
+    <Compile Include="Controllers\CoreMemberController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\HasSkillModel.cs" />
     <Compile Include="Models\InvolvesModel.cs" />
+    <Compile Include="Models\IsNominatedModel.cs" />
     <Compile Include="Models\ProfileDBHandle.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
@@ -182,6 +185,7 @@
     <Content Include="Scripts\js\CommunityProgressReport.js" />
     <Content Include="Scripts\js\bootstrap.js" />
     <Content Include="Scripts\js\bootstrap.min.js" />
+    <Content Include="Scripts\js\jquery-2.2.4.min.js" />
     <Content Include="Scripts\js\jquery-3.4.1.min.js" />
     <Content Include="Scripts\js\main.js" />
     <Content Include="Scripts\js\multiselect.core.js" />
@@ -363,9 +367,14 @@
     <Content Include="Views\Review\PendingReviews.cshtml" />
     <Content Include="Views\Review\PendingVeredicts.cshtml" />
     <Content Include="Views\Report\ReportUsers.cshtml" />
+    <Content Include="Views\Review\GiveVeredict.cshtml" />
+    <Content Include="Views\Review\ReviewRequests.cshtml" />
+    <Content Include="Views\Review\AnswerReviewRequest.cshtml" />
     <Content Include="Views\Colaboration\Colaboration.cshtml" />
     <Content Include="Scripts\js\modernizr-2.8.3" />
     <Content Include="Views\CommunityProgressReport\Index.cshtml" />
+    <Content Include="Views\Coordinator\Coordinator.cshtml" />
+    <Content Include="Views\CoreMember\CoreMember.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

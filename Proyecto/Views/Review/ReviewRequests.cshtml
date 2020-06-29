@@ -1,0 +1,33 @@
+﻿
+@{
+    IEnumerable<Proyecto.Models.ArticleModel> articlesRequested = ViewData["ArticleRequest"] as IEnumerable<Proyecto.Models.ArticleModel>;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<body>
+    <h2>Requests</h2>
+    <div class="article-content">
+        @foreach (Proyecto.Models.ArticleModel item in articlesRequested)
+        {
+            <div class="card card-default">
+
+                <div class="article-info">
+                    <div class="article-info"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.name)</div>
+                    <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
+                </div>
+
+                <div class="article-content">
+                    <p class="block-with-text">
+                        @Html.DisplayFor(modelItem => item.Abstract)
+                    </p>
+                </div>
+
+                @Html.ActionLink("Send Answer", "AnswerReviewRequest", "Review", item, new { @class = "btn btn-outline-dark btn-sm" })
+            </div>
+        }
+    </div>
+</body>
+</html>

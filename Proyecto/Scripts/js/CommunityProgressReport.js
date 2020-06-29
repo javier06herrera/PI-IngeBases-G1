@@ -17,11 +17,9 @@ function getSelectedItems(dropdownlist)
     var len = dropdownlist.options.length;
     var currentOption = null;
 
-    for (var item = 0;  item < len; ++item)
-    {
+    for (var item = 0; item < len; ++item) {
         currentOption = dropdownlist.options[item];
-        if (currentOption.selected)
-        {
+        if (currentOption.selected) {
             selectedItems.push(currentOption.value);
         }
     }
@@ -32,20 +30,20 @@ function generateReport(selectedMemberRanks, selectedFilters)
 {
     var values = null;
     var canvas = null;
-    var toGraphicate = null;
+    var row = document.getElementById("row");
+    row.innerHTML = "";
+
     // For each filter, get the required data, create a canvas and graphicate it.
-    for (var filter = 0; filter < selectedFilters.length; ++filter)
-    {
+    for (var filter = 0; filter < selectedFilters.length; ++filter) {
         values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
-        toGraphicate = getValuesAndLabels(values)
         canvas = createCanvas();
-        drawGraphics(canvas, toGraphicate[0], toGraphicate[1]);
+        drawGraphics(canvas, values);
     }
 }
 
 function getFilteredValues(selectedMemberRanks, filter)
 {
-    var filteredValues = null; 
+    var filteredValues = null;
     $.ajax({
         url: '/CommunityProgressReport/GetFilteredValues',
         data: {
@@ -54,7 +52,7 @@ function getFilteredValues(selectedMemberRanks, filter)
         },
         type: 'post',
         dataType: 'json',
-        async : false,
+        async: false,
         success: function (results) {
             filteredValues = results;
         }
@@ -62,19 +60,6 @@ function getFilteredValues(selectedMemberRanks, filter)
     });
     return filteredValues;
 }
-
-function getValuesAndLabels(jsonElements)
-{
-    var values = []
-    var labels = []
-    for (var item = 0; item < jsonElements.length; ++item)
-    {
-        values.push(jsonElements[item].y)
-        labels.push(jsonElements[item].label)
-    }
-    return [values, labels]
-}
-
 
 function createCanvas()
 {
@@ -90,20 +75,21 @@ function createCanvas()
     cardBodyDiv.appendChild(canvas);
     cardDiv.appendChild(cardBodyDiv);
     colDiv.appendChild(cardDiv);
-    row.appendChild(colDiv); 
+    row.appendChild(colDiv);
     return canvas;
 }
 
-function drawGraphics(canvas, values, labels)
+function drawGraphics(canvas, values)
 {
     new Chart(canvas, {
         type: 'doughnut',
         data: {
+            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
             datasets: [
                 {
                     label: "Population (millions)",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                    data: values
+                    data: values,
                 }
             ]
         },
@@ -120,7 +106,84 @@ function drawGraphics(canvas, values, labels)
     });
 }
 
+//Functions for user report
+function initReportUser() {
+    // Obtain dropdown objects.
+    var categoriesDropdown = document.getElementById("categories");
+    // Obtain selected items in dropdowns.
+    var selectedCategories = getSelectedItems(categoriesDropdown);
+    if (selectedCategories.length > 0) {
+        generateReportUser(selectedCategories);
+    }
+    else {
+        alert("Please select an option!");
+    }
+}
 
+function generateReportUser(selectedCategories) {
+    var values = null;
+    var canvas = null;
+    var title = null
+    var toGraphicate = null;
+    var row = document.getElementById("row");
+    row.innerHTML = "";
+    // For each filter, get the required data, create a canvas and graphicate it.
+    for (var categories = 0; categories < selectedCategories.length; ++categories) {
+        values = getFilteredValuesUser(selectedCategories[categories]);
+        title = "Distribution of " + selectedCategories[categories].toLowerCase() + " for community members";
+        toGraphicate = getValuesAndLabels(values);
+        canvas = createCanvas();
+        drawColumns(canvas, toGraphicate[0], toGraphicate[1], title);
+    }
+}
 
+function getFilteredValuesUser(category) {
+    var categories = null;
+    $.ajax({
+        url: '/Report/ReportUsers',
+        data: {
+            category: category,
+        },
+        type: 'post',
+        dataType: 'json',
+        async: false,
+        success: function (results) {
+            categories = results;
+        }
 
+    });
+    return categories;
+}
 
+function getValuesAndLabels(jsonElements) {
+    var values = []
+    var labels = []
+    for (var item = 0; item < jsonElements.length; ++item) {
+        values.push(jsonElements[item].y)
+        labels.push(jsonElements[item].label)
+    }
+    return [values, labels]
+}
+
+function drawColumns(canvas, values, label, title) {
+
+    var limit = values.length;
+    var dataP = [];
+    for (var i = 0; i < limit; i++) {
+        dataP.push({ y: values[i], label: label[i] });
+    }
+
+    new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [
+                {
+                    label: title,
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                    data: values
+                }
+            ]
+        },
+    });
+}

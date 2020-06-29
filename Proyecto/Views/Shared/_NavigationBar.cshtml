@@ -3,7 +3,7 @@
 
     if ((Session["user"] is null)) //If no one has logged in sets member rank to default user (core)
     {
-        //loads default member rank 
+        //loads default member rank
         ViewData["rank"] = "core";
 
     }
@@ -14,48 +14,58 @@
 }
 
 <div class="container-fluid featured-area-white-border">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Profile/Login"><i class="fa fa-key"></i> Login</a>
-                </div>
-                <div class="login-box border-right-1">
-                    <a href="http://localhost:54007/Profile/Profile"><i class="fa fa-user"></i>My Profile</a>
-                </div>
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-sign-in"></i> Sign Up</a>
-                </div>
-                <div class="login-box border-left-1 border-right-1">
-                    <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
-                </div>
+    @if (Request.RawUrl != "/Profile/Login" && Request.RawUrl != "/Profile/Registration?Length=7")
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Profile/Login"><i class="fa fa-key"></i> Login</a>
+                    </div>
+                    <div class="login-box border-right-1">
+                        <a href="http://localhost:54007/Profile/Profile"><i class="fa fa-user"></i>My Profile</a>
+                    </div>
+                    @*<div class="login-box border-left-1 border-right-1">
+                            <a href="http://localhost:54007/Profile/Registration"><i class="fa fa-sign-in"></i> Sign Up</a>
+                        </div>*@
+                    <div class="login-box border-left-1 border-right-1">
+                        <a href="http://localhost:54007/Email/SendMail"><i class="fa fa-envelope"></i>Email</a>
+                    </div>
 
-                @*Only core and coordinator members can review articles*@
-                @if (ViewData["rank"].ToString() == "core" || ViewData["rank"].ToString() == "coordinator")
-                {
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="http://localhost:54007/Review/PendingReviews"><i class="fa fa-pencil"></i> Reviews</a>
-                    </div>
-                }
-                @*Only coordinator members can give a veredict on articles*@
-                @if (ViewData["rank"].ToString() == "coordinator")
-                {
-                    <div class="login-box border-left-1 border-right-1">
-                        <a href="http://localhost:54007/Review/PendingVeredicts"><i class="fa fa-check-square-o"></i> Veredicts</a>
-                    </div>
-                }
+                    @*Only core and core member can view*@
+                    @if (ViewData["rank"].ToString() == "core" || ViewData["rank"].ToString() == "coordinator")
+                    {
+                        <div class="login-box border-left-1 border-right-1">
+                            <a href="http://localhost:54007/CoreMember/CoreMember"><i class="fa fa-pencil"></i> Reviews</a>
+                        </div>
+                    }
+                    @*Only coordinator member can view*@
+                    @if (ViewData["rank"].ToString() == "coordinator")
+                    {
+                        <div class="login-box border-left-1 border-right-1">
+                            <a href="http://localhost:54007/Coordinator/Coordinator"><i class="fa fa-wrench"></i> Management</a>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 <div class="container-fluid">
     <div class="navigation">
         <div class="row">
             <ul class="topnav">
-                <li></li>
-                <li><a href="http://localhost:54007/Article/HomePage"><i class="fa fa-home"></i>Home</a></li>
-                <li><a href="http://localhost:54007/Article/CommunityArticles"><i class="fa fa-file-text-o"></i> Articles</a></li>
-                <li><a href="http://localhost:54007/Article/ShowQuestion"><i class="fa fa-lightbulb-o"></i> FAQ</a></li>
+                @if ((Request.RawUrl == "/Profile/Login") || (Request.RawUrl == "/Profile/Registration?Length=7"))
+                {
+                    <li><p class="white">Bienvenido</p></li>
+                }
+                @if (Request.RawUrl != "/Profile/Login" && Request.RawUrl != "/Profile/Registration?Length=7")
+                {
+
+                    <li><a href="http://localhost:54007/Article/HomePage"><i class="fa fa-home"></i>Home</a></li>
+                    <li><a href="http://localhost:54007/Article/CommunityArticles"><i class="fa fa-file-text-o"></i> Articles</a></li>
+                    <li><a href="http://localhost:54007/Article/ShowQuestion"><i class="fa fa-lightbulb-o"></i> FAQ</a></li>
+                }
             </ul>
         </div>
     </div>

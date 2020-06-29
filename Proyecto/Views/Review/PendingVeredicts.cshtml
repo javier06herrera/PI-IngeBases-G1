@@ -30,8 +30,7 @@
                         @Html.DisplayFor(modelItem => item.Abstract)
                     </p>
                 </div>
-
-                @Html.ActionLink("Check reviews", "GiveVeredict", "Check reviews", item, new { @class = "btn btn-outline-dark btn-sm" })
+                @Html.ActionLink("Check reviews", "GiveVeredict", "Review", item, new { @class = "btn btn-outline-dark btn-sm" })
              </div>
          }
     </div>

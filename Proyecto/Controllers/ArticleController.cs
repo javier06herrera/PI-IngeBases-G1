@@ -18,9 +18,16 @@ namespace Proyecto.Controllers
 
         public ActionResult CommunityArticles()
         {
-            ArticleDBHandle dbhandle = new ArticleDBHandle(); 
+            ArticleDBHandle dbhandle = new ArticleDBHandle();
             ModelState.Clear();
-            return View(dbhandle.GetArticle());
+            List<ArticleModel> allArticles = dbhandle.GetArticle();
+            List<ArticleModel> publishedArticles= new List<ArticleModel>();
+            foreach (ArticleModel article in allArticles)
+            {
+                if (article.checkedStatus == "published")
+                    publishedArticles.Add(article);
+            }
+            return View(publishedArticles);
         }
         // 2. *************ADD NEW Articulo ******************
         // GET: Articulo/Create
@@ -204,7 +211,7 @@ namespace Proyecto.Controllers
             if (artModel.checkedStatus == "published")
             {
                 sdb.UpdateAccess(artModel);
-                pdb.updateMerits(artModel.articleId, true);
+                //pdb.updateMerits(artModel.articleId, true);
             }
                    
             return View(sdb.GetArticle().Find(smodel => smodel.articleId == artModel.articleId));
@@ -217,7 +224,7 @@ namespace Proyecto.Controllers
             ProfileDBHandle pdb = new ProfileDBHandle();
             int vote = 0;
             int [] likeData = sdb.updateLikes(model.articleId, vote);
-            pdb.updateMerits(model.articleId, true);
+            //pdb.updateMerits(model.articleId, true);
             model.likesCount = likeData[0];
             model.neutralCount = likeData[1];
             model.dislikesCount = likeData[2];
@@ -244,7 +251,7 @@ namespace Proyecto.Controllers
             ProfileDBHandle pdb = new ProfileDBHandle();
             int vote = 2;
             int[] likeData = sdb.updateLikes(model.articleId, vote);
-            pdb.updateMerits(model.articleId, false);
+            //pdb.updateMerits(model.articleId, false);
             model.likesCount = likeData[0];
             model.neutralCount = likeData[1];
             model.dislikesCount = likeData[2];
@@ -438,6 +445,5 @@ namespace Proyecto.Controllers
                 return View();
             }
         }
-
     }
 }

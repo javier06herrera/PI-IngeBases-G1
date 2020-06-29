@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Bootstrap Multiselect (http://davidstutz.de/bootstrap-multiselect/)
  *
  * Apache License, Version 2.0:
