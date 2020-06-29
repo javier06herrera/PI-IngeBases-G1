@@ -548,6 +548,7 @@ namespace Proyecto.Models
             con.Close();
         }
 
+
         //Iteación 3
         public bool updateArticleState(ArticleModel model)
         {
@@ -592,6 +593,23 @@ namespace Proyecto.Models
                 }
             }
             return authors;
+        }
+
+        //I3: Updates an article base grade after grade is calculated according to reviews ponderation
+        public void updateBaseGrade(int articleId, int baseGrade)
+        {
+            connection();
+            String query = "UPDATE Article " +
+                           "SET baseGrade = @baseGrade " +
+                           "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            cmd.Parameters.AddWithValue("@baseGrade", baseGrade);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }

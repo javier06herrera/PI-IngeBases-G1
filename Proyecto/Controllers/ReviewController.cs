@@ -35,7 +35,18 @@ namespace Proyecto.Controllers
             }
             ReviewDBHandle dbh = new ReviewDBHandle();
             model.email = user;
-            dbh.registerGrades(model);
+            try {
+                if (ModelState.IsValid) {
+                    dbh.registerGrades(model); }
+                else {
+                    ViewBag.Message = "Creation of review failed";
+                    return View(model);
+                }
+            }
+            catch {
+                ViewBag.Message = "Creation of review failed";
+                return View(model);
+            }
 
             EmailController eController = new EmailController();
             EmailModel eModel = new EmailModel();
@@ -207,7 +218,7 @@ namespace Proyecto.Controllers
 
             //Denominator (contains the sum of all reviewers merits)
             int sumOfMerits = 0;
-
+          
             foreach (string author in authors)
             {
                 sumOfMerits += rDBH.fetchMerits(author);
@@ -215,12 +226,16 @@ namespace Proyecto.Controllers
 
             meritsGiven = meritsGiven/sumOfMerits;
 
-            //Finally, for each author of this article, update their merits
+            //For each author of this article, update their merits
             ProfileDBHandle pDBH = new ProfileDBHandle();
             foreach (string author in authors)
             {
                 pDBH.updateMerits(author, meritsGiven);
             }
+
+            //Finally,set the article base grade to the calculated grade 
+            aDBH.updateBaseGrade(artId, meritsGiven);
+
         }
 
         public string fetchReviewerComments(int artId)

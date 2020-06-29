@@ -101,6 +101,7 @@ namespace Proyecto.Models
             return pmodel;
         }
 
+        //I3: Checks if credentials of login are correct
         public bool attemptLogin(ProfileModel pmodel)
         {
             //Checks if credentials enttered in login page match credentials of any user
@@ -109,13 +110,22 @@ namespace Proyecto.Models
                            "WHERE CM.email = @email " +
                            "AND CM.password = @password ";
 
-            bool result = false;
+
+            bool result = false;                     
             cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@email", pmodel.email);
             cmd.Parameters.AddWithValue("@password", pmodel.password);
             con.Open();
 
-            reader = cmd.ExecuteReader();
+            //If password is detected as unsafe, returns false and prevents malicious login
+            bool securePassword = checkPasswordSafety(pmodel.password);
+            if (!securePassword)
+            {
+                return false;
+            }
+
+           reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -123,7 +133,6 @@ namespace Proyecto.Models
                     //If query returns a row, then credentials matched in database
                     result = true;
                     pmodel.memberRank = Convert.ToString(reader["memberRank"]);
-
                 }
             }
 
@@ -133,6 +142,22 @@ namespace Proyecto.Models
             return result;
         }
 
+        //I3: Checks if password contains blank space making possible an easy SQLInjection to always login
+        public bool checkPasswordSafety(string password)
+        {
+            bool safe;
+
+            if (password.Contains(" "))
+            {
+                safe = false;
+            }
+            else
+            {
+                safe = true;
+            }
+
+            return safe;
+        }
 
         public bool updateMerits(int articleId, bool valueSign)
         {
@@ -185,22 +210,28 @@ namespace Proyecto.Models
 
         }
 
+        //I3: Updates the merits of a given community member
         public void updateMerits(string author, int merits)
         {
             string query = "UPDATE CommunityMember " +
                            "SET points = points + @merits " +
                            "WHERE email = @author ";
 
-            cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@author", author);
-            cmd.Parameters.AddWithValue("@merits", merits);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
 
+            //If query is detected as unsafe, won't excecute query
+            bool safeQuery = checkQuerySafety(query);
+            if (safeQuery)
+            {
+				cmd = new SqlCommand(query, con);
+				cmd.Parameters.AddWithValue("@author", author);
+				cmd.Parameters.AddWithValue("@merits", merits);
+				con.Open();
+				cmd.ExecuteNonQuery();
+				con.Close();
+            }      
         }
 
-        //Combines all the topics of an Article
+        //I3: Combines all the topics of an Article
         public string topicMerge(int articleId, DataTable topicList)
         {
             string topicsLine = "";
@@ -216,12 +247,20 @@ namespace Proyecto.Models
         }
 
 
-        // Ver resultados de busqueda
+        //I3: Fetches all articles of a given community member
         public List<ArticleModel> fetchMyArticles(String email)
         {
             List<ArticleModel> articleList = new List<ArticleModel>();
 
+
             SqlCommand cmd = new SqlCommand("PISP_getMemeberArticle", con);
+			
+			bool safeQuery = checkQuerySafety(fetchArticles);
+            if (!safeQuery)
+            {
+                return articleList;
+            }
+			
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
@@ -253,7 +292,7 @@ namespace Proyecto.Models
             return articleList;
         }
 
-        //Iteración 3
+        //I3: Retrieves mail of coordinator member
         public string getCoordinatorMail()
         {
 
@@ -262,9 +301,18 @@ namespace Proyecto.Models
                             "FROM CommunityMember " +
                             "WHERE memberRank = 'coordinator'";
 
+
+            //If query is detected as unsafe, returns error string
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return "ERROR: UNSAFE QUERY DETECTED";
+            }
+
             cmd = new SqlCommand(query, con);
             con.Open();
             reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -281,7 +329,7 @@ namespace Proyecto.Models
 
         }
 
-        //Iteración 3
+        //I3: Retrieves information of a given article
         public string getArticleAuthor(int articleId)
         {
 
@@ -296,10 +344,18 @@ namespace Proyecto.Models
                             "WHERE W.articleId = @articleId";
 
 
+            //If query is detected as unsafe, returns empty string
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return authors;
+            }
+
             cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@articleId", articleId);
             con.Open();
             reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -318,6 +374,8 @@ namespace Proyecto.Models
 
         }
 
+
+        //I3: Retrieves list of all emails of core members
         public List<string> getCoreMemberEmails()
         {
             List<string> emails = new List<string>();
@@ -327,9 +385,18 @@ namespace Proyecto.Models
                             "FROM CommunityMember " +
                             "WHERE memberRank = 'core'";
 
+
+            //If query is detected as unsafe, returns empty list
+            bool safeQuery = checkQuerySafety(query);
+            if (!safeQuery)
+            {
+                return emails;
+            }
+
             cmd = new SqlCommand(query, con);
             con.Open();
             reader = cmd.ExecuteReader();
+
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -346,19 +413,43 @@ namespace Proyecto.Models
 
         }
 
+
+        //I3: Checks if a given query contains the 'DROP' statement used maliciously in a query where it shouldn't be
+        public bool checkQuerySafety(string query)
+        {
+            bool safe;
+
+            if (query.Contains("DROP"))
+            {
+                safe = false;
+            }
+            else
+            {
+                safe = true;
+            }
+
+            return safe;
+        }
+
+        //I3: Adds nomination for the potential coremember to review the article
         public void addNomination(string email, int articleId)
         {
             string query = "INSERT INTO IS_NOMINATED VALUES " +
                            " (DEFAULT,DEFAULT,@email,@articleId)";
 
-            cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@articleId", articleId);
-            cmd.Parameters.AddWithValue("@email", email);
 
-            con.Open();
-            int codeError = cmd.ExecuteNonQuery();
-            con.Close();
+            bool safeQuery = checkQuerySafety(query);
+            //If query is detected as unsafe, won't excecute it
+            if (safeQuery)
+            {
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@articleId", articleId);
+                cmd.Parameters.AddWithValue("@email", email);
 
+                con.Open();
+                int codeError = cmd.ExecuteNonQuery();
+                con.Close();
+            }            
         }
     }
 }
