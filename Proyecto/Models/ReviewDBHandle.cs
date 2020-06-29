@@ -537,10 +537,19 @@ namespace Proyecto.Models
         }
 
         //I3: This method turn article status into pending collaboration so the reviewing process can begin
-        public void setNewArticleStatus(int articleId)
+        public void setNewArticleStatus(int articleId, string checkedStatus)
         {
+            string status;
+            if (checkedStatus == "resend")
+            {
+                status = "'not checked' ";
+            }
+            else
+            {
+                status = "'pending collaboration' ";
+            }
             SqlCommand cmd = conn.setSimpleReturnQuery("UPDATE Article " +
-                                                        "SET checkedStatus = 'pending collaboration' " +
+                                                        "SET checkedStatus = "+ status  +
                                                         "WHERE articleId = @articleId");
             cmd.Parameters.AddWithValue("@articleid", articleId);
 

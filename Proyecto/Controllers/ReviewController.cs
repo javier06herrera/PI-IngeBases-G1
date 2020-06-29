@@ -134,7 +134,7 @@ namespace Proyecto.Controllers
             int artId = rModel.articleId;
 
             ArticleDBHandle aDBH = new ArticleDBHandle();
-            aDBH.updateArticleStatus(artId, "not checked");
+            aDBH.updateArticleStatus(artId, "resend");
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
@@ -296,10 +296,11 @@ namespace Proyecto.Controllers
 
         }
 
-        public ActionResult EnrollOnReviewProcess(int articleId)
+        public ActionResult EnrollOnReviewProcess(int articleId, string checkedStatus)
         {
+            
             ReviewDBHandle dbh = new ReviewDBHandle();
-            dbh.setNewArticleStatus(articleId);
+            dbh.setNewArticleStatus(articleId, checkedStatus);
 
             return Redirect("/Profile/Profile");
         }
