@@ -24,6 +24,8 @@ namespace Proyecto.Models
 
         public List<SelectListItem> options = new List<SelectListItem>();
 
+        public bool selected { get; set; }
+
         public List<SelectListItem> optionList
         {
             get
@@ -40,5 +42,10 @@ namespace Proyecto.Models
             }
         }
 
+    }
+
+    public class IsNominatedModelDetail
+    {
+        public List<IsNominatedModel> NominatedDetails { get; set; }
     }
 }

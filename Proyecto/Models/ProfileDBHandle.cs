@@ -445,5 +445,43 @@ namespace Proyecto.Models
                 con.Close();
             }            
         }
+
+        public List<IsNominatedModel> fetchNomenees(int articleId)
+        {
+            List<IsNominatedModel> nomenees = new List<IsNominatedModel>();
+
+            string query = "SELECT * " +
+                            "FROM IS_NOMINATED ISN " +
+                            "WHERE ISN.answer != 'conflict' " + 
+                            "AND articleId = @articleId";
+
+            command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@articleId", articleId);
+            connection.Open();
+            reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    nomenees.Add(
+                  new IsNominatedModel
+                  {
+                      answer = Convert.ToString(reader["answer"]),
+                      email = Convert.ToString(reader["email"]),
+                      comments = Convert.ToString(reader["comments"]),
+                      articleId = Convert.ToInt32(reader["articleId"])
+                  });
+                }                   
+            }
+
+            reader.Close();
+
+            connection.Close();
+
+            return nomenees;
+
+        }
+
+
     }
 }

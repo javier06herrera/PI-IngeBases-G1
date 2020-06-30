@@ -35,6 +35,7 @@ namespace Proyecto.Controllers
             }
             ReviewDBHandle dbh = new ReviewDBHandle();
             model.email = user;
+
             try {
                 if (ModelState.IsValid) {
                     dbh.registerGrades(model); }
@@ -47,6 +48,7 @@ namespace Proyecto.Controllers
                 ViewBag.Message = "Creation of review failed";
                 return View(model);
             }
+
 
             EmailController eController = new EmailController();
             EmailModel eModel = new EmailModel();
@@ -130,7 +132,7 @@ namespace Proyecto.Controllers
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
-            rDBH.removeReviews(artId);
+            rDBH.deleteFromTable(artId, "REVIEWS");
 
             //Send accepted notification to authors
             sendAuthorMails(artId, "accepted");
@@ -169,7 +171,7 @@ namespace Proyecto.Controllers
 
             //Removes old reviews for this article
             ReviewDBHandle rDBH = new ReviewDBHandle();
-            rDBH.removeReviews(artId);
+            rDBH.deleteFromTable(artId, "REVIEWS");
 
             //Send reject notification to authors
             sendAuthorMails(artId, "rejected");
