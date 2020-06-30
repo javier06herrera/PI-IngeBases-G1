@@ -1,13 +1,14 @@
 ﻿function initReport()
 {
     // Obtain dropdown objects.
-    var memberRankDropdown = document.getElementById("memberRanks");
+    //var memberRankDropdown = document.getElementById("memberRanks");
     var filtersDropdown = document.getElementById("filters");
     // Obtain selected items in dropdowns.
-    var selectedMemberRanks = getSelectedItems(memberRankDropdown);
+    //var selectedMemberRanks = getSelectedItems(memberRankDropdown);
     var selectedFilters = getSelectedItems(filtersDropdown);
     // Generate report according to selected items.
-    generateReport(selectedMemberRanks, selectedFilters);
+    //generateReport(selectedMemberRanks, selectedFilters);
+    generateReport(selectedFilters);
 }
 
 function getSelectedItems(dropdownlist)
@@ -26,28 +27,65 @@ function getSelectedItems(dropdownlist)
     return selectedItems;
 }
 
-function generateReport(selectedMemberRanks, selectedFilters)
-{
+//function generateReport(selectedMemberRanks, selectedFilters)
+//{
+//    var values = null;
+//    var canvas = null;
+//    var row = document.getElementById("row");
+//    row.innerHTML = "";
+
+//    // For each filter, get the required data, create a canvas and graphicate it.
+//    for (var filter = 0; filter < selectedFilters.length; ++filter) {
+//        values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
+//        canvas = createCanvas();
+//        drawGraphics(canvas, values);
+//    }
+//}
+
+function generateReport(selectedFilters) {
     var values = null;
     var canvas = null;
     var row = document.getElementById("row");
     row.innerHTML = "";
-
+    var toGraphicate = null;
     // For each filter, get the required data, create a canvas and graphicate it.
     for (var filter = 0; filter < selectedFilters.length; ++filter) {
-        values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
+        values = getFilteredValues(selectedFilters[filter]);
         canvas = createCanvas();
-        drawGraphics(canvas, values);
+        toGraphicate = getValuesAndLabels(values);
+        //drawGraphics(canvas, values);
+        drawColumns(canvas, toGraphicate[0], toGraphicate[1],"Gráfico");
     }
 }
 
-function getFilteredValues(selectedMemberRanks, filter)
-{
+
+//Glori
+//function getFilteredValues(selectedMemberRanks, filter)
+//{
+//    var filteredValues = null;
+//    $.ajax({
+//        url: '/CommunityProgressReport/GetFilteredValues',
+//        data: {
+//            selectedMemberRanks: selectedMemberRanks,
+//            filter: filter,
+//        },
+//        type: 'post',
+//        dataType: 'json',
+//        async: false,
+//        success: function (results) {
+//            filteredValues = results;
+//        }
+
+//    });
+//    return filteredValues;
+//}
+
+//Nueva sin miembros
+function getFilteredValues(filter) {
     var filteredValues = null;
     $.ajax({
         url: '/CommunityProgressReport/GetFilteredValues',
         data: {
-            selectedMemberRanks: selectedMemberRanks,
             filter: filter,
         },
         type: 'post',
@@ -139,6 +177,7 @@ function generateReportUser(selectedCategories) {
 
 function getFilteredValuesUser(category) {
     var categories = null;
+    var jsonString = null;
     $.ajax({
         url: '/Report/ReportUsers',
         data: {
@@ -176,14 +215,25 @@ function drawColumns(canvas, values, label, title) {
     new Chart(canvas, {
         type: 'bar',
         data: {
+
             labels: label,
             datasets: [
                 {
+                    
                     label: title,
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
                     data: values
                 }
             ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         },
     });
 }
