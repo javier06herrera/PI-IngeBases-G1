@@ -50,10 +50,21 @@ namespace Proyecto.Controllers
             {
 
                 ModelState.Remove("type");
+
+                string user = "";
+                if (!(Session["user"] is null)) //If someone has already sign, use their email as author
+                {
+                    user = Session["user"].ToString();
+                }
+                else //If no one is signed up (for developers testing) use default member
+                {
+                    user = "barrKev@puchimail.com";
+                }
+
                 if (ModelState.IsValid) //Si los datos que me pasaron son validos
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    if (sdb.AddArticle(smodel, "short"))
+                    if (sdb.AddArticle(smodel, "short", user))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
@@ -119,10 +130,21 @@ namespace Proyecto.Controllers
                 ModelState.Remove("type");
                 ModelState.Remove("content");
                 ModelState.Remove("type");
+
+                string user = "";
+                if (!(Session["user"] is null)) //If someone has already sign, use their email as author
+                {
+                    user = Session["user"].ToString();
+                }
+                else //If no one is signed up (for developers testing) use default member
+                {
+                    user = "barrKev@puchimail.com";
+                }
+
                 if (ModelState.IsValid) //Tell if the data is valid 
                 {
                     ArticleDBHandle sdb = new ArticleDBHandle();
-                    if (sdb.AddArticle(smodel, "long"))
+                    if (sdb.AddArticle(smodel, "long", user))
                     {
                         ViewBag.Message = "Article Details Added Successfully";
                         ModelState.Clear();
