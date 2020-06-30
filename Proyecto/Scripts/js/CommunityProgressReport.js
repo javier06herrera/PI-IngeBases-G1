@@ -177,6 +177,7 @@ function generateReportUser(selectedCategories) {
 
 function getFilteredValuesUser(category) {
     var categories = null;
+    var jsonString = null;
     $.ajax({
         url: '/Report/ReportUsers',
         data: {
