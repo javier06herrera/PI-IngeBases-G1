@@ -43,17 +43,17 @@ namespace Proyecto.Models
         }
 
         //This method creates a tabla that contain all the topics and categories by memberRanks
-        public List<List<string>> getRankTopicCategory()
+        public List<List<string>> getRankTopicCategory(string query)
         {
             //This section deals with the DB
             DataTable dbInfo = new DataTable();
-            string query =  "SELECT A.name, W.email, I.topicName, I.category, C.memberRank " +
-                            "FROM Article A " +
-                            "JOIN INVOLVES I on I.articleId = A.articleId " +
-                            "JOIN WRITES W on A.articleId = W.articleId " +
-                            "JOIN CommunityMember C on C.email = W.email " +
-                            "WHERE A.checkedStatus = 'published' " +
-                            "ORDER BY C.memberRank, I.topicName";
+            //string query = "SELECT A.name, W.email, I.topicName, I.category, C.memberRank " +
+            //                "FROM Article A " +
+            //                "JOIN INVOLVES I on I.articleId = A.articleId " +
+            //                "JOIN WRITES W on A.articleId = W.articleId " +
+            //                "JOIN CommunityMember C on C.email = W.email " +
+            //                "WHERE A.checkedStatus = 'published' " +
+            //                "ORDER BY C.memberRank, I.topicName";
             command = new SqlCommand(query, dbConnection);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             dbConnection.Open();
@@ -102,12 +102,14 @@ namespace Proyecto.Models
 
             //This is the list which holds the title row
             result.Add(new List<string>());
-            result[0][0] = "Ranks";
+            //result[0][0] = "Ranks";
+            result[0].Add("Ranks");
             //This for adds a new row to the table for every rank in the consult, and also adds the first column of the table
             for (int i = 0; i < memberRanks.Count(); i++)
             {
                 result.Add(new List<string>());
-                result[i][0] = memberRanks[i];
+                //result[i][0] = memberRanks[i];
+                result[i+1].Add(memberRanks[i]);
             }
 
             //Now we start adding and classifign the results into the table
