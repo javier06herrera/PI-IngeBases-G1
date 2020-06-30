@@ -254,13 +254,7 @@ namespace Proyecto.Models
 
 
             SqlCommand cmd = new SqlCommand("PISP_getMemeberArticle", con);
-			
-			bool safeQuery = checkQuerySafety(fetchArticles);
-            if (!safeQuery)
-            {
-                return articleList;
-            }
-			
+					
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
             SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
