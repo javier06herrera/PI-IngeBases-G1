@@ -1910,7 +1910,7 @@ pending collaboration: El autor envía el artículo y el autor no ha solicitado 
 pending assignation: El artículo está en proceso de assignación de revisores
 not checked: Faltan miembros revisores de concluir, 
 checked: Todos los revisores concluyeron su revisión
-resend: El artículo fue aceptado con modificaciones, este estao existe para indicar que se debe
+resend: El artículo fue aceptado con modificaciones, este estado existe para indicar que se debe
 saltar el proceso de pending collaboration y assignation.
 published: Fue Aceptado por el coordinador]]></y:Label.Text>
 						<y:Label.LayoutParameter>
@@ -1940,7 +1940,7 @@ published: Fue Aceptado por el coordinador]]></y:Label.Text>
 				</x:List>
 			</data>
 			<data key="d4">
-				<y:RectD X="57" Y="-1108" Width="523.5" Height="153.75"/>
+				<y:RectD X="33" Y="-1108" Width="547.5" Height="153.75"/>
 			</data>
 			<data key="d6">
 				<yjs:ShapeNodeStyle stroke="#FFFF8C00" fill="#FFFF8C00"/>
@@ -2095,6 +2095,12 @@ published: Fue Aceptado por el coordinador]]></y:Label.Text>
 						<y:Label.Text>M</y:Label.Text>
 						<y:Label.LayoutParameter>
 							<y:SmartEdgeLabelModelParameter Model="{y:GraphMLReference 31}" SegmentRatio="0.44979340787875116" Distance="-119.79389894393049"/>
+						</y:Label.LayoutParameter>
+					</y:Label>
+					<y:Label Style="{y:GraphMLReference 35}">
+						<y:Label.Text>M</y:Label.Text>
+						<y:Label.LayoutParameter>
+							<y:SmartEdgeLabelModelParameter Model="{y:GraphMLReference 31}" SegmentRatio="0.3651766022738097" Distance="98.75745858744165"/>
 						</y:Label.LayoutParameter>
 					</y:Label>
 				</x:List>
