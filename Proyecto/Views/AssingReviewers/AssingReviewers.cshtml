@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Proyecto.Models.ArticleModel>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <h2>Assing Reviewers</h2>
+    <div class="article-content">
+        @foreach (var item in Model)
+        {
+            if (item.checkedStatus == "pending assignation")
+            {
+                <div class="card card-default">
+                    <div class="article-heading-abb">
+                        <a href="http://localhost:54007/Article/PreviewArticle?articleId=@(item.articleId)"> <i class="fa fa-eye"></i>@Html.DisplayFor(modelItem => item.name) </a>
+                    </div>
+
+                    <div class="article-info">
+                        <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.publishDate)</div>
+                        <div class="art-category"><i class="fa fa-folder"></i>@Html.DisplayFor(modelItem => item.topicName)</div>
+                    </div>
+
+                    <div class="article-content">
+                        <p class="block-with-text">
+                            @Html.DisplayFor(modelItem => item.Abstract)
+                        </p>
+                    </div>
+                    @Html.ActionLink("Assing Reviewers", "AssingReviewersForm", "AssingReviewers", item, new { @class = "btn btn-outline-dark btn-sm" })
+                </div>
+            }
+        }
+    </div>
+</body>
+</html>

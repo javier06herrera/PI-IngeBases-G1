@@ -122,7 +122,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+
     <Compile Include="Controllers\CommunityProgressReportController.cs" />
+
+    <Compile Include="Controllers\AssingReviewersController.cs" />
+
     <Compile Include="Controllers\ColaborationController.cs" />
     <Compile Include="Controllers\CoordinatorController.cs" />
     <Compile Include="Controllers\CoreMemberController.cs" />
@@ -375,6 +379,8 @@
     <Content Include="Views\CommunityProgressReport\Index.cshtml" />
     <Content Include="Views\Coordinator\Coordinator.cshtml" />
     <Content Include="Views\CoreMember\CoreMember.cshtml" />
+    <Content Include="Views\AssingReviewers\AssingReviewers.cshtml" />
+    <Content Include="Views\AssingReviewers\AssingReviewersForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

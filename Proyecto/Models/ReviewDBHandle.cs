@@ -346,21 +346,6 @@ namespace Proyecto.Models
             return reviewsList;
         }
 
-        //I3: When accepted or rejected, reviews are removed for the article
-        public void removeReviews(int articleId)
-        {
-            connection();
-            String query = "DELETE FROM REVIEWS " +
-                           "WHERE articleId = @articleId ";
-
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@articleId", articleId);
-
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
-        }
-
         //I3: When accepted with modification, reviews are restarted for the same reviewers       
         public void resetReviews(int articleId)
         {
@@ -557,6 +542,37 @@ namespace Proyecto.Models
             cmd.ExecuteNonQuery();
             conn.conn.Close();
 
+        }
+
+        public void insertReview(IsNominatedModel nomination)
+        {
+            connection();
+            string AddNewArticle = "INSERT INTO REVIEWS " +
+                                   "VALUES (@articleId, @email,'Sin comentarios',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+            SqlCommand cmd = new SqlCommand(AddNewArticle, con);
+
+            cmd.Parameters.AddWithValue("@articleId", nomination.articleId);
+            cmd.Parameters.AddWithValue("@email", nomination.email);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+
+        }
+
+        public void deleteFromTable(int articleId, string tableName)
+        {
+            connection();
+            String query = "DELETE FROM @tableName " +
+                           "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            cmd.Parameters.AddWithValue("@tableName", tableName);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }
