@@ -35,8 +35,8 @@ namespace Proyecto.Controllers
             return View(adapNomenees);
         }
 
-        //[HttpPost]
-        public ActionResult Prueba(IsNominatedModelDetail model)
+        [HttpPost]
+        public ActionResult AssingReviewersForm(IsNominatedModelDetail model)
         {
             ReviewDBHandle rdh = new ReviewDBHandle();
 

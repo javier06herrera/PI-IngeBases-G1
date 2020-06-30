@@ -2,7 +2,7 @@
 
 @using (Html.BeginForm())
 {
-
+    @Html.AntiForgeryToken()
     <!DOCTYPE html>
 
     <html>
@@ -20,29 +20,28 @@
                 foreach (var item in Model.NominatedDetails.ToList())
                 {
 
-                <div class="card card-default">
-                    <div class="article-heading-abb">
-                        @*<div class="art-date"><i class="fa fa-calendar-o"></i>Email: @Html.DisplayFor(modelItem => item.email)</div>*@
-                        <div class="art-date"><i class="fa fa-calendar-o"></i>Email: @Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].email)</div>
-                    </div>
-                    <div class="article-info">
-                        <div class="art-category"><i class="fa fa-folder"></i>Answer:@Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].answer)</div>
-                        <div class="art-category"><i class="fa fa-folder"></i>Selected for review: @Html.EditorFor(modelItem => modelItem.NominatedDetails[i].selected)</div>
-                    </div>
+                    <div class="card card-default">
+                        <div class="article-heading-abb">
+                            <div class="art-date"><i class="fa fa-calendar-o"></i>Email: @Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].email)</div>
+                        </div>
+                        <div class="article-info">
+                            <div class="art-category"><i class="fa fa-folder"></i>Answer:@Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].answer)</div>
+                            <div class="art-category"><i class="fa fa-folder"></i>Selected for review: @Html.EditorFor(modelItem => modelItem.NominatedDetails[i].selected)</div>
+                        </div>
 
-                </div>
+                    </div>
 
                 }
                 i++;
-              }
+            }
 
-            @*<div class="form-group">
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Assing Reviewers" class="btn btn-primary" />
                 </div>
-            </div>*@
+            </div>
 
-            @Html.ActionLink("Assing Reviewers", "Prueba", "AssingReviewers", Model, new { @class = "btn btn-outline-dark btn-sm" })
+            @*@Html.ActionLink("Assing Reviewers", "Prueba", "AssingReviewers", Model, new { @class = "btn btn-outline-dark btn-sm" })*@
 
         </div>
     </body>
