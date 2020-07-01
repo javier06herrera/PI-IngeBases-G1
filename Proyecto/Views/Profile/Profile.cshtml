@@ -135,6 +135,10 @@
                                 </p>
                             </div>
 
+                            <div class="article-info">
+                                <div class="artCommentsCap"><i class="fa fa-book"></i>Article Status: @Html.DisplayFor(modelItem => item.checkedStatus)</div>
+                            </div>
+
                             @Html.ActionLink("Read more", "PreviewArticle", "Article", item, new { @class = "btn btn-outline-dark btn-sm" })
                             @if (item.checkedStatus == "on edition" || item.checkedStatus == "resend")
                             {

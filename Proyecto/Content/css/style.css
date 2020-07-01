@@ -4,7 +4,6 @@
 	VERSION: 1.0
 	GITHUB REPO: https://github.com/sunnyg1210/bootstrapKnowledgeBaseTheme
 */
-
 @font-face {
 	font-family: "Nav Font";
 	src: url("../fonts/ufonts.com_copperplate-gothic-regular.ttf") format("truetype");
@@ -819,6 +818,14 @@ h2.support-heading {
 	margin-left: 10px;
 	padding: 3px 0px 3px 0px;
 }
+
+.artCommentsCap {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 3px 0px 3px 0px;
+    text-transform: capitalize;
+}
+
 .article-content {
 	padding: 15px 35px 10px 15px;
 }
