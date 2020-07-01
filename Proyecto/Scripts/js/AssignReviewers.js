@@ -1,13 +1,25 @@
-﻿$(document).ready(function ()
-{
+﻿//$(document).ready(function ()
+//{
+//    $('select').multiselect(
+//        {
+//            includeSelectAllOption: true,
+//            noneSelectedText: 'Select Something (required)',
+//            numberDisplayed: 5,
+//            buttonWidth: '230px'
+//        });
+//});
+
+
+function styleDropDown() {
     $('select').multiselect(
         {
             includeSelectAllOption: true,
             noneSelectedText: 'Select Something (required)',
             numberDisplayed: 5,
-            buttonWidth: '230px'
+            buttonWidth: '500px'
         });
-});
+};
+
 
 function createReviewersDropdown(articleId)
 {
@@ -21,6 +33,7 @@ function createReviewersDropdown(articleId)
     appendOptions(selectDiv, reviewers)
 
     container.appendChild(selectDiv)
+    styleDropDown()
 }
 
 function appendOptions(selectDiv, reviewers)
