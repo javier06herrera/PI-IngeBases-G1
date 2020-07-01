@@ -1,13 +1,13 @@
---DROP TABLE IS_NOMINATED;
---DROP TABLE HAS_SKILL;
---DROP TABLE Skill;
---DROP TABLE WRITES;
---DROP TABLE REVIEWS;
---DROP TABLE Question;
---DROP TABLE CommunityMember;
---DROP TABLE INVOLVES;
---DROP TABLE Article;
---DROP TABLE Topic;
+DROP TABLE IS_NOMINATED;
+DROP TABLE HAS_SKILL;
+DROP TABLE Skill;
+DROP TABLE WRITES;
+DROP TABLE REVIEWS;
+DROP TABLE Question;
+DROP TABLE CommunityMember;
+DROP TABLE INVOLVES;
+DROP TABLE Article;
+DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -32,19 +32,25 @@ checkedStatus	VARCHAR(50) NOT NULL DEFAULT 'on edition'
 );
 
 
+--Estos prueban las nominaciones de los miembros del núcleo 
+insert into Article
+values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','Nací en 1632, en la ciudad de York, de una buena familia, aunque no de la región, pues mi padre era un extranjero de Brema1 que, inicialmente, se asentó en Hull2. Allí consiguió hacerse con una considerable fortuna como comerciante y, más tarde, abandonó sus negocios y se fue a vivir a York, donde se casó con mi madre, que pertenecía a la familia Robinson, una de las buenas familias del condado de la cual obtuve mi nombre, Robinson Kreutznaer. Mas, por la habitual alteración de las palabras que se hace en Inglaterra, ahora nos llaman y nosotros también nos llamamos y escribimos nuestro nombre Crusoe; y así me han llamado siempre mis compañeros.   Tenía dos hermanos mayores, uno de ellos fue coronel de un regimiento de infantería inglesa en Flandes, que antes había estado bajo el mando del célebre coronel Lockhart, y murió en la batalla de Dunkerque3 contra los españoles.    Lo que fue de mi segundo hermano, nunca lo he sabido al igual que mi padre y mi madre tampoco supieron lo que fue de mí.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending assignation');
 
 insert into Article
-values ('Robinson Crusoe','short','Wreck of an english man and survival in a desert island','12-02-1999','Nací en 1632, en la ciudad de York, de una buena familia, aunque no de la región, pues mi padre era un extranjero de Brema1 que, inicialmente, se asentó en Hull2. Allí consiguió hacerse con una considerable fortuna como comerciante y, más tarde, abandonó sus negocios y se fue a vivir a York, donde se casó con mi madre, que pertenecía a la familia Robinson, una de las buenas familias del condado de la cual obtuve mi nombre, Robinson Kreutznaer. Mas, por la habitual alteración de las palabras que se hace en Inglaterra, ahora nos llaman y nosotros también nos llamamos y escribimos nuestro nombre Crusoe; y así me han llamado siempre mis compañeros.   Tenía dos hermanos mayores, uno de ellos fue coronel de un regimiento de infantería inglesa en Flandes, que antes había estado bajo el mando del célebre coronel Lockhart, y murió en la batalla de Dunkerque3 contra los españoles.    Lo que fue de mi segundo hermano, nunca lo he sabido al igual que mi padre y mi madre tampoco supieron lo que fue de mí.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+values ('I, Robot','short','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','Un  robot  no  debe  dañar  a  un  ser  humano  o,  por  su  inacción,dejar que un ser humano sufra daño.2.  Un  robot  debe  obedecer  las  órde  nes  que  le  son  dadas  por  unser  hu  mano,  excepto  cuando  estas  órdenes  están  en  oposicióncon la primera Ley.3.  Un  robot  debe  proteger  su  propia  existencia,  hasta  donde  estaprotec ción no esté en conflicto con la primera o segunda Leyes.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending assignation');
 
 insert into Article
-values ('I, Robot','long','Elaborate philosophic implications concerning the three laws of robotics','12-02-1999','Un  robot  no  debe  dañar  a  un  ser  humano  o,  por  su  inacción,dejar que un ser humano sufra daño.2.  Un  robot  debe  obedecer  las  órde  nes  que  le  son  dadas  por  unser  hu  mano,  excepto  cuando  estas  órdenes  están  en  oposicióncon la primera Ley.3.  Un  robot  debe  proteger  su  propia  existencia,  hasta  donde  estaprotec ción no esté en conflicto con la primera o segunda Leyes.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'not checked');
+values ('Mamita Yunai','short','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending assignation');
 
+--------------------------------------------------------------------------------------
+--Estos prueban las revisiones de los miembros del núcleo.
 insert into Article
-values ('Mamita Yunai','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
-
+values ('Morgan Salgari','short','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',25,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'not checked');
 insert into Article
-values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',25,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+values ('Little Women','short','es una novela de la escritora estadounidense Louisa May Alcott publicada el 30 de septiembre de 1868, que trata la vida de cuatro niñas que tras pasar la adolescencia, con la Guerra Civil en los Estados Unidos como fondo, entre 1861 y 1865, se convierten en mujeres.','12-02-1999','Esta obra reproduce, tanto en su estructura como en su tema, la conocidísima novela alegórica de John Bunyan El progreso del peregrino, y de ahí que muchos de los títulos de los capítulos sean alusiones directas a esta obra (Juego de los peregrinos; Cargas; Beth encuentra el Palacio Hermoso; El valle de la humillación de Amy; Jo conoce a Apolión; Meg visita la Feria de las Vanidades; entre otros). A la vez, cada una de las muchachas March está destinada a caracterizar y superar estos defectos',25,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'not checked');
 
+--------------------------------------------------------------------------------------
+-- Es para que el coordinador puede pedir colaboración en la revisón del artículo
 insert into Article
 values ('Animal Farm','long','Metaphor about the rotting structure of a raising empire','12-02-1999','One day, Squealer takes the sheep off to a remote spot to teach them a new chant. Not long afterward, the animals have just finished their day’s work when they hear the terrified neighing of a horse. It is Clover, and she summons the others hastily to the yard. There, the animals gaze in amazement at Squealer walking toward them on his hind legs. Napoleon soon appears as well, walking upright; worse, he carries a whip. Before the other animals have a chance to react to the change, the sheep begin to chant, as if on cue: “Four legs good, two legs better!” Clover, whose eyes are failing in her old age, asks Benjamin to read the writing on the barn wall where the Seven Commandments were originally inscribed. Only the last commandment remains: “all animals are equal.” However, it now carries an addition: “but some animals are more equal than others.” In the days that follow, Napoleon openly begins smoking a pipe, and the other pigs subscribe to human magazines, listen to the radio, and begin to install a telephone, also wearing human clothes that they have salvaged from Mr. Jones’s wardrobe.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
 
@@ -53,7 +59,8 @@ values ('The Tell-Tale Heart','short','A short story by American writer Edgar Al
 
 insert into Article
 values ('Alice Adventures in Wonderland','long',' It tells of a young girl named Alice, who falls through a rabbit hole into a subterranean fantasy world populated by peculiar, anthropomorphic creatures. It is considered to be one of the best examples of the literary nonsense genre.The tale plays with logic, giving the story lasting popularity with adults as well as with children','12-02-1999','ALICE was   beginning   to   get   very   tired   ofsitting  by  her  sister  on  the  bank,  and  of  havingnothing  to  do :  once  or  twice  she  had  peeped  intothe  book  her  sister  was  reading,  but  it  had  nopictures  or  conversations  in  it,  “and  what  is',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
-
+--------------------------------------------------------------------------------------
+-- Son para graficar
 insert into Article
 values ('Cocorí','short','La historia de un niño en la region tropical','12-02-1999','Cocorí es un niño que habita en un pueblo donde tiene contacto con el mar, y a la vez con toda la naturaleza del bosque tropical. Cierto día, un barco se acerca al puerto, y Cocorí tiene la oportunidad de subir en él para conocer a sus tripulantes. Entre ellos, está una niña rubia. Con una curiosidad muy infantil, Cocorí se sorprende por el cabello de la niña, ya que nunca ha visto una como ella, y la niña piensa que la piel de Cocorí se ha llenado de hollín y por eso se ha oscurecido, pues nunca ha visto personas que no sean de tez blanca.',100,15,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
 
@@ -164,6 +171,9 @@ VALUES(12,'Drama','Fantasy')
 INSERT INTO INVOLVES
 VALUES(13,'Drama','Fantasy')
 
+INSERT INTO INVOLVES
+VALUES(14,'Drama','Fantasy')
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
@@ -201,6 +211,9 @@ VALUES ( 'herrJav@puchimail.com','Javier', 'Herrera','10-10-1990', 30, 'Santa An
 
 INSERT INTO CommunityMember 
 VALUES('ant.alvarez.chavarria@hotmail.es','coordinator','cordino','1990-10-10',50,'Jacó','Costa Rica','Coordinar','Java','24888','Coordinar', 'coordinator', 5,'coodinar',DEFAULT);
+
+INSERT INTO CommunityMember 
+VALUES('valeriaGM@puchimail.com','Valeria','Gomez Morales','1990-10-10',50,'Jacó','Costa Rica','Read','Spanish','79134','Sykes', 'core', 5,'Speaking',DEFAULT);
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE Skill(
 subjectCategory  VARCHAR(100),
@@ -322,6 +335,12 @@ VALUES('herrJav@puchimail.com',12)
 INSERT INTO WRITES
 VALUES('antonio.alvarez.chavarria@gmail.com',12)
 
+INSERT INTO WRITES
+VALUES('antonio.alvarez.chavarria@gmail.com',13)
+
+INSERT INTO WRITES
+VALUES('barrKev@puchimail.com',14)
+
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -352,6 +371,31 @@ INSERT INTO REVIEWS
 INSERT INTO REVIEWS
  VALUES	(3,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
 
+ INSERT INTO REVIEWS
+ VALUES	(4,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
+
+  INSERT INTO REVIEWS
+ VALUES	(5,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
+
+ INSERT INTO REVIEWS
+ VALUES	(4,'barrKev@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
+ INSERT INTO REVIEWS
+ VALUES	(5,'barrKev@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
+  INSERT INTO REVIEWS
+ VALUES	(5,'antonio.alvarez.chavarria@gmail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
+ INSERT INTO REVIEWS
+ VALUES	(4,'antonio.alvarez.chavarria@gmail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
+
+ INSERT INTO REVIEWS
+ VALUES	(4,'valeriaGM@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
+ INSERT INTO REVIEWS
+ VALUES	(5,'valeriaGM@puchimail.com','Sin comentarios',5,5,5,30,DEFAULT)
+
 
 CREATE TABLE IS_NOMINATED(
 answer VARCHAR(100) DEFAULT 'pending',
@@ -363,23 +407,27 @@ CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES Commun
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE -- No se desea tener miembros nominados a revisar artículos que ya no existen. 
 )
 
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','barrKev@puchimail.com', 5)
+--- Para probar la nominación de los miembros del núcleo.
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','barrKev@puchimail.com', 1)
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','barrKev@puchimail.com', 2)
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','barrKev@puchimail.com', 3)
 
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 7)
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 1)
+INSERT INTO IS_NOMINATED		
+VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 2)
+INSERT INTO IS_NOMINATED		
+VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 3)
 
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','barrKev@puchimail.com', 5)
-
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 5)
-
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','glorymoravi@gmail.com', 5)
-
---INSERT INTO IS_NOMINATED
---VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 7)
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','glorymoravi@gmail.com', 1)
+INSERT INTO IS_NOMINATED		
+VALUES ('pending','no comment','glorymoravi@gmail.com', 2)
+INSERT INTO IS_NOMINATED		
+VALUES ('pending','no comment','glorymoravi@gmail.com', 3)
 
 
 ---------------------------------------------------------------------------------------------
