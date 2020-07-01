@@ -19,11 +19,11 @@ namespace Proyecto.Models
         }
 
         // Se agrega un nuevo articulo
-        public bool AddArticle(ArticleModel smodel, string type)
+        public bool AddArticle(ArticleModel smodel, string type, string author)
         {
             connection();
             string AddNewArticle = "INSERT INTO Article " +
-                                   "VALUES (@name, @type,@Abstract,@publishDate,@content,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
+                                   "VALUES (@name, @type,@Abstract,@publishDate,@content,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
 
             cmd.Parameters.AddWithValue("@name", smodel.name);
@@ -70,10 +70,12 @@ namespace Proyecto.Models
             //Insert a relation with member
             connection();
             AddNewArticle = "INSERT INTO WRITES " +
-                            "VALUES ( 1 , @articleId)";
+                            "VALUES ( @email , @articleId)";
             SqlCommand cmd2 = new SqlCommand(AddNewArticle, con); // Nombre procedimiento, 
             cmd2.Parameters.AddWithValue("@articleId", smodel.articleId);
+            cmd2.Parameters.AddWithValue("@email", author);
 
+            //SESSION 
             con.Open();
             i = cmd2.ExecuteNonQuery();
             con.Close();

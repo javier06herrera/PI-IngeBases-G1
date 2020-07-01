@@ -48,6 +48,12 @@ values ('Morgan Salgari','long','Life of a "criollo" politician and his fight ag
 insert into Article
 values ('Animal Farm','long','Metaphor about the rotting structure of a raising empire','12-02-1999','One day, Squealer takes the sheep off to a remote spot to teach them a new chant. Not long afterward, the animals have just finished their day’s work when they hear the terrified neighing of a horse. It is Clover, and she summons the others hastily to the yard. There, the animals gaze in amazement at Squealer walking toward them on his hind legs. Napoleon soon appears as well, walking upright; worse, he carries a whip. Before the other animals have a chance to react to the change, the sheep begin to chant, as if on cue: “Four legs good, two legs better!” Clover, whose eyes are failing in her old age, asks Benjamin to read the writing on the barn wall where the Seven Commandments were originally inscribed. Only the last commandment remains: “all animals are equal.” However, it now carries an addition: “but some animals are more equal than others.” In the days that follow, Napoleon openly begins smoking a pipe, and the other pigs subscribe to human magazines, listen to the radio, and begin to install a telephone, also wearing human clothes that they have salvaged from Mr. Jones’s wardrobe.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
 
+insert into Article
+values ('The Tell-Tale Heart','short','A short story by American writer Edgar Allan Poe, first published in 1843. It is related by an unnamed narrator who endeavors to convince the reader of the narrator’s sanity while simultaneously describing a murder the narrator committed.','12-02-1999','iT’sTRue!  yes,  i  have been ill,  very  ill.  But  why  do  you  say  that  I  have  lost  control  of  my  mind,  why  do  you  say  that  I  am  mad?  Can  you  not  see  that  I  have  full  control of my mind? Is it not clear that  I  am  not  mad?  Indeed,  the  illness  only  made  my  mind,  my  feelings, my senses stronger, more powerful.   My   sense   of   hearing   especially became more powerful. I  could  hear  sounds  I  had  never  heard before. I heard sounds from heaven; and I heard sounds from hell',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
+
+insert into Article
+values ('Alice Adventures in Wonderland','long',' It tells of a young girl named Alice, who falls through a rabbit hole into a subterranean fantasy world populated by peculiar, anthropomorphic creatures. It is considered to be one of the best examples of the literary nonsense genre.The tale plays with logic, giving the story lasting popularity with adults as well as with children','12-02-1999','ALICE was   beginning   to   get   very   tired   ofsitting  by  her  sister  on  the  bank,  and  of  havingnothing  to  do :  once  or  twice  she  had  peeped  intothe  book  her  sister  was  reading,  but  it  had  nopictures  or  conversations  in  it,  “and  what  is',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
+
 ---------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE Topic(
@@ -107,6 +113,11 @@ VALUES	(5,'Satire', 'Politics')
 INSERT INTO INVOLVES
 VALUES	(5,'Story', 'Fiction')
 
+INSERT INTO INVOLVES
+VALUES	(6,'Story', 'Fiction')
+
+INSERT INTO INVOLVES
+VALUES	(7,'Story', 'Fiction')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
@@ -134,7 +145,7 @@ INSERT INTO CommunityMember
 VALUES ( 'glorymoravi@gmail.com','Gloriana', 'Mora','10-10-1990', 30,'San Sebastián','Costa Rica','Read, travel','Spanish, English','288888','Intel','core', 5, 'Creativity',DEFAULT)
 
 INSERT INTO CommunityMember
-VALUES ( 'alvAnt@puchimail.com','Antonio', 'Álvares', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','388888','Intel','active',3,'Math-skills',DEFAULT)
+VALUES ( 'antonio.alvarez.chavarria@gmail.com','Antonio', 'Álvarez', '10-10-1990',30,'Barva','Costa Rica','Play video games','Spanish, English','388888','Intel','core',3,'Math-skills',DEFAULT)
 
 INSERT INTO CommunityMember
 VALUES ( 'dbarrantescr@gmail.com','Daniel', 'Barrante','10-10-1990', 30,'Alajuela','Costa Rica','Play the piano, eat caldosas, beign a "bicho"','Spanish, English','48888','Intel','active',3,'Adaptability',DEFAULT)
@@ -174,7 +185,7 @@ INSERT INTO HAS_SKILL
 VALUES ('glorymoravi@gmail.com', 'Diseño', 'Adobe')
 
 INSERT INTO HAS_SKILL
-VALUES ('alvAnt@puchimail.com', 'Musica', 'Tocar piano')
+VALUES ('antonio.alvarez.chavarria@gmail.com', 'Musica', 'Tocar piano')
 
 INSERT INTO HAS_SKILL
 VALUES ('herrJav@puchimail.com', 'Diseño', 'Adobe')
@@ -198,7 +209,7 @@ INSERT INTO	Question
 VALUES ('glorymoravi@gmail.com','How to create an article?',DEFAULT, DEFAULT, DEFAULT)
 
 INSERT INTO	Question
-VALUES ('alvAnt@puchimail.com', 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
+VALUES ('antonio.alvarez.chavarria@gmail.com', 'Will vaccinations make me autistic?', DEFAULT , 'No', 'checked')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE WRITES(
 email	VARCHAR(100),
@@ -218,7 +229,7 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
  VALUES	('glorymoravi@gmail.com',1)
 
  INSERT INTO WRITES
- VALUES	('alvAnt@puchimail.com',2)
+ VALUES	('antonio.alvarez.chavarria@gmail.com',2)
 
  INSERT INTO WRITES
  VALUES	('dbarrantescr@gmail.com',2)
@@ -231,6 +242,21 @@ CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleI
 
  INSERT INTO WRITES
  VALUES	('herrJav@puchimail.com',5)
+
+  INSERT INTO WRITES
+ VALUES	('barrKev@puchimail.com',6)
+
+  INSERT INTO WRITES
+ VALUES	('herrJav@puchimail.com',6)
+
+  INSERT INTO WRITES
+ VALUES	('antonio.alvarez.chavarria@gmail.com',7)
+
+   INSERT INTO WRITES
+ VALUES	('dbarrantescr@gmail.com',7)
+
+  INSERT INTO WRITES
+ VALUES	('glorymoravi@gmail.com',7)
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -247,7 +273,7 @@ CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleI
  )
 
 INSERT INTO REVIEWS
- VALUES	(1,'alvAnt@puchimail.com','Sin comentarios',5,5,5,100,'reviewed')
+ VALUES	(1,'antonio.alvarez.chavarria@gmail.com','Sin comentarios',5,5,5,100,'reviewed')
 
 INSERT INTO REVIEWS
  VALUES	(1,'barrKev@puchimail.com','Sin comentarios',5,5,5,75,DEFAULT)
@@ -275,7 +301,10 @@ CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(ar
 INSERT INTO IS_NOMINATED
 VALUES ('pending','no comment','barrKev@puchimail.com', 5)
 
+INSERT INTO IS_NOMINATED
+VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 7)
 
+---------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------
 --Functions

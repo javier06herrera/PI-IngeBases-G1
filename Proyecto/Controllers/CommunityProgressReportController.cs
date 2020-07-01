@@ -38,18 +38,22 @@ namespace Proyecto.Controllers
         public string GetFilteredValues(string filter)
         {
             CommunityProgressReportDBHandle dataBaseHandler = new CommunityProgressReportDBHandle();
-            List<ReportModel> filteredValues;
 
             string query = this.GetQuery(filter);
-            List<List<string>> listOfString;
-            if (filter == "Number of articles peer category and topic")
-            {
-                listOfString = dataBaseHandler.getRankTopicCategory(query);
-            }
-                filteredValues = dataBaseHandler.GetFilteredValues(query);
+            List<ReportModel> filteredValues = dataBaseHandler.GetFilteredValues(query);
             return JsonConvert.SerializeObject(filteredValues);
         }
 
+        [HttpPost]
+        public string GetFilteredTable(string filter)
+        {
+            CommunityProgressReportDBHandle dataBaseHandler = new CommunityProgressReportDBHandle();
+
+            string query = this.GetQuery(filter);
+            List<List<string>> listOfString;
+            listOfString = dataBaseHandler.getRankTopicCategory(query);
+            return JsonConvert.SerializeObject(listOfString);
+        }
 
         public string GetQuery(string filter)
         {
@@ -83,7 +87,7 @@ namespace Proyecto.Controllers
                             "GROUP BY CM.memberRank";
                     break;
                 case "Number of articles peer category and topic":
-                    query = "SELECT A.name, W.email, I.topicName, I.category, C.memberRank " +
+                    query = "SELECT DISTINCT A.articleId, I.topicName, I.category, C.memberRank " +
                             "FROM Article A " +
                             "JOIN INVOLVES I on I.articleId = A.articleId " +
                             "JOIN WRITES W on A.articleId = W.articleId " +
@@ -93,7 +97,13 @@ namespace Proyecto.Controllers
                     break;
 
                 case "Access count peer category and topic":
-                    query = "";
+                    query = "SELECT DISTINCT A.articleId, C.memberRank, I.topicName, I.category, A.accessCount " +
+                            "FROM Article A " +
+                            "JOIN INVOLVES I on I.articleId = A.articleId " +
+                            "JOIN WRITES W on A.articleId = W.articleId " +
+                            "JOIN CommunityMember C on C.email = W.email " +
+                            "WHERE A.checkedStatus = 'published' " +
+                            "ORDER BY C.memberRank, I.topicName";
                     break;
             }
             return query;
