@@ -356,20 +356,6 @@ CONSTRAINT FK_CommunityMember_REVIEW FOREIGN KEY (email) REFERENCES CommunityMem
 CONSTRAINT FK_Article_REVIEW FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE --No se desea tener miembros asignados a revisar artículos que ya no existen. 
  )
 
-INSERT INTO REVIEWS
- VALUES	(1,'antonio.alvarez.chavarria@gmail.com','Sin comentarios',5,5,5,100,'reviewed')
-
-INSERT INTO REVIEWS
- VALUES	(1,'barrKev@puchimail.com','Sin comentarios',5,5,5,75,DEFAULT)
-
-INSERT INTO REVIEWS
- VALUES	(2,'glorymoravi@gmail.com','Sin comentarios',5,5,5,25,'reviewed')
-
-INSERT INTO REVIEWS
- VALUES	(2,'dbarrantescr@gmail.com','Sin comentarios',5,5,5,30,'reviewed')
-
-INSERT INTO REVIEWS
- VALUES	(3,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
 
  INSERT INTO REVIEWS
  VALUES	(4,'glorymoravi@gmail.com','Sin comentarios',5,5,5,60,DEFAULT)
