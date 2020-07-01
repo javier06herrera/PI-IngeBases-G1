@@ -1,13 +1,25 @@
-﻿$(document).ready(function ()
-{
+﻿//$(document).ready(function ()
+//{
+//    $('select').multiselect(
+//        {
+//            includeSelectAllOption: true,
+//            noneSelectedText: 'Select Something (required)',
+//            numberDisplayed: 5,
+//            buttonWidth: '230px'
+//        });
+//});
+
+
+function styleDropDown() {
     $('select').multiselect(
         {
             includeSelectAllOption: true,
             noneSelectedText: 'Select Something (required)',
             numberDisplayed: 5,
-            buttonWidth: '230px'
+            buttonWidth: '500px'
         });
-});
+};
+
 
 function createReviewersDropdown(articleId)
 {
@@ -21,6 +33,7 @@ function createReviewersDropdown(articleId)
     appendOptions(selectDiv, reviewers)
 
     container.appendChild(selectDiv)
+    styleDropDown()
 }
 
 function appendOptions(selectDiv, reviewers)
@@ -73,7 +86,18 @@ function saveReviewers(articleId) {
 function sendToController(articleId)
 {
     var reviewersChosen = saveReviewers(articleId)
-    ajaxReviewers(reviewersChosen, articleId)
+
+    if (reviewersChosen.length > 2 && reviewersChosen.length < 6) {
+        ajaxReviewers(reviewersChosen, articleId)
+
+        alert("Reviewers succesfully assigned!")
+        window.location.href = "/Article/HomePage"
+    }
+    else
+    {
+        alert("Reviewers quantity must be between 3 and 5, please select appropiate quantity of reviewers.")
+    }
+
 }
 
 function ajaxReviewers(selectedItems, articleId) {
