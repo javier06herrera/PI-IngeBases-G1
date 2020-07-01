@@ -51,7 +51,14 @@ namespace Proyecto.Controllers
 
             string query = this.GetQuery(filter);
             List<List<string>> listOfString;
-            listOfString = dataBaseHandler.getRankTopicCategory(query);
+            if (filter == "Number of articles peer category and topic")
+            {
+                listOfString = dataBaseHandler.getRankTopicCategory(query);
+            }
+            else
+            {
+                listOfString = dataBaseHandler.getViewsTopicCategory(query);
+            }
             return JsonConvert.SerializeObject(listOfString);
         }
 
@@ -77,7 +84,7 @@ namespace Proyecto.Controllers
                     //        "ON  W.articleId = A.articleId\n" +
                     //        "AND A.checkedStatus = 'published'\n" +
                     //        "GROUP BY CM.memberRank ";
-                    query = "SELECT CM.memberRank AS [Member rank], AVG(A.baseGrade) AS [Count]\n" +
+                    query = "SELECT CM.memberRank AS [Member rank], SUM(A.baseGrade) AS [Count]\n" +
                             "FROM CommunityMember CM\n" +
                             "JOIN WRITES W\n" +
                             "ON CM.email = W.email\n" +
@@ -96,7 +103,7 @@ namespace Proyecto.Controllers
                             "ORDER BY C.memberRank, I.topicName";
                     break;
 
-                case "Access count peer category and topic":
+                case "Access Count peer category and topic":
                     query = "SELECT DISTINCT A.articleId, C.memberRank, I.topicName, I.category, A.accessCount " +
                             "FROM Article A " +
                             "JOIN INVOLVES I on I.articleId = A.articleId " +

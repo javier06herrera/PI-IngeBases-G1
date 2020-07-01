@@ -13,7 +13,7 @@
     <script src="~/Scripts/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="~/Scripts/js/bootstrap-multiselect.js" type="text/javascript"></script>
     <script src="~/Scripts/js/CommunityProgressReport.js" type="text/javascript"></script>
-    <script  type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script  type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/randomColor.js"></script>
 </head>
 
 <body>
@@ -38,8 +38,8 @@
                     <select id="filters" multiple="multiple">
                         <option value="Number of articles">Number of articles</option>
                         <option value="Article score">Article score</option>
-                        <option value="Number of articles peer category and topic">Number of articles peer category and topic</option>
-                        <option value="Access Count peer category and topic">Access Count peer category and topic</option>
+                        <option value="Number of articles peer category and topic">Number of articles per category and topic</option>
+                        <option value="Access Count peer category and topic">Access Count per category and topic</option>
                     </select>
 
                     <button onclick="initReport()" class="btn btn-primary">Generate</button>

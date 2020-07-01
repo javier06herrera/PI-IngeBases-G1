@@ -54,37 +54,93 @@ function generateReport(selectedFilters) {
 			values = getFilteredTable(selectedFilters[filter]);
 			canvas = createCanvas();
 			toGraphicate = extractDataSet(values);
-			drawStackedColumns(canvas, toGraphicate[0], toGraphicate[1], toGraphicate[2], selectedFilters[filter]);
+            drawStackedColumns(canvas, toGraphicate[0], toGraphicate[1], toGraphicate[2], selectedFilters[filter]);
 		}
 		else {
 			values = getFilteredValues(selectedFilters[filter]);
 			canvas = createCanvas();
 			toGraphicate = getValuesAndLabels(values);
-			drawColumns(canvas, toGraphicate[0], toGraphicate[1], "Gráfico");
+            drawColumns(canvas, toGraphicate[0], toGraphicate[1], selectedFilters[filter]);
 		}
 		//drawGraphics(canvas, values);        
 	}
 }
 
 function extractDataSet(values) {
-	var result = [];
-	label = [];
-	members = [];
-	for (var columns = 1; columns < values[0].length; ++columns) {
-		if (values[1][columns] != "#") {
-			group = [];            
-			for (var rows = 1; rows < values.length; ++rows) {
-				group.push(parseInt(values[rows][columns]))
+ //   var resultTopic = [];
+ //   var resultCategory = [];
+ //   labelTopic = [];
+ //   labelCategory = [];
+ //   members = [];
+ //   var hashtag = false;
+	//for (var columns = 1; columns < values[0].length; ++columns) {
+ //       if (values[1][columns] == "#") {
+ //           hashtag = true;
+ //       }
 
-			}
-			label.push(values[0][columns])
-			result.push(group)
-		}
+ //       else if (!hashtag) {
+ //           group = [];
+ //           for (var rows = 1; rows < values.length; ++rows) {
+ //               group.push(parseInt(values[rows][columns]))
+
+ //           }
+ //           labelTopic.push(values[0][columns])
+ //           resultTopic.push(group)
+ //       }
+
+ //       else if (hashtag) {
+ //           group = [];
+ //           for (var rows = 1; rows < values.length; ++rows) {
+ //               group.push(parseInt(values[rows][columns]))
+
+ //           }
+ //           labelCategory.push(values[0][columns])
+ //           resultCategory.push(group)
+ //       }
+    var result = [];
+    var label = [];
+    var members = [];
+    var hashtag = false;
+    for (var columns = 1; columns < values[0].length; ++columns) {
+        if (values[1][columns] == "#") {
+            hashtag = true;
+        }
+
+        else if (!hashtag) {
+            group = [];
+            for (var rows = 1; rows < values.length; ++rows) {
+                group.push(parseInt(values[rows][columns]))
+
+            }
+            label.push(values[0][columns]);
+
+            for (var rows = 1; rows < values.length; ++rows) {
+                group.push(0);
+            }
+            result.push(group);
+        }
+
+        else if (hashtag) {
+            group = [];
+            for (var rows = 1; rows < values.length; ++rows) {
+                group.push(0);
+            }
+            for (var rows = 1; rows < values.length; ++rows) {
+                group.push(parseInt(values[rows][columns]));
+
+            }
+            label.push(values[0][columns]);
+            result.push(group);
+        }
+
 	}
 	for (var rows = 1; rows < values.length; ++rows) {
-		members.push(values[rows][0]);
-	}
-	return [result, label, members];
+		members.push(values[rows][0] + "Topics");
+    }
+    for (var rows = 1; rows < values.length; ++rows) {
+        members.push(values[rows][0] + "Category");
+    }
+    return [result, label, members];
 }
 
 
@@ -251,7 +307,7 @@ function getValuesAndLabels(jsonElements) {
 	return [values, labels]
 }
 
-function drawColumns(canvas, values, label, title) {
+function drawColumns(canvas, values, label, graphicTitle) {
 
 	var limit = values.length;
 	var dataP = [];
@@ -263,13 +319,11 @@ function drawColumns(canvas, values, label, title) {
 		type: 'bar',
 		data: {
 
-			labels: label,
+            labels: label,            
 			datasets: [
-				{
-					
-					label: title,
+                {					
 					backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-					data: values
+                    data: values,                    
 				}
 			]
 		},
@@ -280,310 +334,83 @@ function drawColumns(canvas, values, label, title) {
 						beginAtZero: true
 					}
 				}]
-			}
+            },
+            title: {
+                display: true,
+                text: graphicTitle
+            },
+            legend: {
+                display: false
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return tooltipItem.yLabel;
+                    }
+                }
+            }
 		},
 	});
 }
 
-function drawStackedColumns(canvas, values, label, members, title)
+function drawStackedColumns(canvas, result, label, members, graphicTitle)
 {
-	var limit = values.length;
-	var dataP = [];
+    var limit = result.length;
+    var dataTopic = [];
+
+    //var dynamicColors = function () {
+    //    var r = Math.floor(Math.random() * 255);
+    //    var g = Math.floor(Math.random() * 255);
+    //    var b = Math.floor(Math.random() * 255);
+    //    return "rgb(" + r + "," + g + "," + b + ")";
+    //};
+    const colors = randomColor({ count: limit });
+
 	for (var i = 0; i < limit; i++) {
-		dataP.push({ type: "stackedcolumn", name: label[i], showInLegend : "true", datapoints: values[i]  });
-	}
+        //dataP.push({ type: "stackedcolumn", name: label[i], showInLegend : "true", datapoints: values[i]  });
+        //dataTopic.push({ label: label[i], data: result[i], backgroundColor: dynamicColors() });
+        dataTopic.push({ label: label[i], data: result[i], backgroundColor: colors[i] });
+    }
 
-	//var chart = new CanvasJS.Chart("chartContainer", {
-	//	animationEnabled: true,
-	//	title: {
-	//		text: "Demographics of a High School Marching Band"
-	//	},
-	//	toolTip: {
-	//		shared: true
-	//	},
-	//	axisY: {
-	//		title: "No. of Students"
-	//	},
-	//	legend: {
-	//		cursor: "pointer",
-	//		verticalAlign: "center",
-	//		horizontalAlign: "right",
-	//		itemclick: toggleDataSeries
-	//	},
-	//	data: {
-	//		datasets = dataP,
-	//		labels = members,
-	//	}		
-		
-	//});
-
-	//new Chart(canvas, {
-	//	animationEnabled: true,
-	//	title: {
-	//		text: "Demographics of a High School Marching Band"
-	//	},
-	//	toolTip: {
-	//		shared: true
-	//	},
-	//	axisY: {
-	//		title: "No. of Students"
-	//	},
-	//	//legend: {
-	//	//	cursor: "pointer",
-	//	//	verticalAlign: "center",
-	//	//	horizontalAlign: "right",
-	//	//	itemclick: toggleDataSeries
- // //          //itemclick: ["prueba 1", "prueba2"]
- // //      },
- //       data:
-	//	//data: dataP,
- //       //data: 
- //           [{
- //               type: "stackedColumn",
- //               showInLegend: true,
- //               color: "#696661",
- //               name: "Q1",
- //               dataPoints: [
- //                   { y: 6.75, x: 3 },
- //                   { y: 8.57, x: 2 },
- //                   { y: 10.64, x: 4 },
- //                   { y: 13.97, x: 5 },
- //                   { y: 15.42, x: 6 },
- //                   { y: 17.26, x: 7 },
- //                   { y: 20.26, x: 8 }
- //               ]
-
-
- //           }]
- //       //}],
- //   });
-
-    //new Chart(canvas, {
-    //    animationEnabled: true,
-    //    title: {
-    //        text: "Google - Consolidated Quarterly Revenue",
-    //        fontFamily: "arial black",
-    //        fontColor: "#695A42"
-    //    },
-
-    //    axisY: {
-    //        valueFormatString: "$#0bn",
-    //        gridColor: "#B6B1A8",
-    //        tickColor: "#B6B1A8"
-    //    },
-    //    toolTip: {
-    //        shared: true,
-    //        content: toolTipContent
-    //    },
-    //    data: [{
-    //        type: "stackedColumn",
-    //        showInLegend: true,
-    //        color: "#696661",
-    //        name: "Q1",
-    //        dataPoints: [
-    //            { y: 6.75, x: 3 },
-    //            { y: 8.57, x: 2 },
-    //            { y: 10.64, x: 4 },
-    //            { y: 13.97, x: 5 },
-    //            { y: 15.42, x: 6 },
-    //            { y: 17.26, x: 7 },
-    //            { y: 20.26, x: 8 }
-    //        ]
-
-
-    //    }]
-    //});
-
-    //new Chart(canvas, {
-    //    type: 'bar',
-    //    data: {
-
-    //        labels: label,
-    //        datasets: [
-    //            {
-
-    //                label: members,
-    //                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-    //                data: values[0]
-    //            }
-    //        ]
-    //    },
-    //    options: {
-    //        scales: {
-    //            yAxes: [{
-    //                ticks: {
-    //                    beginAtZero: true
-    //                }
-    //            }]
-    //        }
-    //    },
-    //});
-
-    //new Chart(canvas,
-    //    {
-    //        title: {
-    //            text: "Evening Sales"
-    //        },
-    //        axisX: {
-    //            valueFormatString: "string",
-    //        //    interval: 1,
-    //        //    intervalType: "month"
-
-    //        },
-    //        data: [
-    //            {
-    //                type: "stackedColumn",
-    //                legendText: "meals",
-    //                showInLegend: "true",
-    //                dataPoints: [
-    //                    { label: "String 1", y: 55 },
-    //                    { label: "String 2", y: 50 },
-    //                    { label: "String 3", y: 65 },
-    //                    { label: "String 4", y: 95 },
-    //                    { label: "String 5", y: 71 }
-
-    //                ]
-    //            },
-    //            {
-    //                type: "stackedColumn",
-    //                legendText: "snacks",
-    //                showInLegend: "true",
-    //                dataPoints: [
-    //                    { label: "String 1", y: 71 },
-    //                    { label: "String 2", y: 55 },
-    //                    { label: "String 3", y: 50 },
-    //                    { label: "String 4", y: 65 },
-    //                    { label: "String 5", y: 95 }
-
-    //                ]
-    //            },
-    //            {
-    //                type: "stackedColumn",
-    //                legendText: "Drinks",
-    //                showInLegend: "true",
-    //                dataPoints: [
-    //                    { label: "String 1", y: 71 },
-    //                    { label: "String 2", y: 55 },
-    //                    { label: "String 3", y: 50 },
-    //                    { label: "String 4", y: 65 },
-    //                    { label: "String 5", y: 95 }
-
-    //                ]
-    //            },
-
-    //            {
-    //                type: "stackedColumn",
-    //                legendText: "dessert",
-    //                showInLegend: "true",
-    //                dataPoints: [
-    //                    { label: "String 1", y: 61 },
-    //                    { label: "String 2", y: 75 },
-    //                    { label: "String 3", y: 80 },
-    //                    { label: "String 4", y: 85 },
-    //                    { label: "String 5", y: 105 }
-
-    //                ]
-    //            },
-    //            {
-    //                type: "stackedColumn",
-    //                legendText: "pick-ups",
-    //                showInLegend: "true",
-    //                dataPoints: [
-    //                    { label: "String 1", y: 20 },
-    //                    { label: "String 2", y: 35 },
-    //                    { label: "String 3", y: 30 },
-    //                    { label: "String 4", y: 45 },
-    //                    { label: "String 5", y: 25 }
-
-    //                ]
-    //            }
-
-    //        ]
-    //    });
-
-   
-
-
-    //new Chart(canvas, {
-    //    type: 'bar',
-    //    data:
-    //        //[
-    //        //    {
-    //        //        type: "stackedColumn",
-    //        //        legendText: "meals",
-    //        //        showInLegend: "true",
-    //        //        dataPoints: [
-    //        //            { label: "String 1", y: 55 },
-    //        //            { label: "String 2", y: 50 },
-    //        //            { label: "String 3", y: 65 },
-    //        //            { label: "String 4", y: 95 },
-    //        //            { label: "String 5", y: 71 }
-
-    //        //        ]
-    //        //},
-    //        //],
-    //        [{
-    //            type: "stackedColumn",
-    //            showInLegend: true,
-    //            color: "#696661",
-    //            name: "Q1",
-    //            dataPoints: [
-    //                { y: 6.75, x: 3 },
-    //                { y: 8.57, x: 2 },
-    //                { y: 10.64, x: 4 },
-    //                { y: 13.97, x: 5 },
-    //                { y: 15.42, x: 6 },
-    //                { y: 17.26, x: 7 },
-    //                { y: 20.26, x: 8 }
-    //            ]
-
-
-    //        }],
-    //    options: {
-    //        scales: {
-    //            axisX: [{
-                    
-    //            }],
-    //            yAxes: [{
-    //                stacked: true
-    //            }]
-    //        }
-    //    }
-    //});
-
-    var chart = new CanvasJS.Chart(canvas, {
-        animationEnabled: true,
-        title: {
-            text: "Google - Consolidated Quarterly Revenue",
-            fontFamily: "arial black",
-            fontColor: "#695A42"
+    var chart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: members,
+            
+            datasets: dataTopic,
+                //[
+            //    {
+            //        label: 'Low',
+            //        data: [67.8, 12.0],
+            //        backgroundColor: '#D6E9C6' // green
+            //    },
+            //    {
+            //        label: 'Moderate',
+            //        data: [20.7, 7.8],
+            //        backgroundColor: '#FAEBCC' // yellow
+            //    },
+            //    {
+            //        label: 'High',
+            //        data: [11.4, 1.2],
+            //        backgroundColor: '#EBCCD1' // red
+            //    }
+            //],
         },
-
-        axisY: {
-            valueFormatString: "$#0bn",
-            gridColor: "#B6B1A8",
-            tickColor: "#B6B1A8"
-        },        
-        data: [{
-            type: "stackedColumn",
-            showInLegend: true,
-            color: "#696661",
-            name: "Q1",
-            dataPoints: [
-                { y: 6.75, x: 3 },
-                { y: 8.57, x: 2 },
-                { y: 10.64, x: 4 },
-                { y: 13.97, x: 5 },
-                { y: 15.42, x: 6 },
-                { y: 17.26, x: 7 },
-                { y: 20.26, x: 8 }
-            ]
-
-
-        }]
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            },
+            title: {
+                display: true,
+                text: graphicTitle
+            },
+        }
     });
-
-    chart.render();
-    //chart.options.data.
+    chart.data.labels.push
 
 }
