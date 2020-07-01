@@ -1,13 +1,13 @@
-DROP TABLE IS_NOMINATED;
-DROP TABLE HAS_SKILL;
-DROP TABLE Skill;
-DROP TABLE WRITES;
-DROP TABLE REVIEWS;
-DROP TABLE Question;
-DROP TABLE CommunityMember;
-DROP TABLE INVOLVES;
-DROP TABLE Article;
-DROP TABLE Topic;
+--DROP TABLE IS_NOMINATED;
+--DROP TABLE HAS_SKILL;
+--DROP TABLE Skill;
+--DROP TABLE WRITES;
+--DROP TABLE REVIEWS;
+--DROP TABLE Question;
+--DROP TABLE CommunityMember;
+--DROP TABLE INVOLVES;
+--DROP TABLE Article;
+--DROP TABLE Topic;
 
 CREATE TABLE Article( 
 articleId		INT IDENTITY(1,1) PRIMARY KEY,
@@ -43,7 +43,7 @@ insert into Article
 values ('Mamita Yunai','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 
 insert into Article
-values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+values ('Morgan Salgari','long','Life of a "criollo" politician and his fight against an oppresive fruit company','12-02-1999','C://Carlos/Fallas',25,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
 
 insert into Article
 values ('Animal Farm','long','Metaphor about the rotting structure of a raising empire','12-02-1999','One day, Squealer takes the sheep off to a remote spot to teach them a new chant. Not long afterward, the animals have just finished their day’s work when they hear the terrified neighing of a horse. It is Clover, and she summons the others hastily to the yard. There, the animals gaze in amazement at Squealer walking toward them on his hind legs. Napoleon soon appears as well, walking upright; worse, he carries a whip. Before the other animals have a chance to react to the change, the sheep begin to chant, as if on cue: “Four legs good, two legs better!” Clover, whose eyes are failing in her old age, asks Benjamin to read the writing on the barn wall where the Seven Commandments were originally inscribed. Only the last commandment remains: “all animals are equal.” However, it now carries an addition: “but some animals are more equal than others.” In the days that follow, Napoleon openly begins smoking a pipe, and the other pigs subscribe to human magazines, listen to the radio, and begin to install a telephone, also wearing human clothes that they have salvaged from Mr. Jones’s wardrobe.',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
@@ -53,6 +53,24 @@ values ('The Tell-Tale Heart','short','A short story by American writer Edgar Al
 
 insert into Article
 values ('Alice Adventures in Wonderland','long',' It tells of a young girl named Alice, who falls through a rabbit hole into a subterranean fantasy world populated by peculiar, anthropomorphic creatures. It is considered to be one of the best examples of the literary nonsense genre.The tale plays with logic, giving the story lasting popularity with adults as well as with children','12-02-1999','ALICE was   beginning   to   get   very   tired   ofsitting  by  her  sister  on  the  bank,  and  of  havingnothing  to  do :  once  or  twice  she  had  peeped  intothe  book  her  sister  was  reading,  but  it  had  nopictures  or  conversations  in  it,  “and  what  is',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'pending collaboration');
+
+insert into Article
+values ('Cocorí','short','La historia de un niño en la region tropical','12-02-1999','Cocorí es un niño que habita en un pueblo donde tiene contacto con el mar, y a la vez con toda la naturaleza del bosque tropical. Cierto día, un barco se acerca al puerto, y Cocorí tiene la oportunidad de subir en él para conocer a sus tripulantes. Entre ellos, está una niña rubia. Con una curiosidad muy infantil, Cocorí se sorprende por el cabello de la niña, ya que nunca ha visto una como ella, y la niña piensa que la piel de Cocorí se ha llenado de hollín y por eso se ha oscurecido, pues nunca ha visto personas que no sean de tez blanca.',100,15,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
+insert into Article
+values ('Única mirando al mar','short','Primera novela del escritor costarricense Fernando Contreras Castro, publicada por primera vez en 1993','12-02-1999','El autor comienza con esta obra a explorar la miseria en la cara oculta de Costa Rica, internándose en el botadero de basura de Río Azul, situado en el oeste de la provincia de Cartago.',75,20,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
+insert into Article
+values ('El mundo de Sofía','short',' Usando como pretexto una trama novelesca, el autor hace una guía básica sobre la historia de la filosofía occidental.','12-02-1999','Sophie, sin que su madre se entere, se convierte en la estudiante de un antiguo filósofo, Alberto Knox. Alberto le enseña sobre la historia de la filosofía. Obtiene una revisión sustantiva y comprensible de los presocráticos hasta Jean-Paul Sartre. Además de esto, Sophie y Alberto reciben postales dirigidas a una niña llamada Hilde de un hombre llamado Albert Knag. A medida que pasa el tiempo, Knag comienza a ocultar los mensajes de cumpleaños a Hilde de maneras cada vez más imposibles, como esconder uno dentro de un plátano sin pelar y hacer hablar al perro de Alberto, Hermes.',85,30,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
+insert into Article
+values ('Reliquias de la Muerte','short','Tres objetos mágicos altamente poderosos supuestamente creados por la Muerte y dados a tres hermanos en la Familia Peverell.','12-02-1999','De acuerdo a la leyenda, el que posea éstos tres artefactos se convertirá en el Amo de la Muerte. La historia de las Reliquias de la Muerte fue originalmente narrada por Beedle el Bardo, y pasada de familia a familia como un cuento de hadas; la leyenda da los nombres de los tres hermanos como Antioch, Cadmus e Ignotus, poseedores de la Varita, la Piedra y la Capa respectivamente. Harry Potter es la única persona de la que se sabe que haya reunido las tres Reliquias al mismo tiempo (Albus Dumbledore también tuvo las tres Reliquias, pero sólo pudo tener al mismo tiempo la Varita de Saúco y la Capa de Invisibilidad. Más tarde, también tuvo a la vez la Varita de Saúco y la Piedra de la Resurrección).',110,50,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
+insert into Article
+values ('Orden del Fénix','short','La Orden del Fénix era una organización secreta fundada por Albus Dumbledore para oponerse y luchar contra Lord Voldemort y sus Mortífagos.','12-02-1999','Con la caída de Voldemort, la Orden se disolvió pero en 1995 se reconstituyó cuando Harry Potter le informó a Albus Dumbledore del regreso del Innombrable y el inicio de la Segunda Guerra Mágica. El problema fue que ésta vez el Ministerio no aceptó que el Señor Oscuro regresó, por lo que la Orden actuó solitaria y en secreto para proteger a Harry y la profecía sobre él y lord Voldemort. Luego de la Batalla en el Departamento de Misterios, donde se hallaba la profecía, el Ministerio admitió la verdad.',100,45,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
+
+insert into Article
+values ('Breve historia del tiempo','short',' Big Bang, los agujeros negros, los conos de luz y la teoría de supercuerdas.','12-02-1999','¿Cuál es la naturaleza del tiempo? ¿Hubo un principio o habrá un final en el tiempo? ¿Es infinito el universo o tiene límites? A partir de estas preguntas, Stephen Hawking revisa las grandes teorías cosmológicas, desde Aristóteles hasta nuestros días, así como muchos enigmas, paradojas y contradicciones que se plantean como retos para la ciencia actual.Hawking considera que los avances recientes de la física, gracias a las fantásticas nuevas tecnologías, sugieren respuestas a algunas de estas preguntas que desde hace tiempo nos preocupan.',95,60,DEFAULT,DEFAULT,DEFAULT,DEFAULT,'published');
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -82,6 +100,15 @@ VALUES ('Satire', 'Politics')
 
 INSERT INTO	Topic
 VALUES ('Story', 'Fiction')
+
+INSERT INTO Topic
+VALUES ('Drama', 'Fantasy')
+
+INSERT INTO Topic
+VALUES ('Novel', 'Fiction')
+
+INSERT INTO Topic
+VALUES ('Novel', 'Philosophy')
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE INVOLVES(
 articleId INT,
@@ -118,6 +145,25 @@ VALUES	(6,'Story', 'Fiction')
 
 INSERT INTO INVOLVES
 VALUES	(7,'Story', 'Fiction')
+
+INSERT INTO INVOLVES
+VALUES(8,'Novel','Fiction')
+
+INSERT INTO INVOLVES
+VALUES(9,'Novel','Fiction')
+
+INSERT INTO INVOLVES
+VALUES(10,'Novel','Philosophy')
+
+INSERT INTO INVOLVES
+VALUES(11,'Drama','Fantasy')
+
+INSERT INTO INVOLVES
+VALUES(12,'Drama','Fantasy')
+
+INSERT INTO INVOLVES
+VALUES(13,'Drama','Fantasy')
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE CommunityMember(
@@ -219,44 +265,63 @@ CONSTRAINT FK_CommunityMember_WRITES FOREIGN KEY (email) REFERENCES CommunityMem
 CONSTRAINT FK_Article_WRITES FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE --No se desea que existan artículos sin autor asociado.
  )
 
- INSERT INTO WRITES
- VALUES	('barrKev@puchimail.com',1)
+INSERT INTO WRITES
+VALUES	('barrKev@puchimail.com',1)
+
+INSERT INTO WRITES
+VALUES	('barrKev@puchimail.com',2)
+
+INSERT INTO WRITES
+VALUES	('glorymoravi@gmail.com',1)
+
+INSERT INTO WRITES
+VALUES	('antonio.alvarez.chavarria@gmail.com',2)
+
+INSERT INTO WRITES
+VALUES	('dbarrantescr@gmail.com',2)
+
+INSERT INTO WRITES
+VALUES	('herrJav@puchimail.com',3)
+
+INSERT INTO WRITES
+VALUES	('barrKev@puchimail.com',4)
+
+INSERT INTO WRITES
+VALUES	('herrJav@puchimail.com',5)
+
+INSERT INTO WRITES
+VALUES	('barrKev@puchimail.com',6)
+
+INSERT INTO WRITES
+VALUES	('herrJav@puchimail.com',6)
+
+INSERT INTO WRITES
+VALUES	('antonio.alvarez.chavarria@gmail.com',7)
+
+INSERT INTO WRITES
+VALUES	('dbarrantescr@gmail.com',7)
+
+INSERT INTO WRITES
+VALUES	('glorymoravi@gmail.com',7)
 
  INSERT INTO WRITES
- VALUES	('barrKev@puchimail.com',2)
+VALUES('barrKev@puchimail.com',8)
 
- INSERT INTO WRITES
- VALUES	('glorymoravi@gmail.com',1)
+INSERT INTO WRITES
+VALUES('glorymoravi@gmail.com',9)
 
- INSERT INTO WRITES
- VALUES	('antonio.alvarez.chavarria@gmail.com',2)
+INSERT INTO WRITES
+VALUES('glorymoravi@gmail.com',10)
 
- INSERT INTO WRITES
- VALUES	('dbarrantescr@gmail.com',2)
+INSERT INTO WRITES
+VALUES('dbarrantescr@gmail.com',11)
 
- INSERT INTO WRITES
- VALUES	('herrJav@puchimail.com',3)
+INSERT INTO WRITES
+VALUES('herrJav@puchimail.com',12)
 
- INSERT INTO WRITES
- VALUES	('barrKev@puchimail.com',4)
+INSERT INTO WRITES
+VALUES('antonio.alvarez.chavarria@gmail.com',12)
 
- INSERT INTO WRITES
- VALUES	('herrJav@puchimail.com',5)
-
-  INSERT INTO WRITES
- VALUES	('barrKev@puchimail.com',6)
-
-  INSERT INTO WRITES
- VALUES	('herrJav@puchimail.com',6)
-
-  INSERT INTO WRITES
- VALUES	('antonio.alvarez.chavarria@gmail.com',7)
-
-   INSERT INTO WRITES
- VALUES	('dbarrantescr@gmail.com',7)
-
-  INSERT INTO WRITES
- VALUES	('glorymoravi@gmail.com',7)
 ---------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE REVIEWS(
 articleId	INT,
@@ -298,11 +363,20 @@ CONSTRAINT FK_CommunityMember_IS_NOMINATED FOREIGN KEY (email) REFERENCES Commun
 CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(articleId) ON DELETE CASCADE ON UPDATE CASCADE -- No se desea tener miembros nominados a revisar artículos que ya no existen. 
 )
 
-INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','barrKev@puchimail.com', 5)
+--INSERT INTO IS_NOMINATED
+--VALUES ('pending','no comment','barrKev@puchimail.com', 5)
 
-INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 7)
+--INSERT INTO IS_NOMINATED
+--VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 7)
+
+--INSERT INTO IS_NOMINATED
+--VALUES ('pending','no comment','barrKev@puchimail.com', 5)
+
+--INSERT INTO IS_NOMINATED
+--VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 5)
+
+--INSERT INTO IS_NOMINATED
+--VALUES ('pending','no comment','glorymoravi@gmail.com', 5)
 
 ---------------------------------------------------------------------------------------------
 
