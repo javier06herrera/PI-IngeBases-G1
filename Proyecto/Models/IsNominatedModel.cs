@@ -43,9 +43,4 @@ namespace Proyecto.Models
         }
 
     }
-
-    public class IsNominatedModelDetail
-    {
-        public List<IsNominatedModel> NominatedDetails { get; set; }
-    }
 }

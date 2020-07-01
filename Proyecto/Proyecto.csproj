@@ -122,11 +122,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
-
     <Compile Include="Controllers\CommunityProgressReportController.cs" />
-
     <Compile Include="Controllers\AssingReviewersController.cs" />
-
     <Compile Include="Controllers\ColaborationController.cs" />
     <Compile Include="Controllers\CoordinatorController.cs" />
     <Compile Include="Controllers\CoreMemberController.cs" />
@@ -184,6 +181,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\ufonts.com_copperplate-gothic-regular.ttf" />
+    <Content Include="Scripts\js\AssignReviewers.js" />
     <Content Include="Scripts\js\bootstrap-multiselect.js" />
     <Content Include="Scripts\js\Chart.js" />
     <Content Include="Scripts\js\CommunityProgressReport.js" />

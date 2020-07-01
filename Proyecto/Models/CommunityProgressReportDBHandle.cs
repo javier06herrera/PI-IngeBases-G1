@@ -336,7 +336,7 @@ namespace Proyecto.Models
                 //We need to add one unit because of the title row
                 rankIndex = memberRanks.IndexOf(tempString) + 1;
                 //We add one unit to the string in the table
-                tempInt = Convert.ToInt32(processedInfo[rankIndex][categoryIndex]) + Convert.ToInt32(item["accessCount"];
+                tempInt = Convert.ToInt32(processedInfo[rankIndex][categoryIndex]) + Convert.ToInt32(item["accessCount"]);
                 processedInfo[rankIndex][categoryIndex] = Convert.ToString(tempInt);
 
 

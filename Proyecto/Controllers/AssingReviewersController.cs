@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Proyecto.Models;
+using Newtonsoft.Json;
 
 namespace Proyecto.Controllers
 {
@@ -20,34 +21,42 @@ namespace Proyecto.Controllers
 
         public ActionResult AssingReviewersForm(ArticleModel model)
         {
-            ProfileDBHandle pdh = new ProfileDBHandle();
-            List<IsNominatedModel> nomenees = pdh.fetchNomenees(model.articleId);
+            //ProfileDBHandle pdh = new ProfileDBHandle();
+            //List<IsNominatedModel> nomenees = pdh.fetchNomenees(model.articleId);
 
-            IsNominatedModelDetail adapNomenees = new IsNominatedModelDetail();
-
-            adapNomenees.NominatedDetails = new List<IsNominatedModel>();
-
-            foreach (IsNominatedModel nomination in nomenees)
-            {
-                adapNomenees.NominatedDetails.Add(nomination);
-            }
-
-            return View(adapNomenees);
+            //List<string> nomenees_emails = new List<string>();
+            //foreach (IsNominatedModel nomenee in nomenees)
+            //{
+            //    nomenees_emails.Add(nomenee.email);
+            //}         
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult AssingReviewersForm(IsNominatedModelDetail model)
+        public string nomeneeEmails(int articleId)
+        {
+            ProfileDBHandle pdh = new ProfileDBHandle();
+            List<IsNominatedModel> nomenees = pdh.fetchNomenees(articleId);
+
+            List<string> nomenees_emails = new List<string>();
+            foreach (IsNominatedModel nomenee in nomenees)
+            {
+                nomenees_emails.Add(nomenee.email);
+            }
+            return JsonConvert.SerializeObject(nomenees_emails);
+        }
+
+        [HttpPost]
+        public void AssingReviewersForm(string[] checkedEmails, int articleId)
         {
             ReviewDBHandle rdh = new ReviewDBHandle();
 
-            foreach (IsNominatedModel nomination in model.NominatedDetails)
+            foreach (string email in checkedEmails)
             {
-                rdh.insertReview(nomination);
+                rdh.insertReview(email, articleId);
             }
 
-            rdh.deleteFromTable(model.NominatedDetails.First().articleId, "IS_NOMINATED");
-            return View();
+            rdh.deleteNomenees(articleId);            
         }
-
     }
 }

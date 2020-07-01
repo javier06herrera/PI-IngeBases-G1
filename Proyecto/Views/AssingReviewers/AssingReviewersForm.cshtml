@@ -1,49 +1,29 @@
-﻿@model Proyecto.Models.IsNominatedModelDetail
+﻿@model Proyecto.Models.ArticleModel
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html>
+<html>
     <head>
         <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap-multiselect.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>      
+        <script src="~/Scripts/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="~/Scripts/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/js/bootstrap-multiselect.js" type="text/javascript"></script>    
+        <script src="~/Scripts/js/AssignReviewers.js"></script>
         <title></title>
     </head>
     <body>
         <h2>Potential Reviewers</h2>
-        <div class="article-content">
-            @{
-                //To make unique Id
-                int i = 0;
-
-                foreach (var item in Model.NominatedDetails.ToList())
-                {
-
-                    <div class="card card-default">
-                        <div class="article-heading-abb">
-                            <div class="art-date"><i class="fa fa-calendar-o"></i>Email: @Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].email)</div>
-                        </div>
-                        <div class="article-info">
-                            <div class="art-category"><i class="fa fa-folder"></i>Answer:@Html.DisplayFor(modelItem => modelItem.NominatedDetails[i].answer)</div>
-                            <div class="art-category"><i class="fa fa-folder"></i>Selected for review: @Html.EditorFor(modelItem => modelItem.NominatedDetails[i].selected)</div>
-                        </div>
-
-                    </div>
-
-                }
-                i++;
-            }
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Assing Reviewers" class="btn btn-primary" />
-                </div>
-            </div>
-
-            @*@Html.ActionLink("Assing Reviewers", "Prueba", "AssingReviewers", Model, new { @class = "btn btn-outline-dark btn-sm" })*@
+        <button onclick="createReviewersDropdown(@Model.articleId)">Show possible reviewers</button>
+        <div class="article-content" id="reviewersDropDown">
 
         </div>
+
+        <button onclick="sendToController(@Model.articleId)">Assing this reviewers</button>
+
     </body>
 </html>
-}
+
