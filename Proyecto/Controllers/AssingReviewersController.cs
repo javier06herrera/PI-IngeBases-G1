@@ -50,13 +50,15 @@ namespace Proyecto.Controllers
         public void AssingReviewersForm(string[] checkedEmails, int articleId)
         {
             ReviewDBHandle rdh = new ReviewDBHandle();
+            ArticleDBHandle adbh = new ArticleDBHandle();
 
             foreach (string email in checkedEmails)
             {
                 rdh.insertReview(email, articleId);
             }
 
-            rdh.deleteNomenees(articleId);            
+            rdh.deleteNomenees(articleId);
+            adbh.updateArticleStatus(articleId, "not checked");
         }
     }
 }

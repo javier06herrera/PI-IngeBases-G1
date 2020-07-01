@@ -73,7 +73,18 @@ function saveReviewers(articleId) {
 function sendToController(articleId)
 {
     var reviewersChosen = saveReviewers(articleId)
-    ajaxReviewers(reviewersChosen, articleId)
+
+    if (reviewersChosen.length > 2 && reviewersChosen.length < 6) {
+        ajaxReviewers(reviewersChosen, articleId)
+
+        alert("Reviewers succesfully assigned!")
+        window.location.href = "/Article/HomePage"
+    }
+    else
+    {
+        alert("Reviewers quantity must be between 3 and 5, please select appropiate quantity of reviewers.")
+    }
+
 }
 
 function ajaxReviewers(selectedItems, articleId) {

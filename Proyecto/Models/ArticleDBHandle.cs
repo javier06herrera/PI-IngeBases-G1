@@ -538,7 +538,7 @@ namespace Proyecto.Models
         {
             connection();
             String query = "UPDATE Article " +
-                            "SET checkedStatus = '@veredict' " +
+                            "SET checkedStatus = @veredict " +
                             "WHERE articleId = @articleId ";
 
             SqlCommand cmd = new SqlCommand(query, con);
