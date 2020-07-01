@@ -1,14 +1,15 @@
 ﻿function initReport()
 {
 	// Obtain dropdown objects.
-	//var memberRankDropdown = document.getElementById("memberRanks");
 	var filtersDropdown = document.getElementById("filters");
 	// Obtain selected items in dropdowns.
-	//var selectedMemberRanks = getSelectedItems(memberRankDropdown);
 	var selectedFilters = getSelectedItems(filtersDropdown);
-	// Generate report according to selected items.
-	//generateReport(selectedMemberRanks, selectedFilters);
-	generateReport(selectedFilters);
+	if (selectedFilters.length > 0) {
+		generateReport(selectedFilters);
+	}
+	else {
+		alert("Please select an option!");
+	}
 }
 
 function getSelectedItems(dropdownlist)
@@ -27,20 +28,6 @@ function getSelectedItems(dropdownlist)
 	return selectedItems;
 }
 
-//function generateReport(selectedMemberRanks, selectedFilters)
-//{
-//    var values = null;
-//    var canvas = null;
-//    var row = document.getElementById("row");
-//    row.innerHTML = "";
-
-//    // For each filter, get the required data, create a canvas and graphicate it.
-//    for (var filter = 0; filter < selectedFilters.length; ++filter) {
-//        values = getFilteredValues(selectedMemberRanks, selectedFilters[filter]);
-//        canvas = createCanvas();
-//        drawGraphics(canvas, values);
-//    }
-//}
 
 function generateReport(selectedFilters) {
 	var values = null;
@@ -54,118 +41,66 @@ function generateReport(selectedFilters) {
 			values = getFilteredTable(selectedFilters[filter]);
 			canvas = createCanvas();
 			toGraphicate = extractDataSet(values);
-            drawStackedColumns(canvas, toGraphicate[0], toGraphicate[1], toGraphicate[2], selectedFilters[filter]);
+			drawStackedColumns(canvas, toGraphicate[0], toGraphicate[1], toGraphicate[2], selectedFilters[filter]);
 		}
 		else {
 			values = getFilteredValues(selectedFilters[filter]);
 			canvas = createCanvas();
 			toGraphicate = getValuesAndLabels(values);
-            drawColumns(canvas, toGraphicate[0], toGraphicate[1], selectedFilters[filter]);
-		}
-		//drawGraphics(canvas, values);        
+			drawColumns(canvas, toGraphicate[0], toGraphicate[1], selectedFilters[filter]);
+		}        
 	}
 }
 
 function extractDataSet(values) {
- //   var resultTopic = [];
- //   var resultCategory = [];
- //   labelTopic = [];
- //   labelCategory = [];
- //   members = [];
- //   var hashtag = false;
-	//for (var columns = 1; columns < values[0].length; ++columns) {
- //       if (values[1][columns] == "#") {
- //           hashtag = true;
- //       }
+	var result = [];
+	var label = [];
+	var members = [];
+	var hashtag = false;
+	for (var columns = 1; columns < values[0].length; ++columns) {
+		if (values[1][columns] == "#") {
+			hashtag = true;
+		}
 
- //       else if (!hashtag) {
- //           group = [];
- //           for (var rows = 1; rows < values.length; ++rows) {
- //               group.push(parseInt(values[rows][columns]))
+		else if (!hashtag) {
+			group = [];
+			for (var rows = 1; rows < values.length; ++rows) {
+				group.push(parseInt(values[rows][columns]))
 
- //           }
- //           labelTopic.push(values[0][columns])
- //           resultTopic.push(group)
- //       }
+			}
+			label.push(values[0][columns]);
 
- //       else if (hashtag) {
- //           group = [];
- //           for (var rows = 1; rows < values.length; ++rows) {
- //               group.push(parseInt(values[rows][columns]))
+			for (var rows = 1; rows < values.length; ++rows) {
+				group.push(0);
+			}
+			result.push(group);
+		}
 
- //           }
- //           labelCategory.push(values[0][columns])
- //           resultCategory.push(group)
- //       }
-    var result = [];
-    var label = [];
-    var members = [];
-    var hashtag = false;
-    for (var columns = 1; columns < values[0].length; ++columns) {
-        if (values[1][columns] == "#") {
-            hashtag = true;
-        }
+		else if (hashtag) {
+			group = [];
+			for (var rows = 1; rows < values.length; ++rows) {
+				group.push(0);
+			}
+			for (var rows = 1; rows < values.length; ++rows) {
+				group.push(parseInt(values[rows][columns]));
 
-        else if (!hashtag) {
-            group = [];
-            for (var rows = 1; rows < values.length; ++rows) {
-                group.push(parseInt(values[rows][columns]))
-
-            }
-            label.push(values[0][columns]);
-
-            for (var rows = 1; rows < values.length; ++rows) {
-                group.push(0);
-            }
-            result.push(group);
-        }
-
-        else if (hashtag) {
-            group = [];
-            for (var rows = 1; rows < values.length; ++rows) {
-                group.push(0);
-            }
-            for (var rows = 1; rows < values.length; ++rows) {
-                group.push(parseInt(values[rows][columns]));
-
-            }
-            label.push(values[0][columns]);
-            result.push(group);
-        }
+			}
+			label.push(values[0][columns]);
+			result.push(group);
+		}
 
 	}
 	for (var rows = 1; rows < values.length; ++rows) {
 		members.push(values[rows][0] + "Topics");
-    }
-    for (var rows = 1; rows < values.length; ++rows) {
-        members.push(values[rows][0] + "Category");
-    }
-    return [result, label, members];
+	}
+	for (var rows = 1; rows < values.length; ++rows) {
+		members.push(values[rows][0] + "Category");
+	}
+	return [result, label, members];
 }
 
 
-//Glori
-//function getFilteredValues(selectedMemberRanks, filter)
-//{
-//    var filteredValues = null;
-//    $.ajax({
-//        url: '/CommunityProgressReport/GetFilteredValues',
-//        data: {
-//            selectedMemberRanks: selectedMemberRanks,
-//            filter: filter,
-//        },
-//        type: 'post',
-//        dataType: 'json',
-//        async: false,
-//        success: function (results) {
-//            filteredValues = results;
-//        }
 
-//    });
-//    return filteredValues;
-//}
-
-//Nueva sin miembros
 function getFilteredValues(filter) {
 	var filteredValues = null;
 	$.ajax({
@@ -319,11 +254,11 @@ function drawColumns(canvas, values, label, graphicTitle) {
 		type: 'bar',
 		data: {
 
-            labels: label,            
+			labels: label,            
 			datasets: [
-                {					
+				{					
 					backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                    data: values,                    
+					data: values,                    
 				}
 			]
 		},
@@ -334,83 +269,57 @@ function drawColumns(canvas, values, label, graphicTitle) {
 						beginAtZero: true
 					}
 				}]
-            },
-            title: {
-                display: true,
-                text: graphicTitle
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                callbacks: {
-                    label: function (tooltipItem) {
-                        return tooltipItem.yLabel;
-                    }
-                }
-            }
+			},
+			title: {
+				display: true,
+				text: graphicTitle
+			},
+			legend: {
+				display: false
+			},
+			tooltips: {
+				callbacks: {
+					label: function (tooltipItem) {
+						return tooltipItem.yLabel;
+					}
+				}
+			}
 		},
 	});
 }
 
 function drawStackedColumns(canvas, result, label, members, graphicTitle)
 {
-    var limit = result.length;
-    var dataTopic = [];
-
-    //var dynamicColors = function () {
-    //    var r = Math.floor(Math.random() * 255);
-    //    var g = Math.floor(Math.random() * 255);
-    //    var b = Math.floor(Math.random() * 255);
-    //    return "rgb(" + r + "," + g + "," + b + ")";
-    //};
-    const colors = randomColor({ count: limit });
+	var limit = result.length;
+	var dataTopic = [];
+	const colors = randomColor({ count: limit });
 
 	for (var i = 0; i < limit; i++) {
-        //dataP.push({ type: "stackedcolumn", name: label[i], showInLegend : "true", datapoints: values[i]  });
-        //dataTopic.push({ label: label[i], data: result[i], backgroundColor: dynamicColors() });
-        dataTopic.push({ label: label[i], data: result[i], backgroundColor: colors[i] });
-    }
+		dataTopic.push({ label: label[i], data: result[i], backgroundColor: colors[i] });
+	}
 
-    var chart = new Chart(canvas, {
-        type: 'bar',
-        data: {
-            labels: members,
-            
-            datasets: dataTopic,
-                //[
-            //    {
-            //        label: 'Low',
-            //        data: [67.8, 12.0],
-            //        backgroundColor: '#D6E9C6' // green
-            //    },
-            //    {
-            //        label: 'Moderate',
-            //        data: [20.7, 7.8],
-            //        backgroundColor: '#FAEBCC' // yellow
-            //    },
-            //    {
-            //        label: 'High',
-            //        data: [11.4, 1.2],
-            //        backgroundColor: '#EBCCD1' // red
-            //    }
-            //],
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            },
-            title: {
-                display: true,
-                text: graphicTitle
-            },
-        }
-    });
-    chart.data.labels.push
+	var chart = new Chart(canvas, {
+		type: 'bar',
+		data: {
+			labels: members,
+			
+			datasets: dataTopic,
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					stacked: true
+				}],
+				yAxes: [{
+					stacked: true
+				}]
+			},
+			title: {
+				display: true,
+				text: graphicTitle
+			},
+		}
+	});
+	chart.data.labels.push
 
 }
