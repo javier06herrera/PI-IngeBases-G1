@@ -544,15 +544,15 @@ namespace Proyecto.Models
 
         }
 
-        public void insertReview(IsNominatedModel nomination)
+        public void insertReview(string email, int articleId)
         {
             connection();
             string AddNewArticle = "INSERT INTO REVIEWS " +
                                    "VALUES (@articleId, @email,'Sin comentarios',DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)";
             SqlCommand cmd = new SqlCommand(AddNewArticle, con);
 
-            cmd.Parameters.AddWithValue("@articleId", nomination.articleId);
-            cmd.Parameters.AddWithValue("@email", nomination.email);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            cmd.Parameters.AddWithValue("@email", email);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -560,15 +560,31 @@ namespace Proyecto.Models
 
         }
 
+        //I3: Generic code to delete from table given an articleId
         public void deleteFromTable(int articleId, string tableName)
         {
             connection();
-            String query = "DELETE FROM @tableName " +
+            string query = "DELETE FROM @tableName " +
                            "WHERE articleId = @articleId ";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@articleId", articleId);
             cmd.Parameters.AddWithValue("@tableName", tableName);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void deleteNomenees(int articleId)
+        {
+            connection();
+            string query = "DELETE FROM IS_NOMINATED " +
+                           "WHERE articleId = @articleId ";
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
