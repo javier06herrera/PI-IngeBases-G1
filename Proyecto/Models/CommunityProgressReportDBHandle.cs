@@ -43,17 +43,10 @@ namespace Proyecto.Models
         }
 
         //This method creates a tabla that contain all the topics and categories by memberRanks
-        public List<List<string>> getRankTopicCategory()
+        public List<List<string>> getRankTopicCategory(string query)
         {
             //This section deals with the DB
             DataTable dbInfo = new DataTable();
-            string query = "SELECT DISTINCT A.articleId, I.topicName, I.category, C.memberRank " +
-                            "FROM Article A " +
-                            "JOIN INVOLVES I on I.articleId = A.articleId " +
-                            "JOIN WRITES W on A.articleId = W.articleId " +
-                            "JOIN CommunityMember C on C.email = W.email " +
-                            "WHERE A.checkedStatus = 'published' " +
-                            "ORDER BY C.memberRank, I.topicName";
             command = new SqlCommand(query, dbConnection);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             dbConnection.Open();
@@ -107,7 +100,7 @@ namespace Proyecto.Models
             for (int i = 0; i < memberRanks.Count(); i++)
             {
                 result.Add(new List<string>());
-                result[i].Add(memberRanks[i]);
+                result[i+1].Add(memberRanks[i]);
             }
 
             //Now we start adding and classifign the results into the table
@@ -210,17 +203,10 @@ namespace Proyecto.Models
         //---------------------------------------------------------------------------------------------------------
 
         //This method creates a tabla that contain all the topics and categories by memberRanks
-        public List<List<string>> getViewsTopicCategory()
+        public List<List<string>> getViewsTopicCategory(string query)
         {
             //This section deals with the DB
             DataTable dbInfo = new DataTable();
-            string query = "SELECT DISTINCT A.articleId, C.memberRank, I.topicName, I.category, A.accessCount " +
-                            "FROM Article A " +
-                            "JOIN INVOLVES I on I.articleId = A.articleId " +
-                            "JOIN WRITES W on A.articleId = W.articleId " +
-                            "JOIN CommunityMember C on C.email = W.email " +
-                            "WHERE A.checkedStatus = 'published' " +
-                            "ORDER BY C.memberRank, I.topicName";
             command = new SqlCommand(query, dbConnection);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             dbConnection.Open();
@@ -258,7 +244,7 @@ namespace Proyecto.Models
             for (int i = 0; i < memberRanks.Count(); i++)
             {
                 result.Add(new List<string>());
-                result[i].Add(memberRanks[i]);
+                result[i+1].Add(memberRanks[i]);
             }
 
             //Now we start adding and classifign the results into the table
