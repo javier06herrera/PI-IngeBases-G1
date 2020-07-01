@@ -36,6 +36,11 @@ namespace Proyecto.Controllers
             ReviewDBHandle dbh = new ReviewDBHandle();
             model.email = user;
 
+            ModelState.Remove("options");
+            ModelState.Remove("state");
+            ModelState.Remove("totalGrade");
+            ModelState.Remove("optionList");
+            ModelState.Remove("email");
             try {
                 if (ModelState.IsValid) {
                     dbh.registerGrades(model); }
@@ -72,7 +77,7 @@ namespace Proyecto.Controllers
                 eController.SendMail(eModel);
             }
 
-            return RedirectToAction("PendingReviews");
+            return RedirectToAction("PendingReviews", "Review");
         }
 
 
@@ -225,6 +230,9 @@ namespace Proyecto.Controllers
             {
                 sumOfMerits += rDBH.fetchMerits(author);
             }
+
+            //if (sumOfMerits == 0)
+            //    sumOfMerits = 1;
 
             meritsGiven = meritsGiven/sumOfMerits;
 

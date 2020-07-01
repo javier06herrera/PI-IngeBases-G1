@@ -564,12 +564,11 @@ namespace Proyecto.Models
         public void deleteFromTable(int articleId, string tableName)
         {
             connection();
-            string query = "DELETE FROM @tableName " +
-                           "WHERE articleId = @articleId ";
+            string query = "DELETE FROM " + tableName +
+                           " WHERE articleId = @articleId ";
 
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@articleId", articleId);
-            cmd.Parameters.AddWithValue("@tableName", tableName);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();

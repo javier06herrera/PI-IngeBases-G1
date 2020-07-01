@@ -76,7 +76,7 @@ namespace Proyecto.Controllers
                     smodel.TopicsList = DropFill();
                     return View(smodel);
                 }
-                return RedirectToAction("CommunityArticles");
+                return RedirectToAction("Profile", "Profile");
             }
             catch
             {
@@ -204,7 +204,7 @@ namespace Proyecto.Controllers
                     smodel.TopicsList = DropFill();
                     return View(smodel);
                 }
-                return RedirectToAction("CommunityArticles");
+                return RedirectToAction("Profile", "Profile");
             }
             catch
             {

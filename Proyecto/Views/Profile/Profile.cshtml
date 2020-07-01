@@ -136,7 +136,7 @@
                             </div>
 
                             @Html.ActionLink("Read more", "PreviewArticle", "Article", item, new { @class = "btn btn-outline-dark btn-sm" })
-                            @if (item.checkedStatus == "on edition")
+                            @if (item.checkedStatus == "on edition" || item.checkedStatus == "resend")
                             {
                                 @Html.ActionLink("Start Revision", "EnrollOnReviewProcess", "Review", new { articleId = item.articleId, checkedStatus = item.checkedStatus}, new { @class = "btn btn-outline-dark btn-sm" })
                             }

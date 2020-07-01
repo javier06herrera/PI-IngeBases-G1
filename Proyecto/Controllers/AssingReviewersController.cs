@@ -20,15 +20,7 @@ namespace Proyecto.Controllers
         }
 
         public ActionResult AssingReviewersForm(ArticleModel model)
-        {
-            //ProfileDBHandle pdh = new ProfileDBHandle();
-            //List<IsNominatedModel> nomenees = pdh.fetchNomenees(model.articleId);
-
-            //List<string> nomenees_emails = new List<string>();
-            //foreach (IsNominatedModel nomenee in nomenees)
-            //{
-            //    nomenees_emails.Add(nomenee.email);
-            //}         
+        {        
             return View(model);
         }
 
