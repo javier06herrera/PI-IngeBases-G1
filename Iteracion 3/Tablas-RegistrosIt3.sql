@@ -395,25 +395,25 @@ CONSTRAINT FK_Article_IS_NOMINATED FOREIGN KEY (articleId) REFERENCES Article(ar
 
 --- Para probar la nominación de los miembros del núcleo.
 INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','barrKev@puchimail.com', 1)
+VALUES ('accept','Yes, I want','barrKev@puchimail.com', 1)
 INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','barrKev@puchimail.com', 2)
+VALUES ('reject','No, I dont','barrKev@puchimail.com', 2)
 INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','barrKev@puchimail.com', 3)
+VALUES ('accept','Yes, I want','barrKev@puchimail.com', 3)
 
 INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 1)
+VALUES ('accept','Yes, I want','antonio.alvarez.chavarria@gmail.com', 1)
 INSERT INTO IS_NOMINATED		
-VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 2)
+VALUES ('accept','Yes, I want','antonio.alvarez.chavarria@gmail.com', 2)
 INSERT INTO IS_NOMINATED		
-VALUES ('pending','no comment','antonio.alvarez.chavarria@gmail.com', 3)
+VALUES ('reject','No, I dont','antonio.alvarez.chavarria@gmail.com', 3)
 
 INSERT INTO IS_NOMINATED
-VALUES ('pending','no comment','glorymoravi@gmail.com', 1)
+VALUES ('accept','Yes, I want','glorymoravi@gmail.com', 1)
 INSERT INTO IS_NOMINATED		
-VALUES ('pending','no comment','glorymoravi@gmail.com', 2)
+VALUES ('reject','No, I dont','glorymoravi@gmail.com', 2)
 INSERT INTO IS_NOMINATED		
-VALUES ('pending','no comment','glorymoravi@gmail.com', 3)
+VALUES ('accept','Yes, I want','glorymoravi@gmail.com', 3)
 
 
 ---------------------------------------------------------------------------------------------
