@@ -589,6 +589,45 @@ namespace Proyecto.Models
             int i = cmd.ExecuteNonQuery();
             con.Close();
         }
+
+        public List<IsNominatedModel> fetchNominationAnswers(int articleId)
+        {
+            //Stablishes a connection string
+            connection();
+            List<IsNominatedModel> nominateAnswer = new List<IsNominatedModel>();
+
+            //Fetching Query of a list composed by articles pending to be reviewed for a specific member
+            string fetchNominations = "SELECT * " +
+                                   "FROM IS_NOMINATED I " +
+                                   "WHERE I.articleId = @articleId ";
+                                   //"AND R.state = 'not reviewed' ";
+            //DB connection arrangement
+            SqlCommand cmd = new SqlCommand(fetchNominations, con);
+
+            SqlDataAdapter sd1 = new SqlDataAdapter(cmd);
+            DataTable nominationTable = new DataTable();
+            cmd.Parameters.AddWithValue("@articleId", articleId);
+            //Open connection with the DB
+            con.Open();
+            //Buffer of data from the DB
+            sd1.Fill(nominationTable);
+            //Loop that formats data into an array 
+            foreach (DataRow nomination in nominationTable.Rows)
+            {
+                nominateAnswer.Add(
+                    new IsNominatedModel
+                    {
+                        articleId = Convert.ToInt32(nomination["articleId"]),
+                        answer    = Convert.ToString(nomination["answer"]),
+                        comments = Convert.ToString(nomination["comments"]),
+                        email = Convert.ToString(nomination["email"]),
+
+                    });
+            }
+            con.Close();
+            return nominateAnswer;
+
+        }
     }
 }
     
