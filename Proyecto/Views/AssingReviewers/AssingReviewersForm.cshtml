@@ -19,14 +19,9 @@
         <title></title>
     </head>
     <body>
-        <h2>Potential Reviewers</h2>
-        <button onclick="createReviewersDropdown(@Model.articleId)" class="btn btn-primary">Show possible reviewers</button>
-        <div class="article-content" id="reviewersDropDown">
-
+        <div>
+            <h3>Nominees Answers</h3>
         </div>
-
-
-        <button onclick="sendToController(@Model.articleId)" class="btn btn-primary">Assing this reviewers</button>
         @foreach (Proyecto.Models.IsNominatedModel item in nominations)
         {
             <div class="card card-default">
@@ -46,6 +41,16 @@
                 </div>
             </div>
         }
+        <h2>Potential Reviewers</h2>
+        <button onclick="createReviewersDropdown(@Model.articleId)" class="btn btn-primary">Show possible reviewers</button>
+        <div class="article-content" id="reviewersDropDown">
+
+        </div>
+
+
+        <button onclick="sendToController(@Model.articleId)" class="btn btn-primary">Assing this reviewers</button>
+
+
     </body>
 </html>
 
