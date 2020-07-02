@@ -1,4 +1,7 @@
 ﻿@model Proyecto.Models.ArticleModel
+@{ 
+    IEnumerable<Proyecto.Models.IsNominatedModel> nominations = ViewData["Nominations"] as IEnumerable<Proyecto.Models.IsNominatedModel>;
+}
 
 <!DOCTYPE html>
 
@@ -22,8 +25,27 @@
 
         </div>
 
-        <button onclick="sendToController(@Model.articleId)" class="btn btn-primary">Assing this reviewers</button>
 
+        <button onclick="sendToController(@Model.articleId)" class="btn btn-primary">Assing this reviewers</button>
+        @foreach (Proyecto.Models.IsNominatedModel item in nominations)
+        {
+            <div class="card card-default">
+
+                <div class="article-heading-abb">
+                    @Html.DisplayFor(modelItem => item.email)
+                </div>
+
+                <div class="article-info">
+                    <div class="art-date"><i class="fa fa-calendar-o"></i>@Html.DisplayFor(modelItem => item.answer)</div>
+                </div>
+
+                <div class="article-content">
+                    <p class="block-with-text">
+                        @Html.DisplayFor(modelItem => item.comments)
+                    </p>
+                </div>
+            </div>
+        }
     </body>
 </html>
 

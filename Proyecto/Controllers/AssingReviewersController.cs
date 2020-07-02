@@ -20,7 +20,9 @@ namespace Proyecto.Controllers
         }
 
         public ActionResult AssingReviewersForm(ArticleModel model)
-        {        
+        {
+            ReviewDBHandle dbh = new ReviewDBHandle();
+            ViewData["Nominations"] = dbh.fetchNominationAnswers(model.articleId);
             return View(model);
         }
 
